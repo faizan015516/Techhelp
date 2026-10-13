@@ -851,6 +851,22 @@
       text-align: center;
     }
 
+    .form-message[data-state="error"] {
+      background: #fef3f2;
+      color: #b42318;
+    }
+
+    .form-message[data-state="pending"] {
+      background: #eef4ff;
+      color: var(--primary);
+    }
+
+    .contact-form button:disabled {
+      opacity: .65;
+      cursor: wait;
+      transform: none;
+    }
+
     /* FOOTER */
 
     footer {
@@ -1686,7 +1702,7 @@
     </div>
 
 
-    <form class="contact-form" id="supportForm">
+    <form class="contact-form" id="supportForm" action="https://formspree.io/f/xwlvrqkl" method="POST">
 
       <h3>Request Tech Support</h3>
 
@@ -1699,12 +1715,12 @@
 
         <div class="field">
           <label for="name">Your name</label>
-          <input id="name" type="text" placeholder="John Smith" required>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="John Smith" required>
         </div>
 
         <div class="field">
           <label for="email">Email address</label>
-          <input id="email" type="email" placeholder="john@example.com" required>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="john@example.com" required>
         </div>
 
       </div>
@@ -1714,7 +1730,7 @@
 
         <label for="issue">What do you need help with?</label>
 
-        <select id="issue" required>
+        <select id="issue" name="issue" required>
           <option value="">Choose an issue</option>
           <option>Printer Support</option>
           <option>Wi-Fi / Router</option>
@@ -1734,6 +1750,7 @@
 
         <textarea
           id="message"
+          name="message"
           placeholder="For example: My printer says offline even though it is connected to Wi-Fi..."
           required
         ></textarea>
@@ -1746,12 +1763,10 @@
       </button>
 
       <p class="form-note">
-        Demo form — no information is transmitted yet.
+        Your details will be sent to our support team through Formspree.
       </p>
 
-      <div class="form-message" id="formMessage">
-        Demo request captured. We'll connect this form to your real support system later.
-      </div>
+      <div class="form-message" id="formMessage" role="status" aria-live="polite" aria-atomic="true"></div>
 
     </form>
 
@@ -1845,14 +1860,57 @@
   });
 
 
-  /* Demo support form */
+  /* Support form */
 
-  document.getElementById("supportForm").addEventListener("submit", function(event) {
+  const supportForm = document.getElementById("supportForm");
+  const formMessage = document.getElementById("formMessage");
+  const submitButton = supportForm.querySelector('button[type="submit"]');
+  let submitting = false;
 
+  function showFormMessage(state, message) {
+    formMessage.dataset.state = state;
+    formMessage.textContent = message;
+    formMessage.style.display = "block";
+  }
+
+  supportForm.addEventListener("submit", async function(event) {
     event.preventDefault();
+    if (submitting || !supportForm.reportValidity()) return;
 
-    document.getElementById("formMessage").style.display = "block";
+    const formData = new FormData(supportForm);
+    const originalButtonText = submitButton.textContent;
+    submitting = true;
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+    supportForm.setAttribute("aria-busy", "true");
+    showFormMessage("pending", "Sending your support request...");
 
+    const controller = new AbortController();
+    const timeout = setTimeout(function() { controller.abort(); }, 30000);
+
+    try {
+      const response = await fetch(supportForm.action, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+        signal: controller.signal
+      });
+
+      if (!response.ok) {
+        showFormMessage("error", "Your request was not accepted. Your details are still here. Please try again.");
+        return;
+      }
+
+      showFormMessage("success", "Thank you! Your support request has been submitted. Our team will reply by email.");
+    } catch (error) {
+      showFormMessage("error", "We could not confirm your submission. Your details are still here. Please check your connection and try again.");
+    } finally {
+      clearTimeout(timeout);
+      submitting = false;
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+      supportForm.removeAttribute("aria-busy");
+    }
   });
 
 </script>
