@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://printerresolve.com/sitemap.xml
