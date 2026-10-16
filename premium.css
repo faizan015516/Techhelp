@@ -60,3 +60,12 @@ body:has(.hero) .section-title{letter-spacing:-1.5px}
 body:has(.hero) .btn:hover{filter:brightness(1.05)}
 @media(max-width:760px){body:has(.hero) .hero{padding:64px 0 70px}body:has(.hero) .hero h1{font-size:clamp(38px,9vw,54px);letter-spacing:-1.4px}body:has(.hero) .support-window{margin-top:14px}body:has(.hero) .service-card{padding:25px}body:has(> main) main{width:calc(100% - 24px);padding:27px 22px;margin:22px auto;border-radius:21px}body:has(> main) main h1{letter-spacing:-1px}body:has(> main) main .note{padding:15px!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* Contact section: retain a dark background for existing light text */
+body:has(.hero) .contact{background:radial-gradient(circle at 85% 15%,rgba(6,182,212,.18),transparent 35%),linear-gradient(125deg,#081b33,#123b68 100%);color:#fff}
+body:has(.hero) .contact .section-label{color:#93c5fd}
+body:has(.hero) .contact .section-title{color:#fff}
+body:has(.hero) .contact .section-description{color:#dbeafe}
+body:has(.hero) .contact .contact-point{color:#e4efff}
+body:has(.hero) .contact .contact-point span:first-child{color:#65e9a7}
+body:has(.hero) .contact .contact-form{background:#fff;color:#172033}
