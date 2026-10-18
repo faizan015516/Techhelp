@@ -13,8 +13,23 @@
 <link rel="stylesheet" href="trust.css"><link rel="stylesheet" href="premium.css">
 <style>
 main{max-width:860px;margin:auto;padding:34px 24px 72px;line-height:1.8}h1,h2,h3{color:#0b2342}h1{line-height:1.22;font-size:clamp(1.95rem,4vw,2.65rem)}h2{margin-top:2rem}a{color:#175cd3}li{margin:.6rem 0}.note{padding:18px 20px;background:#eef5ff;border-left:4px solid #2563eb;border-radius:9px;margin:22px 0}.warning{background:#fff8ee;border-left-color:#d97706}.sources{background:#f8fafc;border-radius:10px;padding:16px 20px}.sources ul{padding-left:23px}.contact-button{display:inline-block;background:#2563eb;color:white;padding:12px 20px;border-radius:9px;text-decoration:none;font-weight:700}.quick{border:1px solid #dce6f6;border-radius:12px;padding:15px 20px;margin:24px 0}.quick table{width:100%;border-collapse:collapse}.quick th,.quick td{padding:9px;text-align:left;border-bottom:1px solid #e1e7ef;vertical-align:top}@media(max-width:540px){.quick{overflow-x:auto}}article section{margin:20px 0}
+
+/* Compact connection diagrams: two network modes, no external image download */
+.connection-visual{margin:24px 0;padding:20px;border:1px solid #d6e4f5;border-radius:15px;background:linear-gradient(140deg,#f3f8ff,#f5fcff)}
+.connection-visual figcaption{font-weight:800;color:#16375f;margin-bottom:13px}
+.network-choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.connection-mode{min-width:0;background:white;border:1px solid #dce6f4;border-radius:12px;padding:17px}
+.connection-mode h3{font-size:16px;line-height:1.3;margin:0 0 8px;color:#193d70}
+.connection-mode p{font-size:13px;margin:10px 0 0;color:#53677f;line-height:1.55}
+.connection-path{display:flex;justify-content:space-around;gap:6px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.connection-node{padding:9px 10px;border-radius:9px;background:#edf4ff;color:#1b548f;font-size:12px;font-weight:750;text-align:center}
+.connection-line{font-size:19px;color:#2363bd;font-weight:800}
+.connection-mode.direct{border-color:#f0dfc1}
+.connection-mode.direct .connection-node{background:#fff4dd;color:#7d520e}
+.connection-mode.direct .connection-line{color:#ac771b}
+@media(max-width:700px){.network-choice{grid-template-columns:1fr}.connection-visual{padding:15px}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Canon Printer Not Found on Wi-Fi in Windows 11? Check These First","description":"Canon printer missing during wireless setup in Windows 11? Check network mode, router, printer connection, Windows detection and official Canon setup tools.","author":{"@type":"Organization","name":"Printer Resolve"},"publisher":{"@type":"Organization","name":"Printer Resolve"},"dateModified":"2026-10-18","mainEntityOfPage":"https://printerresolve.com/canon-printer-not-found-wifi-windows-11.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Canon Printer Not Found on Wi-Fi in Windows 11? Check These First","description":"Canon printer missing during wireless setup in Windows 11? Check network mode, router, printer connection, Windows detection and official Canon setup tools.","author":{"@type":"Organization","name":"Printer Resolve"},"publisher":{"@type":"Organization","name":"Printer Resolve"},"dateModified":"2026-10-19","mainEntityOfPage":"https://printerresolve.com/canon-printer-not-found-wifi-windows-11.html"}</script>
 </head>
 <body>
 <header><a href="index.html">Printer Resolve</a></header>
@@ -23,7 +38,27 @@ main{max-width:860px;margin:auto;padding:34px 24px 72px;line-height:1.8}h1,h2,h3
 <article>
 <h1>Canon Printer Not Found on Wi-Fi in Windows 11? Check These First</h1>
 <p>Windows 11 may fail to discover a Canon printer even when the printer is switched on. That does not always mean the printer is defective. The issue may be a network mismatch, a connection-mode setting, or an incomplete setup. Use these checks in order, before deleting drivers or resetting the printer. The menus vary across Canon PIXMA, MAXIFY, and other product lines.</p>
-<p><small>Reviewed for clarity: 18 October 2026 · Educational guide by Printer Resolve, an independent remote-support provider</small></p>
+<figure class="connection-visual">
+<figcaption>First, identify which Wi-Fi connection your Canon printer is using</figcaption>
+<div class="network-choice">
+<div class="connection-mode">
+<h3>Home router Wi-Fi</h3>
+<div class="connection-path" role="img" aria-label="Windows computer connected through home router Wi-Fi to Canon printer">
+<span class="connection-node">Windows PC</span><span class="connection-line" aria-hidden="true">↔</span><span class="connection-node">Router</span><span class="connection-line" aria-hidden="true">↔</span><span class="connection-node">Canon</span>
+</div>
+<p>For normal home-network printer discovery, the computer and printer must be on networks that allow them to communicate.</p>
+</div>
+<div class="connection-mode direct">
+<h3>Wireless Direct</h3>
+<div class="connection-path" role="img" aria-label="Computer or phone connected directly to Canon printer, bypassing home router">
+<span class="connection-node">Phone or PC</span><span class="connection-line" aria-hidden="true">↔</span><span class="connection-node">Canon</span>
+</div>
+<p>A direct printer connection can work without joining the home router. Windows on your normal Wi-Fi may not discover it in this mode.</p>
+</div>
+</div>
+<p style="font-size:13px;margin:12px 0 0;color:#506681">These are simplified examples; supported modes and setup menus vary by Canon model.</p>
+</figure>
+<p><small>Updated 19 October 2026 · Educational guide by Printer Resolve, an independent remote-support provider</small></p>
 <div class="note warning"><strong>Before changing settings:</strong> Keep your Wi-Fi password private, save open work and avoid factory resets. For device-specific buttons, menu names or updates, consult the manufacturer's instructions for your exact model.</div>
 <div class="quick"><h2>Start with the symptom</h2><table><thead><tr><th scope="col">What you see</th><th scope="col">Where to start</th></tr></thead><tbody><tr><td>Printer shows no Wi-Fi connection</td><td>Start with steps 1–3: printer mode and router connection.</td></tr>
 <tr><td>Printer is connected but Windows cannot find it</td><td>Start with steps 4–6: same network, Windows discovery and setup.</td></tr>
@@ -31,19 +66,21 @@ main{max-width:860px;margin:auto;padding:34px 24px 72px;line-height:1.8}h1,h2,h3
 <section><h2>1. Check for a printer error first</h2><p>Check the display or indicator lights for paper jams, empty supplies or an active error. Address any error indicated by the printer. Turn it on and allow it to finish its startup sequence before trying Windows again.</p></section>
 <section><h2>2. Check which connection mode the Canon printer is using</h2><p>On supported models, look for the Wi-Fi or network status on the printer's screen. A printer in Wireless Direct mode may connect a phone or computer directly but may not be joined to your home's router Wi-Fi. If you want ordinary home-network printing, use the printer's wireless-LAN setup for your router. Your model's manual has the exact menu sequence.</p></section>
 <section><h2>3. Compare the router and printer's Wi-Fi settings</h2><p>Check that the Wi-Fi network name (SSID) and password are correct, especially if you recently changed routers. Many printers support only certain Wi-Fi bands or security modes; consult the exact model's manual rather than assuming it supports every 5 GHz or WPA3-only network. Move the printer near the router while testing. Avoid resetting your router or disabling its security to make a printer connect.</p></section>
-<section><h2>4. Verify the computer is on the right network</h2><p>Make sure the Windows PC uses the same trusted home network as the printer—not a guest Wi-Fi, visitor network, or an isolated hotspot. If your home router keeps guest devices separate, Windows discovery may fail. Try opening a normal website on the PC to establish that its network connection is working.</p></section>
+<section><h2>4. Verify the computer is on the right network</h2><p>Make sure the Windows PC uses the same trusted home network as the printer—not a guest Wi-Fi, visitor network, or an isolated hotspot. If your home router keeps guest devices separate, Windows discovery may fail. Try opening a normal website on the PC to establish that its network connection is working.</p><p><strong>Quick test:</strong> if a phone can print through Wireless Direct but the PC on your home router cannot detect the printer, check whether the printer also joined the router network. Do not switch off firewall or security software merely to test discovery.</p></section>
 <section><h2>5. Look for the printer in Windows 11</h2><p>Open <strong>Settings → Bluetooth &amp; devices → Printers &amp; scanners</strong> and choose <strong>Add device</strong>. Give Windows time to search. If the printer is already listed, select it and try a test print rather than creating duplicate entries. Windows menu labels may change with updates.</p></section>
-<section><h2>6. Use Canon's setup instructions for your exact model</h2><p>Find your model label on the printer and follow Canon's official setup or manual, rather than downloading a generic “driver fixer.” Canon's manuals may recommend its network setup utility for discovery problems on supported models. Use only the tool listed for your model and operating system.</p></section>
+<section><h2>6. Use Canon's setup instructions for your exact model</h2><p>Find your model label on the printer and follow Canon's official setup or manual, rather than downloading a generic “driver fixer.” Canon's manuals may recommend its network setup utility for discovery problems on supported models. Use only the tool listed for your model and operating system. Canon's <a href="https://ij.manual.canon/ij/webmanual/Manual/All/TR7000%20series/EN/NTR/ntr_m_01.html" rel="noopener noreferrer">TR7000-series troubleshooting manual</a>, for example, recommends checking router power, computer connectivity, printer Wi-Fi status and signal before trying the IJ Network Device Setup Utility. These are examples rather than universal steps.</p></section>
 <section><h2>7. If it worked previously, check whether its network details changed</h2><p>After a router replacement or changed network configuration, a saved Windows printer entry may refer to an old network address. On models that support it, print or view the printer's network information and compare it with the printer entry in Windows. Record the old configuration before making changes.</p></section>
 <section><h2>8. Re-add the printer only after the network checks</h2><p>If the Canon printer is connected to the correct network but Windows still cannot print, follow Canon's model-specific setup instructions to remove an obsolete printer entry and re-add it. Do not delete unrelated printers or factory-reset the device just to try a quick fix.</p></section>
 <section><h2>Frequently asked questions</h2><h3>Does the Canon printer have to be on the same Wi-Fi as my laptop?</h3><p>For normal local-network discovery, both usually need to be on a network that permits them to communicate. Guest networks and device isolation can prevent detection.</p>
 <h3>Why can my phone print but my Windows PC cannot?</h3><p>The phone may use a different connection method or network, or Windows may have a stale printer entry. First compare the network names and the printer's selected connection mode.</p>
+<h3>Why can I see my Canon printer's Wi-Fi symbol but not find it in Windows?</h3><p>The symbol may show wireless capability rather than successful communication with your home router. Check the printer's displayed wireless network status or network information report for your exact model.</p>
 <h3>Should I install a third-party printer repair tool?</h3><p>No. Start with Windows settings and the support material for your exact Canon model.</p></section>
 <section class="sources"><h2>Manufacturer references</h2><p>These official resources explain the related troubleshooting concepts. The example manuals may describe models different from yours.</p><ul><li><a href="https://ij.manual.canon/ij/webmanual/Manual/All/TR7000%20series/EN/NTR/ntr_m_01.html" rel="noopener noreferrer">Canon inkjet manual: printer not found during setup (TR7000 series example)</a> <small>(official manufacturer resource; model-specific steps may differ)</small></li>
 <li><a href="https://ij.manual.canon/" rel="noopener noreferrer">Canon's model-specific manuals</a> <small>(official manufacturer resource; model-specific steps may differ)</small></li></ul></section>
 <section><h2>Related free guides</h2><ul><li><a href="printer-not-found-windows-11.html">Printer not found in Windows 11</a></li>
 <li><a href="printer-not-connecting-wifi.html">General Wi-Fi printer connection checklist</a></li>
-<li><a href="find-install-printer-driver.html">Finding the correct printer driver</a></li></ul></section>
+<li><a href="find-install-printer-driver.html">Finding the correct printer driver</a></li>
+<li><a href="hp-printer-offline-connected-wifi.html">HP printer offline despite being connected to Wi-Fi</a></li></ul></section>
 <section class="note" aria-label="Contact support"><h2>Still need help?</h2><p>Printer Resolve provides independent remote technical support from India. We are not affiliated with, authorized by or endorsed by printer manufacturers. Ask about any service fee before agreeing to paid work. Never share passwords, payment-card details or one-time security codes.</p><a class="contact-button" href="index.html#contact">Request independent tech support →</a></section>
 </article>
 </main>
