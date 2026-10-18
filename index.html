@@ -1063,8 +1063,101 @@
  body:has(.hero)>header .nav-links .btn{padding:9px 10px;font-size:11px;line-height:1.25;white-space:nowrap;border-radius:9px}
 }
 @media (max-width:360px){body:has(.hero)>header .container{width:calc(100% - 20px)}body:has(.hero)>header .logo{font-size:15px;gap:5px}body:has(.hero)>header .nav-links .btn{padding:8px 9px;font-size:10px}}
+
+/* Homepage styles inlined from premium.css to avoid a render-blocking request. */
+/* Printer Resolve — premium visual system, lightweight and accessible */
+:root{--pr-ink:#0b1d3b;--pr-blue:#2563eb;--pr-cyan:#06b6d4;--pr-violet:#6d5dfc;--pr-surface:#f5f8ff;--pr-line:#dce7f7}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 8% 4%,rgba(102,126,234,.16),transparent 34%),radial-gradient(ellipse at 92% 16%,rgba(6,182,212,.13),transparent 32%),linear-gradient(180deg,#f4f8ff,#f9fbff 48%,#eef5ff);color:#21334f}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #0e7dc8;outline-offset:4px}
+::selection{background:#bfdbfe;color:#102443}
+/* All secondary pages — exclude the homepage containing .hero so its full-width layout is not constrained */
+body:has(> main):not(:has(.hero)) header{background:rgba(255,255,255,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(199,216,242,.8);box-shadow:0 8px 35px rgba(26,60,118,.04)}
+body:has(> main):not(:has(.hero)) header a{display:inline-flex;align-items:center;gap:12px;font-size:clamp(20px,3vw,25px);letter-spacing:-.7px}
+body:has(> main):not(:has(.hero)) header a:before{content:"✦";display:grid;place-items:center;width:42px;height:42px;border-radius:13px;color:#fff;background:linear-gradient(135deg,#2563eb,#06b6d4);box-shadow:0 8px 24px rgba(37,99,235,.2)}
+body:has(> main):not(:has(.hero)) main{width:min(950px,calc(100% - 32px));max-width:950px;margin:clamp(24px,5vw,66px) auto;padding:clamp(24px,5.5vw,72px);background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(249,252,255,.98));border:1px solid rgba(202,218,244,.9);border-radius:clamp(20px,3vw,32px);box-shadow:0 25px 80px rgba(35,69,132,.10),0 4px 15px rgba(35,69,132,.04);position:relative;overflow:hidden}
+body:has(> main):not(:has(.hero)) main:before{content:"";display:block;height:6px;background:linear-gradient(90deg,#2563eb,#06b6d4,#7c66ff);position:absolute;top:0;left:0;right:0}
+body:has(> main):not(:has(.hero)) main h1{font-size:clamp(32px,4.6vw,52px);letter-spacing:-1.8px;line-height:1.12;color:#0b1d3b;margin:10px 0 24px;max-width:760px}
+body:has(> main):not(:has(.hero)) main h2{font-size:clamp(20px,2.5vw,26px);letter-spacing:-.55px;margin:40px 0 13px;color:#102e5d;line-height:1.28}
+body:has(> main):not(:has(.hero)) main h3{font-size:18px;color:#173c77;margin:26px 0 8px}
+body:has(> main):not(:has(.hero)) main p,body:has(> main):not(:has(.hero)) main li{color:#3c4c68;line-height:1.85}
+body:has(> main):not(:has(.hero)) main li{padding-left:4px;margin-bottom:8px}
+body:has(> main):not(:has(.hero)) main a:not(.contact-button){color:#1c5bd7;font-weight:650;text-decoration-thickness:1px;text-underline-offset:4px}
+body:has(> main):not(:has(.hero)) main .eyebrow,body:has(> main):not(:has(.hero)) main article>p:first-child{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1.15px;text-transform:uppercase;color:#235bc7;background:#eaf2ff;border:1px solid #d7e5ff;padding:8px 14px;border-radius:999px;margin-bottom:16px}
+body:has(> main):not(:has(.hero)) main .note,body:has(> main):not(:has(.hero)) main [aria-label="Contact support"]{border:1px solid #cbdffd!important;border-left:5px solid #2563eb!important;background:linear-gradient(125deg,#edf5ff,#f5f9ff)!important;border-radius:15px!important;padding:20px 24px!important;margin:24px 0!important}
+body:has(> main):not(:has(.hero)) main .note strong{color:#102e5d}
+body:has(> main):not(:has(.hero)) main .contact-button,body:has(> main):not(:has(.hero)) main [aria-label="Contact support"] a{display:inline-flex!important;align-items:center;justify-content:center;gap:8px;background:linear-gradient(120deg,#2563eb,#156bd4)!important;color:white!important;text-decoration:none!important;padding:14px 22px!important;border-radius:12px!important;font-weight:750!important;box-shadow:0 10px 24px rgba(37,99,235,.2);transition:transform .2s,box-shadow .2s}
+body:has(> main):not(:has(.hero)) main .contact-button:hover,body:has(> main):not(:has(.hero)) main [aria-label="Contact support"] a:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(37,99,235,.26)}
+body:has(> main):not(:has(.hero)) footer{background:linear-gradient(135deg,#081b33,#122c54);border-top:1px solid #23456c}
+body:has(> main):not(:has(.hero)) footer nav{gap:12px 25px;margin-bottom:18px}
+body:has(> main):not(:has(.hero)) footer a{text-decoration:none;transition:color .2s}
+body:has(> main):not(:has(.hero)) footer a:hover{color:#7ce3fa}
+body:has(> main):not(:has(.hero)) main code{background:#edf2ff;color:#143c80;padding:3px 6px;border-radius:6px;overflow-wrap:anywhere}
+/* Main homepage — dark luminous hero */
+body:has(.hero){background:#f6f9ff}
+body:has(.hero) header{background:rgba(255,255,255,.9);border-bottom:1px solid #dfe8f7;box-shadow:0 6px 28px rgba(19,49,103,.045)}
+body:has(.hero) .hero{background:radial-gradient(circle at 88% 18%,rgba(19,179,219,.25),transparent 32%),radial-gradient(circle at 13% 78%,rgba(95,88,234,.22),transparent 35%),linear-gradient(120deg,#07162e 0%,#102a55 52%,#123d6b 100%);isolation:isolate}
+body:has(.hero) .hero:before{width:600px;height:600px;border:1px solid rgba(255,255,255,.09);background:repeating-radial-gradient(circle,transparent 0 48px,rgba(255,255,255,.055) 49px 50px);right:-180px;top:-200px;pointer-events:none}
+body:has(.hero) .hero h1{color:#fff;text-shadow:0 8px 34px rgba(0,0,0,.15)}
+body:has(.hero) .hero h1 span{color:#67e8f9}
+body:has(.hero) .hero-description{color:#d4e4fb}
+body:has(.hero) .hero-trust{color:#e2efff}
+body:has(.hero) .hero .eyebrow{background:rgba(110,209,248,.13);color:#a6efff;border:1px solid rgba(116,221,249,.28)}
+body:has(.hero) .hero .btn-primary,body:has(.hero) .btn-primary{background:linear-gradient(115deg,#2868f2,#138dd7);box-shadow:0 12px 28px rgba(30,101,221,.25)}
+body:has(.hero) .hero .btn-light{background:rgba(255,255,255,.95);color:#0e2850;border-color:rgba(255,255,255,.8)}
+body:has(.hero) .support-window{transform:rotate(0deg);border:1px solid rgba(178,221,255,.32);box-shadow:0 32px 85px rgba(0,9,27,.36);background:rgba(255,255,255,.96);border-radius:25px}
+body:has(.hero) .window-top{background:linear-gradient(115deg,#0b244a,#123b71)}
+body:has(.hero) .support-inner{background:#f4f8ff}
+body:has(.hero) .issue{border-color:#d9e6f7;box-shadow:0 3px 12px rgba(26,65,126,.04)}
+body:has(.hero) .issue:hover{background:#edf5ff;border-color:#72b5f2;box-shadow:0 10px 20px rgba(31,97,170,.12)}
+body:has(.hero) .services{background:radial-gradient(circle at 5% 0%,#e8f1ff,transparent 32%),linear-gradient(180deg,#f5f9ff,#fff)}
+body:has(.hero) .service-card{background:linear-gradient(150deg,#fff,#f9fbff);border:1px solid #dbe6f6;border-radius:23px;box-shadow:0 8px 30px rgba(32,72,128,.05);padding:34px}
+body:has(.hero) .service-card:hover{box-shadow:0 23px 50px rgba(25,77,145,.15);border-color:#9ac5fa}
+body:has(.hero) .service-icon{background:linear-gradient(140deg,#e6f0ff,#e4f8ff);border:1px solid #d7e8ff;border-radius:17px;width:59px;height:59px}
+body:has(.hero) .service-card h3{font-size:21px;letter-spacing:-.4px}
+body:has(.hero) .service-card a{display:inline-flex;align-items:center;font-size:14px;background:#edf4ff;padding:9px 13px;border-radius:9px}
+body:has(.hero) .service-card a:hover{background:#dcecff}
+body:has(.hero) .how{background:linear-gradient(130deg,#eaf2ff,#f7fbff 50%,#e9faff)}
+body:has(.hero) .step{background:rgba(255,255,255,.72);border:1px solid #dbe7f7;padding:34px 22px;border-radius:22px;box-shadow:0 10px 35px rgba(27,66,123,.05)}
+body:has(.hero) .step-number{background:linear-gradient(135deg,#2563eb,#06b6d4)}
+body:has(.hero) .security-card{background:linear-gradient(145deg,#081b33,#143e72);box-shadow:0 25px 60px rgba(10,45,100,.2)}
+body:has(.hero) .plan{border-radius:22px}
+body:has(.hero) .contact{background:linear-gradient(145deg,#edf5ff,#f9fbff)}
+body:has(.hero) .section-title{letter-spacing:-1.5px}
+body:has(.hero) .btn:hover{filter:brightness(1.05)}
+@media(max-width:760px){body:has(.hero) .hero{padding:64px 0 70px}body:has(.hero) .hero h1{font-size:clamp(38px,9vw,54px);letter-spacing:-1.4px}body:has(.hero) .support-window{margin-top:14px}body:has(.hero) .service-card{padding:25px}body:has(> main):not(:has(.hero)) main{width:calc(100% - 24px);padding:27px 22px;margin:22px auto;border-radius:21px}body:has(> main):not(:has(.hero)) main h1{letter-spacing:-1px}body:has(> main):not(:has(.hero)) main .note{padding:15px!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* Contact section: retain a dark background for existing light text */
+body:has(.hero) .contact{background:radial-gradient(circle at 85% 15%,rgba(6,182,212,.18),transparent 35%),linear-gradient(125deg,#081b33,#123b68 100%);color:#fff}
+body:has(.hero) .contact .section-label{color:#93c5fd}
+body:has(.hero) .contact .section-title{color:#fff}
+body:has(.hero) .contact .section-description{color:#dbeafe}
+body:has(.hero) .contact .contact-point{color:#e4efff}
+body:has(.hero) .contact .contact-point span:first-child{color:#65e9a7}
+body:has(.hero) .contact .contact-form{background:#fff;color:#172033}
+
+
+/* Unified brand design for all inner pages */
+body:has(> main):not(:has(.hero)){background:radial-gradient(ellipse at 85% 6%,rgba(6,182,212,.22),transparent 28%),radial-gradient(ellipse at 5% 22%,rgba(80,92,230,.15),transparent 30%),linear-gradient(180deg,#e9f2ff 0%,#f5f9ff 48%,#edf4ff 100%)}
+body:has(> main):not(:has(.hero)) header{background:linear-gradient(110deg,#081b33,#123b68)!important;border-bottom:1px solid rgba(147,197,253,.18)!important;padding:19px max(5vw,20px)}
+body:has(> main):not(:has(.hero)) header a{color:#fff!important;font-weight:800;text-decoration:none}
+body:has(> main):not(:has(.hero)) header a:before{background:linear-gradient(135deg,#3b82f6,#06b6d4)!important;box-shadow:0 8px 24px rgba(6,182,212,.25)}
+body:has(> main):not(:has(.hero)) main{border-radius:30px!important;box-shadow:0 30px 90px rgba(11,37,82,.14)!important;border:1px solid #cfddf4!important;padding:clamp(22px,4.5vw,62px)!important;background:linear-gradient(180deg,#ffffff,#fbfdff)!important}
+body:has(> main):not(:has(.hero)) main:before{height:7px!important;background:linear-gradient(90deg,#2563eb,#06b6d4,#8b5cf6)!important}
+body:has(> main):not(:has(.hero)) article>h1,body:has(> main):not(:has(.hero)) main>h1{background:radial-gradient(circle at 92% 10%,rgba(34,211,238,.23),transparent 32%),radial-gradient(circle at 8% 90%,rgba(124,104,255,.24),transparent 38%),linear-gradient(125deg,#081b33,#10335e 65%,#135582);color:#fff!important;padding:clamp(34px,5vw,65px) clamp(24px,4vw,54px)!important;border-radius:23px;box-shadow:0 20px 48px rgba(8,27,51,.22);position:relative;overflow:hidden;margin:10px 0 25px!important;font-size:clamp(30px,4.4vw,50px)!important;line-height:1.17!important}
+body:has(> main):not(:has(.hero)) article>h1:after,body:has(> main):not(:has(.hero)) main>h1:after{content:"";display:block;width:72px;height:5px;background:linear-gradient(90deg,#60a5fa,#67e8f9);border-radius:8px;margin-top:25px}
+body:has(> main):not(:has(.hero)) article>p:first-child{background:linear-gradient(90deg,#dbeafe,#e6faff)!important;border:1px solid #bcd8ff!important;color:#1859bd!important}
+body:has(> main):not(:has(.hero)) article>h2,body:has(> main):not(:has(.hero)) main>h2{padding:15px 18px;border-left:5px solid #3b82f6;border-radius:0 13px 13px 0;background:linear-gradient(90deg,#eaf3ff,#f7fbff 80%);margin-top:38px!important}
+body:has(> main):not(:has(.hero)) article>h3{color:#0f3b76}
+body:has(> main):not(:has(.hero)) article>.note{box-shadow:0 8px 24px rgba(37,99,235,.07)}
+body:has(> main):not(:has(.hero)) article>ol,body:has(> main):not(:has(.hero)) article>ul{padding:20px 25px 20px 46px;border-radius:16px;background:#f4f8ff;border:1px solid #dfebfc}
+body:has(> main):not(:has(.hero)) article>ol li::marker{color:#2563eb;font-weight:800}
+body:has(> main):not(:has(.hero)) article>p{font-size:16px}
+body:has(> main):not(:has(.hero)) article a:not(.contact-button):hover{text-decoration:underline}
+body:has(> main):not(:has(.hero)) footer{background:linear-gradient(125deg,#06172d,#103660)!important}
+@media(max-width:760px){body:has(> main):not(:has(.hero)) main{padding:22px 18px!important;border-radius:19px!important}body:has(> main):not(:has(.hero)) article>h1,body:has(> main):not(:has(.hero)) main>h1{padding:32px 23px!important;border-radius:17px;font-size:clamp(28px,8vw,38px)!important}body:has(> main):not(:has(.hero)) article>h2,body:has(> main):not(:has(.hero)) main>h2{padding:13px 12px}body:has(> main):not(:has(.hero)) article>ol,body:has(> main):not(:has(.hero)) article>ul{padding:16px 16px 16px 35px}}
 </style>
-  <link rel="stylesheet" href="premium.css">
 </head>
 
 <body>
