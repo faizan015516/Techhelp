@@ -1025,18 +1025,32 @@
       }
     }
   
-/* Troubleshooting guide directory */
-.guide-library{background:#f6f9ff;scroll-margin-top:90px}
-.guide-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:38px}
-.guide-column{background:#fff;border:1px solid #dfe8f4;border-radius:18px;padding:27px;box-shadow:0 12px 28px rgba(8,27,51,.04)}
-.guide-column h3{font-size:21px;color:#081b33;margin-bottom:10px}
-.guide-column>p{font-size:14px;color:#667085;margin-bottom:20px}
-.guide-column ul{list-style:none;padding:0;margin:0}
-.guide-column li+li{border-top:1px solid #e7edf5}
-.guide-column li a{display:block;padding:12px 0;color:#175cd3;font-size:14px;font-weight:650;line-height:1.5;text-decoration:none}
-.guide-column li a:hover{text-decoration:underline}
-.guide-category{display:inline-block;color:#175cd3;background:#eaf2ff;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:800;margin-bottom:14px}
-@media(max-width:900px){.guide-columns{grid-template-columns:1fr}.guide-column{padding:22px}}
+/* Troubleshooting guide directory — responsive article cards */
+.guide-library{background:linear-gradient(180deg,#f2f7ff 0%,#f9fbff 58%,#fff);scroll-margin-top:90px}
+.guide-library .section-description{max-width:750px;line-height:1.7}
+.guide-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:42px;align-items:stretch}
+.guide-column{min-width:0;background:linear-gradient(160deg,#fff,#fbfdff);border:1px solid #dce6f4;border-radius:24px;padding:30px;box-shadow:0 14px 40px rgba(16,51,97,.065)}
+.guide-column:first-child{grid-column:1/-1;background:linear-gradient(130deg,#fff,#f7faff)}
+.guide-heading{display:flex;align-items:center;gap:16px}
+.guide-symbol{display:grid;place-items:center;flex:0 0 55px;height:55px;border-radius:17px;background:#e9f1ff;color:#1d5cc7;border:1px solid #d5e5ff}
+.guide-symbol svg{width:27px;height:27px;display:block}
+.guide-column:nth-child(2) .guide-symbol{background:#e8f9fc;color:#087d9c;border-color:#c8ecf5}
+.guide-column:nth-child(3) .guide-symbol{background:#f1edff;color:#6547c9;border-color:#e0d9ff}
+.guide-column h3{font-size:clamp(20px,2.4vw,25px);color:#0b2342;letter-spacing:-.5px;line-height:1.25;margin:2px 0 0}
+.guide-column>p{font-size:15px;color:#596b86;line-height:1.65;margin:16px 0 0;max-width:710px}
+.guide-category{display:block;color:#2456a5;text-transform:uppercase;font-size:11px;letter-spacing:1px;font-weight:800;margin:0}
+.guide-column ul{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;list-style:none;padding:0;margin:22px 0 0}
+.guide-column:first-child ul{grid-template-columns:repeat(2,minmax(0,1fr))}
+.guide-column li{min-width:0;margin:0}.guide-column li+li{border:0}
+.guide-column li a{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px;padding:15px 17px;color:#17447e;background:#f6f9ff;border:1px solid #e0e9f7;border-radius:13px;font-size:15px;font-weight:650;line-height:1.5;text-decoration:none;transition:background .2s,border-color .2s,box-shadow .2s,transform .2s}
+.guide-link-label{min-width:0;overflow-wrap:break-word}
+.guide-link-arrow{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:9px;background:#e4eeff;color:#1e5bd0;font-size:19px;line-height:1}
+.guide-column li a:hover,.guide-column li a:focus-visible{background:#fff;border-color:#a4c6f3;box-shadow:0 8px 20px rgba(31,84,154,.11);transform:translateY(-2px);text-decoration:none}
+.guide-column li a:hover .guide-link-arrow,.guide-column li a:focus-visible .guide-link-arrow{background:#2563eb;color:#fff}
+.guide-column li a:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+@media(max-width:900px){.guide-columns{grid-template-columns:1fr;gap:19px}.guide-column:first-child{grid-column:auto}.guide-column{padding:27px}}
+@media(max-width:620px){.guide-library{padding:52px 0}.guide-columns{gap:16px;margin-top:26px}.guide-column{padding:20px;border-radius:18px}.guide-heading{gap:12px}.guide-symbol{height:46px;flex-basis:46px;border-radius:13px}.guide-symbol svg{width:23px;height:23px}.guide-column h3{font-size:20px}.guide-column>p{font-size:14px;margin-top:12px}.guide-column ul,.guide-column:first-child ul{grid-template-columns:1fr;gap:9px;margin-top:17px}.guide-column li a{padding:13px 14px;min-height:61px;font-size:14px;line-height:1.45}.guide-link-arrow{flex-basis:28px;width:28px;height:28px}}
+@media(prefers-reduced-motion:reduce){.guide-column li a{transition:none}.guide-column li a:hover,.guide-column li a:focus-visible{transform:none}}
 
 /* Compact mobile homepage navigation and guide spacing */
 @media (max-width:600px){
@@ -1047,13 +1061,6 @@
  body:has(.hero)>header .logo-icon svg{width:18px;height:18px}
  body:has(.hero)>header .nav-links{gap:0;flex-shrink:0}
  body:has(.hero)>header .nav-links .btn{padding:9px 10px;font-size:11px;line-height:1.25;white-space:nowrap;border-radius:9px}
- .guide-library{padding:48px 0}
- .guide-columns{gap:16px;margin-top:24px}
- .guide-column{padding:18px;border-radius:15px}
- .guide-column h3{font-size:20px;margin:0 0 6px}
- .guide-column>p{margin:0 0 12px;line-height:1.55}
- .guide-category{margin-bottom:9px}
- .guide-column li a{padding:10px 0;font-size:14px;line-height:1.45}
 }
 @media (max-width:360px){body:has(.hero)>header .container{width:calc(100% - 20px)}body:has(.hero)>header .logo{font-size:15px;gap:5px}body:has(.hero)>header .nav-links .btn{padding:8px 9px;font-size:10px}}
 </style>
@@ -1378,32 +1385,32 @@
   <h2 class="section-title center" id="guides-title">Troubleshooting guides by topic</h2>
   <p class="section-description center">Choose a topic and follow practical checks you can try before requesting remote support. Start with the guide that matches your issue.</p>
   <div class="guide-columns">
-   <article class="guide-column"><span class="guide-category">Printer help</span><h3>Printer Troubleshooting</h3><p>Printing, wireless setup, drivers and common Windows printer errors.</p><ul>
-        <li><a href="hp-printer-offline-connected-wifi.html">HP printer offline but connected to Wi-Fi →</a></li>
-    <li><a href="canon-printer-not-found-wifi-windows-11.html">Canon printer not found on Wi-Fi (Windows 11) →</a></li>
-    <li><a href="epson-printer-not-connecting-wifi.html">Epson printer not connecting to Wi-Fi →</a></li>
-    <li><a href="brother-printer-offline-windows-11.html">Brother printer offline in Windows 11 →</a></li>
-    <li><a href="printer-offline-windows-11.html">Fix a printer showing offline in Windows 11 →</a></li>
-    <li><a href="printer-not-found-windows-11.html">Printer not found in Windows 11 →</a></li>
-    <li><a href="printer-driver-unavailable-windows-11.html">Printer driver unavailable in Windows 11 →</a></li>
-    <li><a href="print-spooler-keeps-stopping-windows-11.html">Print Spooler keeps stopping →</a></li>
-    <li><a href="printer-not-printing.html">Printer not printing? Troubleshooting guide →</a></li>
-    <li><a href="printer-printing-blank-pages.html">Printer printing blank pages →</a></li>
-    <li><a href="printer-print-queue-stuck-windows-11.html">Clear a stuck print queue →</a></li>
-    <li><a href="printer-not-connecting-wifi.html">Printer not connecting to Wi-Fi →</a></li>
-    <li><a href="find-install-printer-driver.html">Find and install the correct printer driver →</a></li>
+   <article class="guide-column"><div class="guide-heading"><span class="guide-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6zM17 11h.01"/></svg></span><div><span class="guide-category">Printer help</span><h3>Printer Troubleshooting</h3></div></div><p>Printing, wireless setup, drivers and common Windows printer errors.</p><ul>
+        <li><a href="hp-printer-offline-connected-wifi.html"><span class="guide-link-label">HP printer offline but connected to Wi-Fi</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="canon-printer-not-found-wifi-windows-11.html"><span class="guide-link-label">Canon printer not found on Wi-Fi (Windows 11)</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="epson-printer-not-connecting-wifi.html"><span class="guide-link-label">Epson printer not connecting to Wi-Fi</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="brother-printer-offline-windows-11.html"><span class="guide-link-label">Brother printer offline in Windows 11</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-offline-windows-11.html"><span class="guide-link-label">Fix a printer showing offline in Windows 11</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-not-found-windows-11.html"><span class="guide-link-label">Printer not found in Windows 11</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-driver-unavailable-windows-11.html"><span class="guide-link-label">Printer driver unavailable in Windows 11</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="print-spooler-keeps-stopping-windows-11.html"><span class="guide-link-label">Print Spooler keeps stopping</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-not-printing.html"><span class="guide-link-label">Printer not printing? Troubleshooting guide</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-printing-blank-pages.html"><span class="guide-link-label">Printer printing blank pages</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-print-queue-stuck-windows-11.html"><span class="guide-link-label">Clear a stuck print queue</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-not-connecting-wifi.html"><span class="guide-link-label">Printer not connecting to Wi-Fi</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="find-install-printer-driver.html"><span class="guide-link-label">Find and install the correct printer driver</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
    </ul></article>
-   <article class="guide-column"><span class="guide-category">Network help</span><h3>Wi-Fi &amp; Router Support</h3><p>Diagnose internet access and wireless connection problems safely.</p><ul>
-        <li><a href="wifi-keeps-disconnecting-windows-11.html">Wi-Fi keeps disconnecting on Windows 11 →</a></li>
-    <li><a href="wifi-connected-no-internet-windows-11.html">Wi-Fi connected but no internet in Windows 11 →</a></li>
-    <li><a href="printer-not-connecting-wifi.html">Connect a wireless printer to your network →</a></li>
-    <li><a href="device-setup-installation.html">Device setup and installation basics →</a></li>
+   <article class="guide-column"><div class="guide-heading"><span class="guide-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg></span><div><span class="guide-category">Network help</span><h3>Wi-Fi &amp; Router Support</h3></div></div><p>Diagnose internet access and wireless connection problems safely.</p><ul>
+        <li><a href="wifi-keeps-disconnecting-windows-11.html"><span class="guide-link-label">Wi-Fi keeps disconnecting on Windows 11</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="wifi-connected-no-internet-windows-11.html"><span class="guide-link-label">Wi-Fi connected but no internet in Windows 11</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="printer-not-connecting-wifi.html"><span class="guide-link-label">Connect a wireless printer to your network</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="device-setup-installation.html"><span class="guide-link-label">Device setup and installation basics</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
    </ul></article>
-   <article class="guide-column"><span class="guide-category">Computer help</span><h3>Windows PC Support</h3><p>Improve slow performance and investigate common Windows 11 issues.</p><ul>
-        <li><a href="windows-11-slow-startup-fixes.html">Windows 11 slow startup fixes →</a></li>
-    <li><a href="windows-11-disk-100-percent-usage.html">Windows 11 disk usage at 100% →</a></li>
-    <li><a href="windows-pc-slow-errors.html">Troubleshoot a slow Windows PC →</a></li>
-    <li><a href="remote-assistance-safety.html">How to use remote assistance safely →</a></li>
+   <article class="guide-column"><div class="guide-heading"><span class="guide-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg></span><div><span class="guide-category">Computer help</span><h3>Windows PC Support</h3></div></div><p>Improve slow performance and investigate common Windows 11 issues.</p><ul>
+        <li><a href="windows-11-slow-startup-fixes.html"><span class="guide-link-label">Windows 11 slow startup fixes</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="windows-11-disk-100-percent-usage.html"><span class="guide-link-label">Windows 11 disk usage at 100%</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="windows-pc-slow-errors.html"><span class="guide-link-label">Troubleshoot a slow Windows PC</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="remote-assistance-safety.html"><span class="guide-link-label">How to use remote assistance safely</span><span class="guide-link-arrow" aria-hidden="true">→</span></a></li>
    </ul></article>
   </div>
  </div>
