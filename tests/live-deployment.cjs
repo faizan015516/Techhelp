@@ -24,6 +24,19 @@ const expected=[
  ["/privacy","Google Ads Settings"],
  ["/editorial-policy","How we prepare and maintain"],
 ];
+// Read all canonical sitemap routes from the checked-out repository.
+// A successful homepage alone does not establish that Google can fetch the inner articles.
+const fs=require("node:fs");
+const path=require("node:path");
+const xml=fs.readFileSync(path.join(__dirname,"..","sitemap.xml"),"utf8");
+const sitemapPaths=[...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
+ .map(x=>new URL(x[1]))
+ .filter(u=>u.origin===base)
+ .map(u=>u.pathname);
+for(const route of sitemapPaths){
+ if(!expected.some(([p])=>p===route))expected.push([route,"<h1"]);
+}
+process.stdout.write("Production sitemap verification: "+sitemapPaths.length+" canonical routes.\\n");
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 async function get(path){const url=base+path+"?qa="+Date.now();const response=await fetch(url,{redirect:"follow",headers:{"Cache-Control":"no-cache","Pragma":"no-cache","User-Agent":"Mozilla/5.0 (compatible; PrinterResolveDeploymentCheck/1.0)"}});return{status:response.status,url:response.url,body:await response.text()}}
 (async()=>{
