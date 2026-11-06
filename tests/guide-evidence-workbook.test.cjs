@@ -8,9 +8,12 @@ const targets={
  "printer-not-connecting-wifi.html":"wifi",
  "printer-paper-jam-no-paper-stuck.html":"jam",
  "printer-printing-cut-off-pages.html":"clipping",
- "epson-printer-not-connecting-wifi.html":"epsonwifi"
+ "epson-printer-not-connecting-wifi.html":"epsonwifi",
+ "printer-printing-blank-pages.html":"blankpages",
+ "printer-not-found-windows-11.html":"discovery",
+ "find-install-printer-driver.html":"driverchoice"
 };
-test("All five flagship guides present distinct useful browser-based evidence panels",()=>{
+test("Eight flagship guides present distinct useful browser-based evidence panels",()=>{
  for(const [page,topic] of Object.entries(targets)){
   const html=read(page);
   assert.ok(html.includes('data-diagnostic="'+topic+'"'),"Missing panel "+page);
@@ -25,7 +28,7 @@ test("All five flagship guides present distinct useful browser-based evidence pa
     assert.ok(html.includes('data-observation="'+q.id+'"'),"Missing question "+q.id+" on "+page);
     for(const [value] of q.options)assert.ok(html.includes('value="'+value+'"'),"Missing supported observation "+value+" on "+page);
   }
-  assert.ok(html.includes('href="/editorial-policy"'));
+  assert.ok(html.includes('href="/editorial-policy"')||html.includes('href="/editorial-policy#editorial-accountability"'));
  }
 });
 test("Diagnostic logic changes recommendations by observed evidence",()=>{
@@ -44,7 +47,16 @@ test("Diagnostic logic changes recommendations by observed evidence",()=>{
   ["clipping",{selftest:"yes"},"hardware"],
   ["epsonwifi",{model:"et2800",code:"e8"},"ET-2800"],
   ["epsonwifi",{model:"l3250",code:"e9"},"L3250"],
-  ["epsonwifi",{code:"e237"},"E-2/E-3/E-7"]
+  ["epsonwifi",{code:"e237"},"E-2/E-3/E-7"],
+  ["blankpages",{internal:"blank",technology:"inkjet"},"nozzle-check"],
+  ["blankpages",{internal:"marks",document:"one"},"print preview"],
+  ["blankpages",{internal:"blank",technology:"laser"},"toner"],
+  ["discovery",{connection:"wifi",evidence:"ip"},"Add a new device manually"],
+  ["discovery",{connection:"wifi",evidence:"noip"},"DHCP"],
+  ["discovery",{connection:"usb"},"USB"],
+  ["driverchoice",{download:"thirdparty"},"third-party driver-downloader"],
+  ["driverchoice",{system:"arm",status:"unavailable"},"ARM-based"],
+  ["driverchoice",{status:"basic"},"full-feature software"]
  ];
  for(const [topic,inputs,fragment] of branches)assert.ok(advice(topic,inputs).includes(fragment),JSON.stringify({topic,inputs,fragment,actual:advice(topic,inputs)}));
 });
