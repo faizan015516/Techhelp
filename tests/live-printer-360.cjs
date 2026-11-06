@@ -9,7 +9,10 @@ const cases=[
  {url:"/",kind:"home",file:"LIVE-printer-360-home-desktop.png"},
  {url:"/epson-printer-not-connecting-wifi",kind:"epson",file:"LIVE-printer-360-epson-desktop.png"},
  {url:"/canon-printer-not-found-wifi-windows-11",kind:"canon",file:"LIVE-printer-360-canon-desktop.png"},
- {url:"/hp-printer-offline-connected-wifi",kind:"hp",file:"LIVE-printer-360-hp-desktop.png"}
+ {url:"/hp-printer-offline-connected-wifi",kind:"hp",file:"LIVE-printer-360-hp-desktop.png"},
+ {url:"/epson-not-printing-black-ink",kind:"epson",file:"LIVE-printer-360-epson-ink-desktop.png"},
+ {url:"/canon-printer-not-responding-windows-11",kind:"canon",file:"LIVE-printer-360-canon-responding-desktop.png"},
+ {url:"/dell-printer-not-connecting-wifi-windows-11",kind:"dell",file:"LIVE-printer-360-dell-desktop.png"}
 ];
 async function verifyPage(page,{url,kind,file}){
  let error="";
@@ -39,6 +42,28 @@ async function verifyPage(page,{url,kind,file}){
       await widget.locator(".pr360-reset").click();
       await spin.click();
       assert.equal((await spin.textContent()).trim(),"Pause rotation");
+      if(kind!=="home"){
+        const hero=page.locator(".pr-brand-hero");
+        const info=await hero.evaluate(el=>({
+          brand:el.dataset.brand,
+          heading:el.querySelector(".pr-brand-display")?.textContent,
+          intro:el.querySelector(".pr-brand-subhead")?.textContent,
+          label:el.querySelector(".pr-brand-visual-id")?.textContent,
+          fallback:el.querySelector(".pr360-fallback")?.getAttribute("src"),
+          css:!!document.querySelector('link[href*="/assets/brand-hero.css"]'),
+          links:[...el.querySelectorAll(".pr-brand-quicklinks a")].map(a=>a.getAttribute("href")),
+          overflow:document.documentElement.scrollWidth-window.innerWidth
+        }));
+        assert.equal(info.brand,kind,"Wrong manufacturer in hero: "+JSON.stringify(info));
+        assert.ok(info.heading.toLowerCase().includes(kind)&&info.intro.length>90,"Missing specific brand copy: "+JSON.stringify(info));
+        assert.ok(info.label.toLowerCase().includes(kind),"Brand is not labeled on visual");
+        assert.equal(info.fallback,"/assets/printer-concept-"+kind+".svg");
+        assert.ok(info.css&&info.links.length>=5);
+        assert.ok(info.overflow<=2,"Horizontal overflow on "+url+": "+JSON.stringify(info));
+        const visualName="LIVE-printer-360-brand-hero-"+kind+"-"+url.split("/").pop()+".png";
+        await hero.screenshot({path:path.join(out,visualName),animations:"disabled",timeout:30000});
+        console.log("BRAND_HERO_VISUAL_PASS "+JSON.stringify({url,...info}));
+      }
       console.log("360_VISUAL_PASS "+JSON.stringify({url,kind,...result}));
       return;
     }
@@ -72,6 +97,6 @@ async function verifyPage(page,{url,kind,file}){
   assert.ok(homeLayout.viewerTop>=homeLayout.actionsBottom-3,"Home 3D collides with hero action buttons: "+JSON.stringify(homeLayout));
   assert.ok(homeLayout.scrollWidth<=homeLayout.viewport+2,"Home mobile overflow: "+JSON.stringify(homeLayout));
   await mobile.locator(".hero").screenshot({path:path.join(out,"LIVE-printer-360-home-mobile-full-hero.png"),animations:"disabled"});
-  console.log("360_VISUAL_SUMMARY 6 out of 6 3D viewers mounted and keyboard rotation changed canvas; mobile hero layouts don't overlap");
+  console.log("360_VISUAL_SUMMARY 9 out of 9 3D viewers mounted and keyboard rotation changed canvas; original brand visuals and mobile layouts confirmed");
  }finally{await browser.close()}
 })().catch(e=>{console.error(e.stack);process.exitCode=1});
