@@ -1,0 +1,33 @@
+name: PrinterResolve public AdSense GDPR preview diagnostics
+on:
+  push:
+    branches: [main]
+    paths:
+      - tests/adsense-cmp-public-diagnostics.cjs
+      - .github/workflows/adsense-cmp-public-diagnostics.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect-public-consent:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium
+      - name: Observe public Google script requests and consent state only
+        run: node tests/adsense-cmp-public-diagnostics.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: adsense-public-consent-diagnostics
+          path: |
+            test-artifacts/adsense-cmp-public-diagnostics.json
+            test-artifacts/ad-consent-public-test-*.png
+          if-no-files-found: ignore
