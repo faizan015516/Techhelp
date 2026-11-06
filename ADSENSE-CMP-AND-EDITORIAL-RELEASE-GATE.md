@@ -66,6 +66,22 @@ User-supplied screenshot of the **Your sites** picker shows a single selected si
 
 The AdSense **Privacy & messaging → European regulations → Messages** view showed a single published message, `Printer Resolve - Privacy Consent`, for `printerresolve.com`, English, last modified 16 October 2026, with publish switch enabled. It showed **0 messages shown and 0% consent rate**. These figures do not establish a delivery failure; there may have been no eligible or recorded displays in the selected reporting period. The screenshot is strong evidence of publication, but not proof of actual message rendering or legal adequacy.
 
+## Reader-value improvements on 6 November 2026
+
+Search Console performance for **18 October–4 November 2026** showed these pages receiving search impressions but no clicks in that window, including `.html` variants:
+
+| Page | Impressions | Newly shipped user value |
+|---|---:|---|
+| `/printer-printing-blank-pages` | 35 | Reader-driven comparison of printer-generated marks, app-specific blank sheets and inkjet vs laser technology. Official Microsoft and model-specific Epson links. |
+| `/printer-not-found-windows-11` | 26 | Branching evidence workflow for USB, local Wi-Fi and managed/shared printers, distinguishing disconnected, undiscoverable and Offline queues. Official Windows Add device guidance. |
+| `/find-install-printer-driver` | 20 | Architecture-aware decision workflow that distinguishes Windows on ARM, Windows Update, manufacturer downloads and suspicious third-party installers. Official Microsoft instructions. |
+
+These are illustrative, locally operated decision tools, **not physical printer test results**. Inputs are not transmitted or persisted. Source code: `assets/guide-evidence-workbook.js`. Automated regression coverage: `tests/guide-evidence-workbook.test.cjs`, `tests/live-guide-evidence.cjs`.
+
+**Editorial assessment:** The site has substantially more practical diagnostic value, and there is now direct publisher/AI-preparation attribution. Nevertheless, the current Google AdSense state remains **Needs attention — Low-value content** (user's screenshot, 6 November 2026), and the site's live Google consent message still did not initialize in forced-preview testing. No reliable claim of AdSense approval or guaranteed eligibility can follow from these changes.
+
+**Remaining gate:** Independently assess the highest-impression guides for technical accuracy with real printer/Windows evidence where practicable; seek feedback from an unaffiliated user; verify Google recrawl/indexing; document or escalate unresolved consent-delivery issue; only then consider submitting again.
+
 ## AdSense resubmission gate
 
 Keep **HOLD** until:
