@@ -59,9 +59,9 @@ test("Ink and Canon print-output diagnostics contain source-backed safety branch
 
 test("Evidence-led high-interest guides retain their original decision frameworks",()=>{
  const sections={
-  "printer-not-printing.html":["id=\"four-test-isolation\"","Built-in page works","printer's own built-in","fix-print-job-stuck-in-queue-errors-in-windows","mainEntityOfPage"],
+  "printer-not-printing.html":["id=\"four-test-isolation\"","Built-in page works","using controls on the printer itself","fix-print-job-stuck-in-queue-errors-in-windows","mainEntityOfPage"],
   "printer-not-connecting-wifi.html":["id=\"wifi-report-decision\"","169.254.x.x","/tools/connection-path","net_connection_report_codes.html"],
-  "printer-paper-jam-no-paper-stuck.html":["id=\"jam-stage-matrix\"","document feeder","ntr","problem_paper_jam_l3250.html"],
+  "printer-paper-jam-no-paper-stuck.html":["id=\"jam-stage-matrix\"","document feeder","1304","problem_paper_jam_l3250.html"],
   "printer-printing-slowly-windows-11.html":["id=\"prt-timing-form\"","/assets/print-timing-lab.js","110","first page","hypothetical"]
  };
  for(const [name,patterns] of Object.entries(sections)){const body=read(name).toLowerCase();for(const p of patterns)assert.ok(body.includes(p.toLowerCase()),name+" is missing original reader-value element: "+p);}
