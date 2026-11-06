@@ -10,6 +10,7 @@ const root=path.resolve(__dirname,"../test-artifacts");fs.mkdirSync(root,{recurs
 const urls=[
  "https://printerresolve.com/?fc=alwaysshow&fctype=gdpr",
  "https://printerresolve.com/?fc=alwaysshow",
+ "https://printerresolve.com/?fc=alwaysshow&fctype=gdpr_limited",
  "https://printerresolve.com/"
 ];
 function relevant(u){return /googlesyndication|fundingchoices|googlefc|doubleclick|googleadservices|googleads|google-tag-manager/i.test(u)}
@@ -17,7 +18,7 @@ function redact(u){try{const x=new URL(u);return x.origin+x.pathname}catch{retur
 async function run(browser,url,index){
  const context=await browser.newContext({viewport:{width:1366,height:900},locale:"en-GB",ignoreHTTPSErrors:false,acceptDownloads:false});
  const page=await context.newPage(),requests=[],errors=[];
- page.on("request",r=>{if(relevant(r.url()))requests.push({event:"request",method:r.method(),resourceType:r.resourceType(),url:redact(r.url())})});
+ page.on("request",r=>{if(relevant(r.url()))requests.push({event:"request",method:r.method(),resourceType:r.resourceType(),url:redact(r.url()),crossOriginRefererSent:!!r.headers()["referer"]})});
  page.on("requestfailed",r=>{if(relevant(r.url()))requests.push({event:"failed",url:redact(r.url()),reason:r.failure()})});
  page.on("response",r=>{if(relevant(r.url()))requests.push({event:"response",status:r.status(),url:redact(r.url())})});
  page.on("console",m=>{if(m.type()==="error")errors.push(m.text().slice(0,500))});
