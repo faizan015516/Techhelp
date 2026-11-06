@@ -28,11 +28,11 @@ async function view(page,record){
  const info=await panel.evaluate(el=>{
   const sel=el.querySelector("select"),r=el.getBoundingClientRect(),p=el.querySelector(".pr-diagnostic-advice");
   const txt=getComputedStyle(p).color,background=getComputedStyle(el).backgroundColor;
-  return {topic:el.dataset.diagnostic,width:r.width,viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth,selectorVisible:sel.getBoundingClientRect().width>100,resultColor:txt,background};
+  return {topic:el.dataset.diagnostic,width:r.width,viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth,selectorVisible:sel.getBoundingClientRect().width>100,resultColor:txt,background,gradient:getComputedStyle(el).backgroundImage};
  });
  assert.ok(info.selectorVisible,"Hidden/overlapped selector "+JSON.stringify(info));
  assert.ok(info.scrollWidth<=info.viewport+3,"Horizontal overflow "+JSON.stringify(info));
- assert.ok(!["rgb(255, 255, 255)","rgba(0, 0, 0, 0)"].includes(info.background),"Expected dark contrast panel "+JSON.stringify(info));
+ assert.ok(info.gradient.includes("gradient"),"Expected dark gradient background panel "+JSON.stringify(info));
  await panel.screenshot({path:path.join(root,"LIVE-evidence-"+record.topic+"-"+page.viewportSize().width+".png"),animations:"disabled"});
  console.log("FLAGSHIP_EVIDENCE_PASS "+JSON.stringify({route:record.route,...info,advice:actual.slice(0,135)}));
 }
