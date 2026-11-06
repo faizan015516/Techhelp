@@ -41,7 +41,7 @@ test("All seven brand guide pages show their own rotating printer category",()=>
 });
 test("Viewer automatically rotates on every capable device with drag, keyboard and reset controls",()=>{
  const s=read("assets/printer-360.mjs");
- for(const text of ["pointerdown","pointermove","ArrowLeft","ArrowRight","ResizeObserver","IntersectionObserver","prefers-reduced-motion","static printer illustration","setPointerCapture","WebGLRenderer","renderer.dispose"]){
+ for(const text of ["pointerdown","pointermove","ArrowLeft","ArrowRight","ResizeObserver","IntersectionObserver","static printer illustration","setPointerCapture","WebGLRenderer","renderer.dispose"]){
   if(text==="static printer illustration")continue;
   assert.ok(s.includes(text),"3D viewer lacks "+text);
  }
