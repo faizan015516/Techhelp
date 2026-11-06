@@ -168,6 +168,17 @@ function server(){return http.createServer((req,res)=>{let url;try{url=decodeURI
   assert.equal(phoneTiles.length,3,"Windows problem diagnostic should show all three cards");
   assert.ok(phoneTiles.every(t=>t.background==="rgb(32, 58, 84)"&&t.titleColor==="rgb(240, 248, 255)"),"Cards must be high-contrast on mobile: "+JSON.stringify(phoneTiles));
   await mobile.screenshot({path:path.join(art,"windows-cards-mobile-contrast-fixed.png"),fullPage:true,animations:"disabled"});
+  // Even if a stale/failed CSS request is used, HTML has the critical fallback.
+  await mobile.route("**/assets/future-2.css*",route=>route.abort());
+  await mobile.goto(base+"/windows-pc-slow-errors?cache-fallback-test=1",{waitUntil:"load"});
+  const fallbackCards=await mobile.locator(".diagnostic-card").evaluateAll(cards=>cards.map(card=>({
+    bg:getComputedStyle(card).backgroundColor,
+    title:getComputedStyle(card.querySelector("strong")).color,
+    detail:getComputedStyle(card.querySelector("small")).color
+  })));
+  assert.equal(fallbackCards.length,3,"critical CSS fallback includes every diagnostic card");
+  assert.ok(fallbackCards.every(c=>c.bg==="rgb(32, 58, 84)"&&c.title==="rgb(240, 248, 255)"&&c.detail==="rgb(240, 248, 255)"),"stale stylesheet fallback failed: "+JSON.stringify(fallbackCards));
+
   await mobile.close();
   process.stdout.write("Browser smoke passed: every page opens at mobile width; 3D hero, menu, reduced motion, no overflow, diagnostics, page fit, local notes.\n");
  }finally{await browser.close();await new Promise(ok=>app.close(ok))}

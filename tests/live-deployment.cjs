@@ -11,6 +11,8 @@ const expected=[
  ["/assets/scene-driver.svg","<svg"],
  ["/assets/future-2.css","2026-11-06 accessibility repair"],
  ["/windows-pc-slow-errors","diagnostic-card"],
+ ["/windows-pc-slow-errors","pr-mobile-contrast-critical"],
+ ["/windows-pc-slow-errors","20261106-contrast-4"],
  ["/tools/connection-path","Printer Connection Lab"],
  ["/tools/page-fit","Paper Fit"],
  ["/editorial-policy","How we prepare and maintain"],
