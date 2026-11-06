@@ -48,3 +48,11 @@ test("Guide library routes distinct symptoms to distinct first steps",()=>{
  for(const target of ["id=\"choose-path\"","/printer-not-connecting-wifi","/printer-not-found-windows-11","/printer-offline-windows-11","/printer-print-queue-stuck-windows-11","/printer-printing-blank-pages","/printer-printing-cut-off-pages"])
   assert.ok(s.includes(target),"Missing decision guide route "+target);
 });
+
+test("Ink and Canon print-output diagnostics contain source-backed safety branches",()=>{
+ const cases=[
+ ["epson-not-printing-black-ink.html",["et2800-nozzle-check","Maintenance","Nozzle Check","at least 12 hours","checking_nozzles_lcd_et2800_l3260.html"]],
+ ["canon-printer-not-responding-windows-11.html",["canon-tr4700-print-notrespond","Print LAN details","paper-size","ntr_t_03_01_c.html","ntr_n_01_04.html"]]
+ ];
+ for(const [file,phrases] of cases){const s=read(file).toLowerCase();for(const phrase of phrases)assert.ok(s.includes(phrase.toLowerCase()),file+" missing: "+phrase)}
+});
