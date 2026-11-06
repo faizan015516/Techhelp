@@ -23,7 +23,7 @@ for(const filename of htmlFiles){
  const canonical=(s.match(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i)||[])[1]||"";
  const title=pretty(section(s,"title")),h1=[...s.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map(m=>pretty(m[1]));
  const desc=(s.match(/<meta\b[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i)||[])[1]||"";
- const main=section(s,"main")||s,article=section(s,"article")||main,plain=pretty(article);
+ const main=section(s,"main")||s,article=main,plain=pretty(article); // Analyze the full <main>: several guides contain multiple sections after their first <article>.
  const words=plain.split(/\s+/).filter(Boolean).length;
  const linkRe=/<a\b[^>]*href=["']([^"']+)["']/gi,links=[...s.matchAll(linkRe)].map(m=>m[1]);
  const external=links.filter(u=>/^https?:/i.test(u));
