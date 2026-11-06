@@ -31,3 +31,41 @@ body.nx-document .nx-hero-art .pr360 *{box-sizing:border-box}
 @media (max-width:900px){.hero-art>.pr360{min-height:380px;height:470px}.pr360-frame{height:340px}body.nx-document .nx-hero-art>.pr360{min-height:370px}}
 @media (max-width:600px){.pr360{min-height:310px;height:auto}.pr360-frame{height:clamp(250px,70vw,355px);border-radius:18px}.pr360-controls{margin-top:6px}.pr360 .pr360-controls button{padding:10px 12px!important;font-size:11px!important}.hero-art>.pr360{height:390px;min-height:310px}body.nx-document .nx-hero-art>.pr360{min-height:325px}.pr360-note{font-size:10px!important;padding:0 8px}}
 @media (prefers-reduced-motion:reduce){.pr360-frame,.pr360-controls button{scroll-behavior:auto!important;transition:none!important}}
+
+/* 3D mobile collision repair — keep the model below the hero's call-to-action row. */
+.pr360-ready .pr360-status{
+ position:absolute!important;
+ width:1px!important;height:1px!important;
+ padding:0!important;margin:-1px!important;
+ overflow:hidden!important;white-space:nowrap!important;
+ clip-path:inset(50%)!important;border:0!important;
+}
+@media(max-width:840px){
+ body.nx-document .nx-hero-art:has(>.pr360){
+  height:440px!important;min-height:440px!important;
+  margin-top:8px!important;margin-bottom:8px!important;
+  align-items:center!important;
+ }
+ body.nx-document .nx-hero-art>.pr360{
+  min-height:400px!important;height:408px!important;
+  justify-content:center!important;
+ }
+ body.nx-document .nx-hero-art .pr360-frame{
+  height:min(320px,62vw)!important;
+  min-height:250px!important;
+ }
+}
+@media(max-width:580px){
+ body.nx-document .nx-hero-art:has(>.pr360){
+  height:405px!important;min-height:405px!important;
+  margin-top:20px!important;margin-bottom:12px!important;
+ }
+ body.nx-document .nx-hero-art>.pr360{
+  min-height:375px!important;height:386px!important;
+ }
+ body.nx-document .nx-hero-art .pr360-frame{
+  height:278px!important;min-height:278px!important;
+ }
+ body.nx-document .nx-hero-art .nx-tag-a{top:17%!important}
+ body.nx-document .nx-hero-art .nx-tag-b{bottom:20%!important}
+}
