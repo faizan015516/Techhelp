@@ -1,0 +1,85 @@
+/* Site-wide printer finder and search. Accessible on desktop, laptop and mobile. */
+.pr-visually-hidden{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important}
+.pr-discovery-controls,.pr-discovery-controls *,.pr-discovery-dialog,.pr-discovery-dialog *{box-sizing:border-box}
+header .pr-discovery-controls{display:flex;align-items:center;gap:9px;min-width:0;flex:1 1 290px;max-width:425px;font:inherit}
+header .pr-top-search{display:flex;align-items:center;min-width:0;min-height:41px;border:1px solid rgba(153,203,241,.38);background:#16283b;border-radius:999px;overflow:hidden;flex:1 1 auto;margin:0}
+header .pr-top-search:focus-within{border-color:#99eaff;box-shadow:0 0 0 3px rgba(150,236,255,.17)}
+header .pr-top-search-input{min-width:0;flex:1 1 auto;width:100%;border:0!important;border-radius:0!important;background:transparent!important;color:#f2f9ff!important;font:500 12px/1.3 Inter,system-ui,sans-serif!important;padding:11px 9px 11px 15px!important;outline:0!important;box-shadow:none!important;min-height:41px}
+header .pr-top-search-input::placeholder{color:#c1d5e7!important;opacity:1}
+header .pr-top-search-button{min-width:67px;min-height:41px;padding:0 11px!important;background:#dff5ff!important;border:0!important;border-radius:999px!important;color:#102538!important;font:750 12px/1.2 Inter,system-ui,sans-serif!important;letter-spacing:0!important;box-shadow:none!important;white-space:nowrap}
+header .pr-top-search-button:hover{background:#fff!important}
+header .pr-top-printer-button{flex:0 0 auto;min-height:41px;padding:9px 14px!important;border:1px solid rgba(153,218,250,.55)!important;border-radius:999px!important;background:rgba(34,66,95,.89)!important;color:#e6f8ff!important;font:700 12px/1.15 Inter,system-ui,sans-serif!important;white-space:nowrap;letter-spacing:0!important}
+header .pr-top-printer-button:hover{background:#2d6384!important}
+header .pr-top-printer-button:focus-visible,header .pr-top-search-button:focus-visible,.pr-discovery-dialog :focus-visible{outline:3px solid #8ee8ff!important;outline-offset:3px!important}
+header.site-header .nav-wrap{gap:12px}
+header.site-header .nav-links{gap:13px;flex:0 0 auto}
+header.site-header .nav-links a{font-size:12px}
+body.nx-document header.nx-top .nx-top-inner{gap:15px}
+body.nx-document header.nx-top .nx-top-nav{gap:13px}
+body.nx-document header.nx-top .nx-top-nav a{font-size:12px!important}
+.pr-open-picker{cursor:pointer}
+.pr-discovery-dialog[hidden],.pr-discovery-dialog [hidden]{display:none!important}
+.pr-discovery-dialog{position:fixed;inset:0;border:1px solid rgba(142,218,255,.28);border-radius:24px;padding:0!important;width:min(785px,calc(100vw - 28px));max-width:785px;max-height:min(90svh,840px);overflow:auto;background:#0c1726;color:#e7f4ff;box-shadow:0 33px 120px rgba(0,0,0,.65);color-scheme:dark;font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;z-index:9999}
+.pr-discovery-dialog::backdrop{background:rgba(1,8,18,.77);backdrop-filter:blur(9px)}
+.pr-dialog-shell{padding:clamp(19px,4vw,34px)}
+.pr-dialog-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:26px}
+.pr-dialog-kicker{margin:0 0 9px!important;font:750 11px/1.4 Inter,system-ui,sans-serif!important;letter-spacing:.13em;color:#8de2ff!important}
+.pr-discovery-dialog #pr-dialog-title{font-size:clamp(25px,4vw,39px)!important;color:#fff!important;letter-spacing:-.04em;line-height:1.1;margin:0 0 10px!important;font-weight:750!important}
+.pr-dialog-intro{font-size:14px!important;margin:0!important;color:#bcd0e4!important;line-height:1.65!important}
+.pr-dialog-close{flex:0 0 auto;width:39px;height:39px;border:1px solid #637e99;border-radius:12px;background:#1e344c;color:#f4fbff;font:30px/1 Inter,system-ui,sans-serif;cursor:pointer}
+.pr-dialog-section-title{font-size:12px!important;letter-spacing:.12em;color:#93bcd7!important;text-transform:uppercase;font-weight:800;margin:0 0 12px!important}
+.pr-brand-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:24px}
+.pr-brand-button{display:flex!important;flex-direction:column;align-items:flex-start;gap:5px;padding:17px!important;border:1px solid #466481!important;border-radius:15px!important;background:linear-gradient(145deg,#172a3f,#112136)!important;color:#eef8ff!important;min-height:92px;text-align:left;cursor:pointer}
+.pr-brand-button:hover,.pr-brand-button[aria-pressed=true]{border-color:#9de9ff!important;background:linear-gradient(145deg,#284b6b,#17314d)!important}
+.pr-brand-button[aria-pressed=true]{box-shadow:inset 0 0 0 1px #9de9ff,0 8px 30px rgba(24,115,178,.15)}
+.pr-brand-name{display:block;color:#fff!important;font-size:18px!important;font-weight:780!important}
+.pr-brand-description{display:block;font-size:11px!important;color:#b9d4e7!important;line-height:1.4!important}
+.pr-filter-label{display:block;font-weight:730!important;color:#e4f1ff!important;margin:0 0 8px!important;font-size:14px!important}
+.pr-filter-label span{font-weight:400;color:#9fb9d0}
+.pr-dialog-input{display:block;width:100%;height:50px;min-height:50px!important;padding:12px 16px!important;border:1px solid #567c9c!important;border-radius:12px!important;background:#091728!important;color:#f6fbff!important;font:500 15px/1.3 Inter,system-ui,sans-serif!important;box-shadow:none!important;outline:none!important}
+.pr-dialog-input::placeholder{color:#91adc7}
+.pr-dialog-hint{margin:9px 0 0!important;font-size:12px!important;color:#9fb8ce!important;line-height:1.55!important}
+.pr-dialog-search{margin-bottom:22px}
+.pr-dialog-result-zone{margin:22px 0 10px;padding-top:18px;border-top:1px solid #2c4861}
+.pr-result-status{min-height:21px;color:#a4cbdf!important;font-weight:660;font-size:13px!important;margin:0 0 16px!important}
+.pr-search-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.pr-found-group-title{grid-column:1/-1;color:#e5f6ff!important;font-size:15px!important;line-height:1.3!important;letter-spacing:0!important;margin:12px 0 0!important}
+.pr-found-card{min-width:0;position:relative;border:1px solid #36516b;background:#15283c;border-radius:14px;padding:14px 34px 15px 16px;display:flex;flex-direction:column;gap:7px;text-decoration:none!important;transition:background .16s,border-color .16s;color:#fff!important}
+.pr-found-card:hover{border-color:#8cdcf8;background:#223e57}
+.pr-found-label{font-size:10px;color:#91dfff!important;text-transform:uppercase;font-weight:800;letter-spacing:.1em}
+.pr-found-title{font-size:15px;color:#fff!important;font-weight:750;line-height:1.35}
+.pr-found-description{color:#b8ccdf!important;font-size:12px;line-height:1.5}
+.pr-found-arrow{position:absolute;top:14px;right:14px;color:#b3e4fa;font-size:16px}
+.pr-no-results{grid-column:1/-1;border:1px dashed #4b6784;border-radius:12px;background:#142639;padding:19px;color:#d0e1f0!important;font-size:14px!important;margin:0!important}
+.pr-dialog-foot{display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid #2c4861;padding-top:17px;margin-top:23px}
+.pr-dialog-foot a{font-size:13px;color:#9ce4ff!important;font-weight:700;text-decoration:underline!important;text-underline-offset:4px}
+@media(max-width:1190px){
+ header.site-header .nav-links a:nth-child(2),header.site-header .nav-links a:nth-child(3){display:none}
+ body.nx-document header.nx-top .nx-top-nav a:nth-child(2),body.nx-document header.nx-top .nx-top-nav a:nth-child(3){display:none!important}
+}
+@media(max-width:850px){
+ header.site-header .nav-wrap,body.nx-document header.nx-top .nx-top-inner{flex-wrap:wrap!important;row-gap:7px!important;padding-top:8px!important;padding-bottom:10px!important}
+ header .pr-discovery-controls{order:4;flex:1 1 100%!important;max-width:none!important;width:100%!important}
+ header.site-header .brand,body.nx-document .nx-wordmark{order:1}
+ header.site-header .menu-button{order:2;margin-left:auto}
+ header.site-header .nav-links,body.nx-document header.nx-top .nx-top-nav{order:3;margin-left:auto}
+ header .pr-top-search-input{min-height:40px}
+ header .pr-top-printer-button,header .pr-top-search-button{min-height:40px}
+}
+@media(max-width:580px){
+ header.site-header .nav-wrap,body.nx-document header.nx-top .nx-top-inner{gap:6px!important}
+ header.site-header .nav-links{order:5}
+ header.site-header .nav-links.open{width:100%}
+ header .pr-top-printer-button{padding:9px 11px!important}
+ header .pr-top-search-input{font-size:12px!important}
+ header .pr-top-search-button{min-width:58px;padding:0 9px!important}
+ .pr-discovery-dialog{border-radius:15px;width:calc(100vw - 14px);max-height:94svh}
+ .pr-dialog-shell{padding:18px 15px}
+ .pr-brand-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .pr-brand-button{padding:13px!important;min-height:82px}
+ .pr-brand-name{font-size:16px!important}
+ .pr-search-results{grid-template-columns:minmax(0,1fr)}
+ .pr-found-card{padding:14px 33px 14px 15px}
+ .pr-dialog-foot{gap:14px}
+}
+@media(prefers-reduced-motion:reduce){.pr-found-card,.pr-brand-button{transition:none!important}}
