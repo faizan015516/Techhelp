@@ -37,6 +37,22 @@
 - https://support.google.com/adsense/answer/1348695 — required advertising cookie disclosures
 - https://support.google.com/adsense/answer/7299563 — unique content and visitor usability
 
+## Public delivery investigation — 6 November 2026
+
+**User-supplied browser evidence:** On Chrome Incognito, `https://printerresolve.com/?fc=alwaysshow&fctype=gdpr` showed the normal homepage without a consent message. The URL was correctly formed (not the previously malformed `%26` variant).
+
+**Independent read-only Chromium diagnostic:** GitHub Actions [PrinterResolve public AdSense GDPR preview diagnostics](https://github.com/sakibautomation/Techhelp/actions/runs/42238619949) tested three fresh browser contexts: `?fc=alwaysshow&fctype=gdpr`, `?fc=alwaysshow`, and the ordinary homepage.
+
+- All three returned HTTP 200 and a page with the matching AdSense tag `ca-pub-2393332073506347`.
+- `adsbygoogle.js` loaded with HTTP 200, and `show_ads_impl.js` loaded with HTTP 200. Other Google ad requests also returned 200/204.
+- After approximately 11 seconds of rendering each URL, no `window.__tcfapi` function, `window.googlefc` object, `googlefcLoaded` marker, or consent dialog was present in the headless-browser page; no relevant JavaScript errors were captured.
+- No fundingchoices-domain network requests were observed in that test. This indicates that the CMP message did not initialize in those test contexts; it does **not** establish why.
+- No website settings, consent choices or Google's account configuration were modified by these diagnostic tests.
+
+**Assessment:** A published message in the AdSense account **does not currently imply proven public delivery**. Correct publisher script and absent consent UI point to a message-eligibility, account-side configuration, or loading-condition issue that requires further investigation. **Do not assume the site's unresolved AdSense approval status is the cause**; Google has not confirmed that condition as responsible.
+
+**Next permitted checks:** Open the *existing* published message in AdSense, confirm the domain and message URL, selected privacy-policy URL, message choices, and any account-side settings or exceptions; use Google's official preview if available. Escalate to AdSense support/community with the reproduction URL, correct publisher tag, and evidence above if configuration appears correct. Do not delete/recreate the message or insert an unsupported homemade CMP.
+
 ## Screenshot evidence: 6 November 2026
 
 The AdSense **Privacy & messaging → European regulations → Messages** view showed a single published message, `Printer Resolve - Privacy Consent`, for `printerresolve.com`, English, last modified 16 October 2026, with publish switch enabled. It showed **0 messages shown and 0% consent rate**. These figures do not establish a delivery failure; there may have been no eligible or recorded displays in the selected reporting period. The screenshot is strong evidence of publication, but not proof of actual message rendering or legal adequacy.
