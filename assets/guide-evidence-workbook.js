@@ -34,6 +34,30 @@ const CONFIG={
    {id:"selftest",label:"Does the printer's own status/test page have the same missing edge?",options:[["unknown","Not checked / unavailable"],["yes","Yes — internal page is also affected"],["no","No — internal page prints normally"]]}
   ]
  },
+ blankpages:{
+  label:"Blank-page differential",
+  questions:[
+   {id:"internal",label:"What appears on a printer-generated internal test or nozzle page?",options:[["unknown","Not checked / unavailable"],["marks","Marks and text appear normally"],["blank","Entire internal sheet is blank"],["failed","Printer cannot complete its own test"]]},
+   {id:"document",label:"Which documents print blank from the affected computer?",options:[["unknown","Not compared"],["one","Only one file or application"],["all","Even a simple one-line text document"],["other","Another computer prints the same document correctly"]]},
+   {id:"technology",label:"What printing technology does the model use?",options:[["unknown","Not sure"],["inkjet","Inkjet / EcoTank / cartridge"],["laser","Laser / toner"]]}
+  ]
+ },
+ discovery:{
+  label:"Windows printer discovery",
+  questions:[
+   {id:"connection",label:"How is this printer meant to connect to Windows?",options:[["unknown","Not sure"],["wifi","Wi-Fi / local network"],["usb","Direct USB cable"],["shared","Shared by another computer or managed print server"]]},
+   {id:"evidence",label:"What has actually been verified?",options:[["unknown","No status report yet"],["ip","Printer report shows a usable network IP address"],["noip","Printer report shows no usable network address"],["usb","USB connection works on another authorized computer"]]},
+   {id:"windows",label:"What does Windows 11 show in Printers & scanners?",options:[["unknown","Not checked"],["missing","Printer not in the list or discovery results"],["offline","Printer is listed but marked Offline"],["present","Printer appears and is Ready"]]}
+  ]
+ },
+ driverchoice:{
+  label:"Safe printer driver installation",
+  questions:[
+   {id:"system",label:"What does Settings → System → About show for System type?",options:[["unknown","Not checked"],["x64","x64-based processor"],["arm","ARM-based processor"],["other","Another or unsupported system"]]},
+   {id:"status",label:"Which result describes this printer in Windows?",options:[["unknown","Not checked"],["missing","Not listed in Printers & scanners"],["unavailable","Listed, but driver unavailable"],["basic","Printing works, but advanced features are missing"],["installed","Printing and required features already work"]]},
+   {id:"download",label:"Where is the proposed driver coming from?",options:[["unknown","No download selected"],["windows","Windows Update / Windows Settings"],["maker","Exact-model manufacturer support page"],["thirdparty","Third-party driver downloader or advertisement"]]}
+  ]
+ },
  epsonwifi:{
   label:"Epson wireless connection",
   questions:[
@@ -77,6 +101,33 @@ function advice(topic,values){
   else if(v.paper==="no")a="A mismatch between A4, US Letter or another size can crop or rescale content. Align document layout, print-dialog choice and loaded stock, then recheck preview.";
   else if(v.preview==="no"&&v.selftest==="no")a="The preview and internal page look correct. Compare one application versus another and check printer-specific printable margins and scaling.";
   else a="Compare preview, document paper, print-dialog paper and the printer's own test before deciding whether the problem is layout or hardware.";
+ }else if(topic==="blankpages"){
+  if(v.internal==="failed")a="The printer could not complete its built-in test. First inspect its own display or error code and the exact model manual. Windows driver changes cannot prove a hardware path works.";
+  else if(v.internal==="blank"&&v.technology==="inkjet")a="A printer-generated sheet is blank on an inkjet: inspect the documented ink supply and nozzle-check pattern. Do not start repeated deep or power-cleaning cycles without the exact model's limits.";
+  else if(v.internal==="blank"&&v.technology==="laser")a="A printer-generated sheet is blank on a laser device: check its documented toner-cartridge installation and device error messages. Avoid touching hot fuser or internal imaging components.";
+  else if(v.internal==="blank")a="An internally generated test is also blank. That makes a single Windows PDF or app less likely; identify inkjet versus laser technology before selecting the manufacturer troubleshooting procedure.";
+  else if(v.internal==="marks"&&v.document==="one")a="The printer can mark paper independently, and only one document or app fails. Compare print preview and a short text document before replacing ink, toner or hardware.";
+  else if(v.internal==="marks"&&v.document==="all")a="The built-in page works but all computer jobs are blank. Verify the printer selected by Windows, test a simple text page, and examine driver, print mode and queue.";
+  else if(v.internal==="marks"&&v.document==="other")a="Another authorized computer prints the same file. Concentrate on the affected computer's app, printer destination and installed driver rather than a general printer reset.";
+  else a="Print one documented internal test or nozzle page and one short text job. Record whether each contains marks; one blank sheet alone does not identify the cause.";
+ }else if(topic==="discovery"){
+  if(v.windows==="present")a="Windows shows this printer as Ready. Discovery is not the current failure; send one small test job and investigate the printing path instead.";
+  else if(v.windows==="offline")a="The printer already exists in Windows but is Offline. Use its current network report or USB state to check whether the installed destination is stale.";
+  else if(v.connection==="shared")a="This printer is shared from another computer or server. Confirm the share name, host availability, access permissions and organization policy before adding a local IP printer.";
+  else if(v.connection==="usb"&&v.evidence==="usb")a="A second authorized computer recognizes the USB connection. Check the affected PC's port/cable and Windows printer entry; do not change network security settings.";
+  else if(v.connection==="usb")a="Direct USB printer not discovered: confirm power and a known-good cable/port, then check Windows Settings → Bluetooth & devices → Printers & scanners → Add device.";
+  else if(v.connection==="wifi"&&v.evidence==="noip")a="A network printer without a usable IP address has not completed network setup. Check the printer's own SSID/authentication/DHCP report before manual Windows addition.";
+  else if(v.connection==="wifi"&&v.evidence==="ip")a="Printer has a network IP but Windows auto-discovery cannot see it. Confirm the intended local network and isolation settings; Windows offers Add device → Add a new device manually when discovery fails. Use the correct manufacturer driver and documented address.";
+  else a="First distinguish direct USB, local Wi-Fi and a shared printer. For Wi-Fi, record the printer's own IP status; discovery and actual connectivity are separate tests.";
+ }else if(topic==="driverchoice"){
+  if(v.download==="thirdparty")a="Stop before downloading. A third-party driver-downloader advertisement is not a reliable source. Use Windows Update or the exact model's manufacturer support page; never pay for an unverified driver.";
+  else if(v.system==="arm"&&v.status!=="installed")a="Windows reports an ARM-based PC. Microsoft notes that some vendor printer installers fail on ARM. Try Windows 11 Settings → Bluetooth & devices → Printers & scanners → Add device, and follow any model-specific ARM instructions from the manufacturer.";
+  else if(v.status==="installed")a="The printer and required features work. Do not install another driver just because a website offers a newer download; record the installed version before optional changes.";
+  else if(v.status==="missing")a="The printer isn't listed. Confirm USB/network discovery and use Settings → Bluetooth & devices → Printers & scanners → Add device before assuming a driver package is required.";
+  else if(v.status==="basic")a="Basic printing works, but advanced features are missing. Compare your exact model, Windows build and architecture with the manufacturer's optional full-feature software; keep a rollback plan.";
+  else if(v.status==="unavailable")a="Windows lists the device but reports an unavailable driver. Start with Windows Update, then look up the exact model on the manufacturer's support page and verify OS and processor compatibility.";
+  else if(v.download==="maker")a="Confirm the manufacturer's domain, exact model, Windows version and system type before running the installer. Manufacturer packages for a similar model are not interchangeable.";
+  else a="Start with the exact model identifier and Windows System type. Microsoft recommends Windows Update as the primary driver path; use official manufacturer support if necessary.";
  }else if(topic==="epsonwifi"){
   if(v.code==="e237")a="Epson's report groups E-2/E-3/E-7 around wireless discovery or credential issues, with model-specific wording. Confirm the SSID, signal and password using the report instead of blindly reinstalling a driver.";
   else if(v.code==="e8")a="E-8 relates to an invalid printer IP configuration on Epson's documented report-code lists. Review DHCP versus manual addressing and router settings with the appropriate model instructions.";
