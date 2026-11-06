@@ -57,6 +57,54 @@ async function details(page){
   for(const [i,c] of fallback.cards.entries()){
    assert.ok(ratio(c.background,c.title)>=4.5&&ratio(c.background,c.detail)>=4.5,"CSS outage fallback failed on card "+i+": "+JSON.stringify(c));
   }
+  // Regression: the guide library's formerly white-on-white symptom table.
+  // Validate actual CSS computed colors against its opaque row and header
+  // backgrounds, on desktop and on a mobile-sized viewport.
+  for(const [layout,viewport] of [["desktop",{width:1365,height:900}],["mobile",{width:393,height:851}]]){
+    const view=await browser.newPage({viewport});
+    try{
+      let check=null;
+      for(let attempt=1;attempt<=8;attempt++){
+        await view.goto("https://printerresolve.com/guides?contrastFix="+Date.now()+"-"+attempt,{waitUntil:"load",timeout:30000});
+        check=await view.evaluate(()=>{
+          const root=document.getElementById("choose-path");
+          if(!root)return null;
+          const one=(selector)=>{
+            const el=root.querySelector(selector);
+            if(!el)return null;
+            const css=getComputedStyle(el);
+            return {color:css.color,background:css.backgroundColor,text:(el.innerText||"").trim().slice(0,120)};
+          };
+          const tr=root.querySelector("tbody tr");
+          const tr2=root.querySelector("tbody tr:nth-child(2)");
+          const panel=getComputedStyle(root);
+          return {fix:!!document.getElementById("pr-choose-path-contrast-fix"),
+            panelBackground:panel.backgroundImage,
+            heading:one("#choose-path-heading"),copy:one("p:not(.section-kicker)"),
+            th:one("thead th"),firstRow:tr?getComputedStyle(tr).backgroundColor:null,
+            secondRow:tr2?getComputedStyle(tr2).backgroundColor:null,
+            td:one("tbody td"),link:one("tbody td a"),
+            width:document.documentElement.scrollWidth,viewport:window.innerWidth};
+        });
+        if(check?.fix&&check.panelBackground?.includes("gradient"))break;
+        if(attempt<8)await delay(8000);
+      }
+      assert.ok(check?.fix,"Guide contrast repair not deployed: "+JSON.stringify(check));
+      assert.ok(check.panelBackground.includes("gradient"),"Guide symptom card is not dark: "+JSON.stringify(check));
+      for(const [label,color] of [["heading",check.heading?.color],["copy",check.copy?.color]]){
+        for(const bg of ["rgb(20, 43, 67)","rgb(14, 32, 52)"])
+          assert.ok(ratio(color,bg)>=4.5,layout+" guide "+label+" contrast fails: "+JSON.stringify(check));
+      }
+      assert.ok(ratio(check.th?.background,check.th?.color)>=4.5,layout+" table headers unreadable: "+JSON.stringify(check));
+      for(const bg of [check.firstRow,check.secondRow]){
+        assert.ok(ratio(bg,check.td?.color)>=4.5,layout+" table data unreadable: "+JSON.stringify(check));
+        assert.ok(ratio(bg,check.link?.color)>=4.5,layout+" focused links unreadable: "+JSON.stringify(check));
+      }
+      assert.ok(check.width<=check.viewport+2,layout+" page has horizontal overflow: "+JSON.stringify(check));
+      await view.locator("#choose-path").screenshot({path:path.join(out,"LIVE-guide-symptom-contrast-"+layout+".png"),animations:"disabled",timeout:30000});
+      process.stdout.write("LIVE_GUIDES_CONTRAST_PASS "+layout+" "+JSON.stringify(check)+"\\n");
+    }finally{await view.close()}
+  }
   process.stdout.write("LIVE mobile contrast verified: "+JSON.stringify(info)+"; fallback verified.\n");
  }finally{await browser.close()}
 })().catch(e=>{process.stderr.write(e.stack+"\n");process.exitCode=1});
