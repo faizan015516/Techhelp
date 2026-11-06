@@ -135,7 +135,7 @@ test("Independent content audit preserves exact connection decisions instead of 
  const s=read("device-setup-installation.html");
  for(const text of ['id="first-print-path-specific"','USB cable directly into your PC',
   'Ethernet cable to your router or network','Wi-Fi Direct or a direct printer hotspot',
-  'Shared printer from another PC or print server','same network','ARM-based',
+  'Shared printer from another PC or print server','permitted local network','ARM-based',
   'share-a-printer-as-a-network-printer'])
   assert.ok(s.includes(text),"Missing first-print decision: "+text);
 });
