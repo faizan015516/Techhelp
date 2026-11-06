@@ -14,7 +14,15 @@ const expected=[
  ["/windows-pc-slow-errors","pr-mobile-contrast-critical"],
  ["/windows-pc-slow-errors","20261106-contrast-4"],
  ["/tools/connection-path","Printer Connection Lab"],
- ["/tools/page-fit","Paper Fit"],
+ ["/tools/page-fit",'id="reference-sheets"'],
+ ["/tools/connection-path","The two addresses are identical"],
+ ["/printer-printing-cut-off-pages",'id="print-scale-test"'],
+ ["/printer-not-connecting-wifi",'id="address-boundary"'],
+ ["/wifi-keeps-disconnecting-windows-11",'id="wlan-session-check"'],
+ ["/wifi-connected-no-internet-windows-11",'id="local-print-internet-check"'],
+ ["/windows-11-disk-100-percent-usage",'id="disk-print-comparison"'],
+ ["/windows-11-slow-startup-fixes",'id="sign-in-or-first-print"'],
+ ["/editorial-policy",'id="published-software-test"'],
  ["/tools/print-path-lab","pp-form"],
  ["/hp-printer-offline-connected-wifi","hp-smart-tank-report"],
  ["/dell-printer-not-connecting-wifi-windows-11","dell-model-compatibility"],
@@ -64,6 +72,16 @@ const expected=[
 // A successful homepage alone does not establish that Google can fetch the inner articles.
 const fs=require("node:fs");
 const path=require("node:path");
+const {createHash}=require("node:crypto");
+const digest=buffer=>createHash("sha256").update(buffer).digest("hex");
+const referenceAssets=new Set([
+ "/assets/print-scale-a4.pdf", "/assets/print-scale-letter.pdf",
+ "/assets/print-scale-letter-unscaled.png", "/assets/print-scale-letter-fitted.png"
+]);
+for(const route of referenceAssets){
+ const local=fs.readFileSync(path.join(__dirname,"..",route.slice(1)));
+ expected.push([route,digest(local)]);
+}
 const xml=fs.readFileSync(path.join(__dirname,"..","sitemap.xml"),"utf8");
 const sitemapPaths=[...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
  .map(x=>new URL(x[1]))
@@ -74,7 +92,7 @@ for(const route of sitemapPaths){
 }
 process.stdout.write("Production sitemap verification: "+sitemapPaths.length+" canonical routes.\\n");
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
-async function get(path){const url=base+path+"?qa="+Date.now();const response=await fetch(url,{redirect:"follow",headers:{"Cache-Control":"no-cache","Pragma":"no-cache","User-Agent":"Mozilla/5.0 (compatible; PrinterResolveDeploymentCheck/1.0)"}});return{status:response.status,url:response.url,body:await response.text()}}
+async function get(path){const url=base+path+"?qa="+Date.now();const response=await fetch(url,{redirect:"follow",headers:{"Cache-Control":"no-cache","Pragma":"no-cache","User-Agent":"Mozilla/5.0 (compatible; PrinterResolveDeploymentCheck/1.0)"}});return{status:response.status,url:response.url,body:referenceAssets.has(path)?digest(Buffer.from(await response.arrayBuffer())):await response.text()}}
 (async()=>{
  let success=false,failures=[];
  for(let attempt=1;attempt<=8;attempt++){

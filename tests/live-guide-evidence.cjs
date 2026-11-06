@@ -47,6 +47,31 @@ async function view(page,record){
  await panel.screenshot({path:path.join(root,"LIVE-evidence-"+record.topic+"-"+page.viewportSize().width+".png"),animations:"disabled"});
  console.log("FLAGSHIP_EVIDENCE_PASS "+JSON.stringify({route:record.route,...info,advice:actual.slice(0,135)}));
 }
+async function measuredExamples(page){
+ const site="https://printerresolve.com";
+ const guide=page.locator("#print-scale-test");
+ for(let attempt=0;attempt<8;attempt++){
+  await page.goto(site+"/printer-printing-cut-off-pages?scaleCheck="+Date.now(),{waitUntil:"domcontentloaded"});
+  if(await guide.count())break;
+  await pause(7000);
+ }
+ await guide.locator("summary").click();
+ assert.match(await guide.innerText(),/941 pixels/);
+ assert.equal(await guide.locator('a[href$=".pdf"]').count(),2);
+ const width=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+ assert.ok(width<=3,"Scale test overflows the viewport by "+width+" px");
+ await page.goto(site+"/tools/page-fit?scaleCheck="+Date.now(),{waitUntil:"domcontentloaded"});
+ await page.locator("#margin-left").fill("105");
+ await page.locator("#fit-form button").click();
+ assert.equal(await page.locator("#fit-result").getAttribute("data-outcome"),"invalid");
+ await page.goto(site+"/tools/connection-path?addressCheck="+Date.now(),{waitUntil:"domcontentloaded"});
+ await page.locator("#computer-ip").fill("192.168.1.126");
+ await page.locator("#printer-ip").fill("192.168.1.126");
+ await page.locator("#prefix").selectOption("25");
+ await page.locator("#lab-form button").click();
+ assert.match(await page.locator("#lab-title").innerText(),/identical/);
+ console.log("Verified the PDF comparison, impossible margins and duplicate address at "+page.viewportSize().width+" px.");
+}
 async function controlledTest(page,label){
  const base="https://printerresolve.com/tools/print-path-lab";
  let ready=false;
@@ -88,6 +113,8 @@ async function controlledTest(page,label){
   await view(mobile,cases[5]);
   await controlledTest(desktop,"desktop");
   await controlledTest(mobile,"mobile");
+  await measuredExamples(desktop);
+  await measuredExamples(mobile);
   console.log("FLAGSHIP_EVIDENCE_SUMMARY 12/12 interactive panels and branching tested, no mobile horizontal overflow");
  }finally{await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

@@ -61,3 +61,54 @@ test("PrinterResolve has a consistent branded favicon on every page",()=>{
     assert.ok(html.includes('href="/favicon.svg?v=20261107-1"'),p+" missing scalable favicon");
   }
 });
+
+test("Connection lab flags copied addresses, link-local and subnet boundaries", () => {
+  const ids = ["lab-form", "lab-result", "lab-title", "lab-message", "lab-networks",
+    "computer-ip", "printer-ip", "prefix", "same-sample", "different-sample"];
+  const fields = Object.fromEntries(ids.map(id => [id, fakeEl()]));
+  const page = read("tools/connection-path.html");
+  vm.runInNewContext(inlineLast(page), {document: {getElementById: id => fields[id]}});
+  const cases = [
+    ["192.168.1.126", "192.168.1.129", 24, "same", "192.168.1.0/24"],
+    ["192.168.1.126", "192.168.1.129", 25, "different", "192.168.1.128/25"],
+    ["192.168.1.126", "192.168.1.126", 25, "check", "identical"],
+    ["192.168.1.126", "192.168.1.127", 25, "check", "broadcast"],
+    ["192.168.1.126", "192.168.1.255", 25, "different", "192.168.1.128/25"],
+    ["192.168.1.128", "192.168.1.129", 31, "same", "192.168.1.128/31"],
+    ["192.168.1.126", "169.254.1.2", 24, "check", "link-local"],
+    ["169.254.1.1", "169.254.1.2", 16, "check", "Both"],
+    ["127.0.0.1", "192.168.1.129", 24, "error", "Loopback"]
+  ];
+  for (const [computer, printer, prefix, type, clue] of cases) {
+    fields["computer-ip"].value = computer;
+    fields["printer-ip"].value = printer;
+    fields.prefix.value = String(prefix);
+    fields["lab-form"].requestSubmit();
+    assert.equal(fields["lab-result"].dataset.type, type);
+    const output = ["lab-title", "lab-message", "lab-networks"].map(id => fields[id].textContent).join(" ");
+    assert.ok(output.includes(clue), output);
+  }
+  for (let prefix = 1; prefix <= 32; prefix++) {
+    assert.ok(page.includes('value="' + prefix + '"'), "Missing prefix /" + prefix);
+  }
+});
+
+test("Paper Fit rejects blank and impossible margins and clears the stale drawing", () => {
+  const ids = ["fit-form", "fit-result", "fit-title", "fit-summary", "fit-detail",
+    "paper", "content-width", "content-height", "margin-left", "margin-top",
+    "paper-rect", "safe-rect", "content-rect", "page-label"];
+  const fields = Object.fromEntries(ids.map(id => [id, fakeEl()]));
+  fields.paper.value = "a4";
+  fields["content-width"].value = "210";
+  fields["content-height"].value = "297";
+  fields["margin-top"].value = "0";
+  fields["margin-left"].value = "0";
+  vm.runInNewContext(inlineLast(read("tools/page-fit.html")), {document: {getElementById: id => fields[id]}});
+  for (const [margin, outcome] of [["105", "invalid"], ["106", "invalid"], ["", "invalid"], ["0", "fits"]]) {
+    fields["margin-left"].value = margin;
+    fields["fit-form"].requestSubmit();
+    assert.equal(fields["fit-result"].dataset.outcome, outcome);
+    assert.equal(fields["content-rect"].attrs.visibility, outcome === "invalid" ? "hidden" : "visible");
+    assert.doesNotMatch(fields["fit-detail"].textContent, /reduce the content to 0(?:\.0)?%/i);
+  }
+});
