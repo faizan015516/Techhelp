@@ -112,7 +112,7 @@ test("Day 2 discovery guide separates USB, manual-IP, Wi-Fi Direct and shared qu
   'auto-discovery finds nothing.',
   'Wi-Fi Direct mode only',
   'company print server',
-  'printer is already listed but marked Offline',
+  'Printer is already listed but marked Offline.',
   'help-with-installing-printers-on-arm-pcs'
  ]) assert.ok(s.includes(phrase),"Missing distinct printer-discovery decision: "+phrase);
 });
