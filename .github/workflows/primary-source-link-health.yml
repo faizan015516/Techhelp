@@ -3,6 +3,8 @@ on:
   push:
     branches: [main]
     paths:
+      - '*.html'
+      - 'tools/**/*.html'
       - 'tests/primary-source-link-health.cjs'
       - '.github/workflows/primary-source-link-health.yml'
   workflow_dispatch:
