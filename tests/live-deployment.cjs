@@ -15,6 +15,8 @@ const expected=[
  ["/windows-pc-slow-errors","20261106-contrast-4"],
  ["/tools/connection-path","Printer Connection Lab"],
  ["/tools/page-fit","Paper Fit"],
+ ["/tools/print-path-lab","pp-form"],
+ ["/privacy","Google Ads Settings"],
  ["/editorial-policy","How we prepare and maintain"],
 ];
 const delay=ms=>new Promise(r=>setTimeout(r,ms));

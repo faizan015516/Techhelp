@@ -1,0 +1,135 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Printer Failure Isolation Lab — Evidence-Based Print Path Guide | Printer Resolve</title>
+<meta name="description" content="Compare an internal printer test, another device, network status and Windows queue to isolate printer, network, driver and document problems. Private browser-only diagnostic worksheet.">
+<link rel="canonical" href="https://printerresolve.com/tools/print-path-lab">
+<meta name="theme-color" content="#0b1422">
+<link rel="stylesheet" href="/assets/experience.css"><link rel="stylesheet" href="/assets/future-2.css?v=20261106-contrast-4">
+<style>
+.pp-shell{width:min(1120px,calc(100% - 36px));margin:auto}
+.pp-hero{padding:86px 0 70px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 79% 27%,#284b6b,transparent 40%),linear-gradient(125deg,#090f18,#12243a);border-bottom:1px solid #24415a}
+.pp-hero h1{font-size:clamp(43px,6.5vw,78px);max-width:780px;letter-spacing:-.067em;color:#f6fbff;line-height:1.06;margin:18px 0 20px}
+.pp-hero p{max-width:710px;color:#b9d2e8;line-height:1.75}
+.pp-label{font-size:12px!important;letter-spacing:.14em;color:#99dfff!important;text-transform:uppercase;font-weight:800}
+.pp-hero img{position:absolute;max-width:400px;width:40vw;right:-45px;top:10px;opacity:.24;animation:nx-float 7s ease-in-out infinite alternate;pointer-events:none}
+.pp-main{padding:54px 0 100px;background:#0b1625;color:#d9e9f9}
+.pp-main a{color:#9bdcff}
+.pp-main p,.pp-main li{line-height:1.75;color:#c5d7eb}
+.pp-main h2{font-size:clamp(28px,3.4vw,41px);color:#f5fbff;letter-spacing:-.04em;margin:0 0 18px}
+.pp-main h3{color:#f3faff;font-size:22px}
+.pp-note{padding:17px 21px;background:#19324a;border-left:3px solid #85d7ff;border-radius:11px;color:#c8e3f4;font-size:14px;line-height:1.75;margin:24px 0}
+.pp-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
+.pp-card{background:linear-gradient(135deg,#142a40,#0f2033);border:1px solid #3d617e;border-radius:20px;padding:clamp(23px,3vw,33px);box-shadow:0 22px 60px rgba(0,0,0,.15)}
+.pp-questions{display:grid;gap:18px}
+.pp-questions label{font-size:14px;font-weight:750;color:#ecf7ff;display:block;margin-bottom:8px}
+.pp-questions select{width:100%;background:#0b1c2f;border:1px solid #668baa;border-radius:12px;padding:13px 14px;color:#f2faff;font:inherit;font-size:15px}
+.pp-questions select:focus-visible,.pp-button:focus-visible{outline:3px solid #87e8ff;outline-offset:3px}
+.pp-hint{font-size:12px;color:#aec5d9;margin:7px 0 0!important}
+.pp-button{margin-top:12px;padding:14px 24px;border:1px solid #a3def7;border-radius:999px;background:#dff4ff;color:#102e46;font:inherit;font-weight:850;cursor:pointer}
+.pp-results{margin:28px 0 0;padding:22px;border-radius:17px;background:#172f48;border:1px solid #5798bc}
+.pp-results h3{margin:0 0 10px}.pp-results p{font-size:14px;margin:7px 0 17px}
+.pp-results ul{padding-left:20px}.pp-results li{font-size:14px;margin-bottom:8px}
+.pp-results[hidden]{display:none}
+.pp-stages{list-style:none;padding:0!important;display:grid;gap:17px}
+.pp-stages li{display:grid;grid-template-columns:46px 1fr;gap:15px;background:#10243a;border:1px solid #36536c;border-radius:14px;padding:17px}
+.pp-stages b{display:grid;place-items:center;border-radius:11px;width:42px;height:42px;background:#274b68;color:#a8eaff}
+.pp-stages strong{color:#f3faff}
+.pp-stages p{font-size:13px;margin:6px 0}
+.pp-article{margin-top:68px}
+.pp-article h2{margin-top:45px}
+.pp-table-wrap{overflow-x:auto}
+.pp-table{width:100%;border-collapse:collapse;min-width:610px;font-size:14px}
+.pp-table th{text-align:left;background:#1c3b56;color:#f2fbff}
+.pp-table td,.pp-table th{padding:16px;border:1px solid #375671;vertical-align:top}
+.pp-table td{color:#d5e6f6}
+.pp-table tbody tr:nth-child(even){background:#10273c}
+.pp-source{border-left:3px solid #4a98c2;padding:14px 20px;background:#172f43;margin:15px 0;border-radius:9px}
+.pp-source a{font-weight:650}
+.pp-safety{background:#242d3a;border-left:3px solid #e4ad64;border-radius:12px;padding:17px 19px}
+.pp-footer{padding:32px 16px;background:#070f1b;color:#a4bed5;border-top:1px solid #243a52;text-align:center;font-size:13px}
+.pp-footer a{margin:0 9px;color:#b2e7ff}
+@media(max-width:830px){.pp-layout{grid-template-columns:1fr}.pp-hero{padding:65px 0 55px}.pp-hero img{opacity:.12;width:76vw}.pp-card{padding:22px}.pp-main{padding:35px 0 60px}.pp-article{margin-top:45px}}
+@media(prefers-reduced-motion:reduce){.pp-hero img{animation:none!important}}
+</style></head><body class="nx-lab">
+<a href="#main" class="skip">Skip to content</a>
+<header class="site-header"><div class="shell nav-wrap"><a class="brand" href="/">PrinterResolve</a><nav class="nav-links" aria-label="Navigation"><a href="/guides">All guides</a><a href="/tools/connection-path">IPv4 lab</a><a href="/privacy">Privacy</a></nav></div></header>
+<main id="main">
+<section class="pp-hero"><img src="/assets/scene-printer.svg" width="720" height="520" alt="" aria-hidden="true"><div class="pp-shell"><p class="pp-label">Original diagnostic worksheet · No account · No upload</p><h1>Find the failing layer before changing a setting.</h1><p>A printer may generate its own page successfully while Windows cannot deliver a job—or the reverse. Record four observations and this worksheet explains what they suggest, what they do not prove, and the next low-risk test.</p></div></section>
+<div class="pp-main"><div class="pp-shell">
+<div class="pp-layout"><section class="pp-card" aria-labelledby="worksheet-title"><h2 id="worksheet-title">Your print-path evidence</h2>
+<p>Use a real observation when possible. If you have not tested something, choose <strong>Not tested</strong> rather than guessing.</p>
+<form id="pp-form" class="pp-questions">
+<div><label for="pp-connection">How is the printer connected to this computer?</label><select id="pp-connection"><option value="wireless">Wi-Fi / network</option><option value="wired">Ethernet network</option><option value="usb">Direct USB cable</option><option value="unknown">I'm not sure</option></select></div>
+<div><label for="pp-selftest">Can the printer produce its own built-in report, status sheet or test page?</label><select id="pp-selftest"><option value="unknown">Not tested / no built-in option known</option><option value="yes">Yes — printer-generated page is normal</option><option value="no">No — page fails, is blank or device shows an error</option></select><p class="pp-hint">A device-generated page is different from Windows' “Print test page.” The exact menu depends on the model.</p></div>
+<div><label for="pp-other">Can a second trusted phone or computer print to this printer?</label><select id="pp-other"><option value="unknown">Not tested</option><option value="yes">Yes, another device prints</option><option value="no">No, another device also fails</option></select></div>
+<div><label for="pp-network">For network printers, what does the printer's network status show?</label><select id="pp-network"><option value="unknown">Not checked / not applicable</option><option value="joined">Joined intended Wi-Fi/Ethernet network, address shown</option><option value="disconnected">Not joined, address missing or error shown</option><option value="different">On guest / different network or unclear address</option></select></div>
+<div><label for="pp-windows">What happens to the job in Windows?</label><select id="pp-windows"><option value="unknown">Not tested / don't know</option><option value="offline">Shows Offline or unavailable</option><option value="waiting">Job remains waiting, paused or in queue</option><option value="completed">Job appears completed but paper does not appear</option><option value="wrong">Only one app/document fails</option></select></div>
+<button class="pp-button" type="submit">Interpret my observations →</button></form>
+<div id="pp-results" class="pp-results" role="status" aria-live="polite" hidden><h3 id="pp-heading"></h3><p id="pp-why"></p><strong>Next safe checks</strong><ul id="pp-actions"></ul><p id="pp-limit"></p><p id="pp-links"></p></div>
+</section>
+<aside class="pp-card"><h2>Four layers. Four different questions.</h2><ol class="pp-stages"><li><b>01</b><div><strong>Printer itself</strong><p>Does its own status page or display indicate a hardware or consumables problem?</p></div></li><li><b>02</b><div><strong>Network or cable</strong><p>Has the printer joined the correct network or does a known-good direct USB connection work?</p></div></li><li><b>03</b><div><strong>Windows printing path</strong><p>Is the correct printer selected? Is the job paused, offline or pending? Which port is saved?</p></div></li><li><b>04</b><div><strong>Document or app</strong><p>Does a simple text file print while one PDF or application fails?</p></div></li></ol>
+<div class="pp-note"><strong>Important:</strong> The lab does not connect to the printer or perform network tests. It interprets the observations you enter. No details are submitted to Printer Resolve.</div></aside></div>
+<article class="pp-article">
+<h2>How to collect reliable evidence</h2>
+<p><strong>Start with the printer's own status.</strong> Check the display for paper jams, cover warnings, ink/toner problems or connection errors. If your model supports an internal configuration or status page, follow its official instructions to produce one without using Windows. A normal device page suggests the basic paper-feed and print mechanism can function; it does not prove the Wi-Fi or driver is working.</p>
+<p><strong>Compare a second device only when safe.</strong> A trusted second phone or laptop already configured for that printer can be a useful control. If it prints normally, focus on the original PC's selected printer, saved port, spooler or app. If it fails too, look at shared causes such as the printer state or network. A second-device failure does not prove the printer is physically broken.</p>
+<p><strong>Use the printer's current network record, not a remembered address.</strong> Many printers can show their joined SSID and local IP address in a network report. A computer using a guest or isolated wireless network may not discover a printer even if both devices show Wi-Fi. The <a href="/tools/connection-path">IPv4 range calculator</a> can help compare addresses, but being in the same calculated subnet does not guarantee reachability, and different subnets can still communicate when routing permits.</p>
+<p><strong>Inspect Windows without clearing other people's print jobs.</strong> In Windows 11 open Settings → Bluetooth &amp; devices → Printers &amp; scanners, choose the relevant printer and inspect its queue. The exact menu wording may vary by Windows version. Confirm you selected the physical printer rather than “Print to PDF,” an older duplicate or a device at a previous address. On work or school equipment, ask the administrator before changing shared settings.</p>
+<h2>How different outcomes change the diagnosis</h2>
+<div class="pp-table-wrap"><table class="pp-table"><thead><tr><th>Observation A</th><th>Observation B</th><th>More useful next question</th><th>What it does not prove</th></tr></thead><tbody>
+<tr><td>Internal test fails</td><td>Windows says Offline</td><td>What does the printer display report? Check model-specific hardware status first.</td><td>That reinstalling a driver will fix a device error.</td></tr>
+<tr><td>Internal test works</td><td>Another trusted device prints</td><td>Is this PC using an outdated printer entry, wrong app, paused queue or saved port?</td><td>That every possible Windows or networking issue is ruled out.</td></tr>
+<tr><td>Internal test works</td><td>No device can print</td><td>Is the network connection valid and the printer's service ready?</td><td>That the printer is broken or that the router alone is responsible.</td></tr>
+<tr><td>Network shows an address</td><td>Windows says Offline</td><td>Does Windows point to the same current device and connection path?</td><td>That the address alone proves connectivity.</td></tr>
+<tr><td>Simple file prints</td><td>One PDF fails</td><td>Does the app preview, page size or rendering path explain the difference?</td><td>That the physical print system has failed.</td></tr>
+<tr><td>Windows job completes</td><td>No paper appears</td><td>Was a virtual printer, old entry or incorrect printer selected?</td><td>That a job reached the intended device.</td></tr>
+</tbody></table></div>
+<h2>Advanced Windows observations, only when they help</h2>
+<p>For a network printer with a <strong>verified</strong> IP address, Windows PowerShell includes the read-only <code>Get-PrinterPort</code> command. It lists configured printer ports on that Windows machine. A saved address that differs from the printer's current report can be useful evidence—but some printers use WSD or other discovery mechanisms, so not every printer will display a simple IP-based port.</p>
+<p>The Windows <code>Test-NetConnection -ComputerName 192.168.1.50 -Port 9100</code> command can test TCP connectivity to port 9100 <em>only if the exact printer or print server is documented to use RAW TCP/9100</em>. Replace the sample address with a verified device address. A failed test on an unsupported port proves nothing about printer health; an open port does not guarantee a functioning driver or print job. We do not run this command from the website.</p>
+<p>ICMP ping results have similar limits: a disabled or filtered ping response is not enough to declare a printer unreachable. Use the manufacturer's documentation to determine the supported print protocol. Avoid opening router ports to the public internet to fix local printing.</p>
+<div class="pp-safety"><strong>Stop condition:</strong> If the printer warns of an internal hardware error, a hot or electrical component, or repeated maintenance failure, follow the manufacturer manual or use qualified service. On a managed network, coordinate changes with the administrator. Do not disable antivirus, erase an entire shared spool queue or factory-reset a router just to follow this worksheet.</div>
+<h2>Primary technical references</h2>
+<div class="pp-source"><a href="https://support.microsoft.com/en-us/windows/hardware/printer/fix-printer-connection-and-printing-problems-in-windows" rel="noopener noreferrer">Microsoft — Fix printer connection and printing problems in Windows</a><p>Windows 11 Get Help, printer installation, queues and connection guidance.</p></div>
+<div class="pp-source"><a href="https://learn.microsoft.com/en-us/powershell/module/printmanagement/get-printerport?view=windowsserver2025-ps" rel="noopener noreferrer">Microsoft Learn — Get-PrinterPort</a><p>Read-only listing of Windows printer ports; support depends on the installed module.</p></div>
+<div class="pp-source"><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2025-ps" rel="noopener noreferrer">Microsoft Learn — Test-NetConnection</a><p>Details and limits of testing a known TCP endpoint. Do not assume all printers use port 9100.</p></div>
+<p><strong>Editorial boundary:</strong> This worksheet and sample scenarios are original analytical illustrations based on documented behavior, not reports of hands-on testing on a particular printer model. There is no remote support, login requirement or payment. See <a href="/editorial-policy">our editorial policy</a> and <a href="/privacy">Privacy Policy</a>.</p>
+</article></div></div></main>
+<footer class="pp-footer"><nav aria-label="Information pages"><a href="/">Home</a><a href="/guides">Guides</a><a href="/about">About</a><a href="/editorial-policy">Editorial policy</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a></nav><p>© 2026 Printer Resolve · Independent educational publisher</p></footer>
+<script>
+(()=>{"use strict";
+const $=id=>document.getElementById(id);
+const guides={printer:"/printer-not-printing",wifi:"/printer-not-connecting-wifi",offline:"/printer-offline-windows-11",queue:"/printer-print-queue-stuck-windows-11",driver:"/printer-driver-unavailable-windows-11",document:"/printer-printing-blank-pages"};
+const scenarios=[
+ {id:"printer",title:"Begin with the printer's own reported error",why:"The built-in page or status check did not succeed. A Windows driver change would not explain an error already present when the PC is not involved.",steps:["Read and record the exact device error, including any paper-path or supply warning.","Consult the precise model's user manual for an internal diagnostic or safe maintenance step.","If the error persists, stop before attempting invasive repair."],limit:"The failed built-in test narrows attention to printer-side causes; it is not proof of a particular failed component.",link:"printer"},
+ {id:"network",title:"Check whether the printer actually joined the network",why:"The printer shows no working network association or an unexpected/isolated network. Start at that connection before changing Windows drivers.",steps:["Use the printer's network report or on-device Wi-Fi status for the current network and address.","Compare the intended SSID/guest network and supported Wi-Fi band with the exact model manual.","Retest with one trusted device after reconnecting by the manufacturer's instructions."],limit:"A wireless icon or assigned IP does not on its own prove printing will work.",link:"wifi"},
+ {id:"pc",title:"Focus on the affected Windows computer",why:"A normal printer-generated test and a successful print from another device suggest the original PC, its selected printer entry or app deserves closer investigation.",steps:["Confirm that Windows is using the intended physical printer, not a saved duplicate or virtual device.","Check the printer queue for pause/offline status and record the exact error.","Compare the printer's current network address with Windows' saved printer configuration before changing ports."],limit:"A second device printing does not eliminate every network or application-specific problem.",link:"offline"},
+ {id:"shared",title:"Investigate a shared print path, not just one PC",why:"The printer can generate its own page but multiple devices report print failures. A shared network or device service is worth checking before PC-specific driver changes.",steps:["Verify the printer's current network state and whether the same service is available to both devices.","Check any device-side alerts or network isolation settings you are authorized to view.","Ask an administrator before altering shared printer settings or clearing other users' queues."],limit:"Two failed devices are a clue, not a controlled proof of a router or printer fault.",link:"wifi"},
+ {id:"app",title:"Isolate the document or application",why:"A symptom limited to one app or file is better compared with a small test document before printer-wide maintenance.",steps:["Compare print preview for the affected file and a simple text document.","Confirm page size, scale and selected physical printer in both jobs.","Test an alternate trusted viewer, if available, and note whether the outcome changes."],limit:"A software-specific result does not establish a defect in ink, toner or hardware.",link:"document"},
+ {id:"queue",title:"Record the queue state before resetting anything",why:"Jobs remain waiting or paused. That result can have multiple causes, including the device connection, an application or the Windows spooler.",steps:["Open the selected printer's queue and note whether a specific job or all jobs are held.","Try cancelling only your own stuck job, if appropriate.","If the spooler itself stops repeatedly, follow Microsoft's documented Windows guidance rather than removing files without approval."],limit:"A stuck job alone does not prove that the printer driver is bad.",link:"queue"},
+ {id:"complete",title:"Verify the printer that actually received the job",why:"Windows reports a completed job but the expected paper did not appear. The selected device or destination should be verified.",steps:["Confirm the physical printer name and location rather than relying on a similar-looking entry.","Check whether the app used Print to PDF, an old duplicate or a shared queue.","If the destination was correct, inspect the printer display or status for device-side errors."],limit:"Windows showing Completed is not proof that paper emerged from the intended printer.",link:"offline"},
+ {id:"unknown",title:"Collect the most informative first observation",why:"There is not yet enough evidence to identify a likely failing stage without guessing.",steps:["Read the printer's display for an error and, if supported, print its built-in status page.","Check how the printer connects and whether another trusted device can print.","Write down what Windows does with one simple test document."],limit:"The worksheet cannot diagnose hardware automatically; it only interprets entered observations.",link:"printer"}
+];
+function classify(a){
+ if(a.selftest==="no")return scenarios[0];
+ if(a.connection!=="usb"&&(a.network==="disconnected"||a.network==="different"))return scenarios[1];
+ if(a.selftest==="yes"&&a.other==="yes"&&a.windows!=="wrong")return scenarios[2];
+ if(a.windows==="wrong")return scenarios[4];
+ if(a.selftest==="yes"&&a.other==="no"&&a.connection!=="usb")return scenarios[3];
+ if(a.windows==="completed")return scenarios[6];
+ if(a.windows==="waiting")return scenarios[5];
+ if(a.windows==="offline")return scenarios[2];
+ return scenarios[7];
+}
+$("pp-form").addEventListener("submit",e=>{
+ e.preventDefault();
+ const a={connection:$("pp-connection").value,selftest:$("pp-selftest").value,other:$("pp-other").value,network:$("pp-network").value,windows:$("pp-windows").value};
+ const s=classify(a);
+ $("pp-heading").textContent=s.title;$("pp-why").textContent=s.why;
+ const list=$("pp-actions");list.replaceChildren();s.steps.forEach(step=>{const li=document.createElement("li");li.textContent=step;list.appendChild(li)});
+ $("pp-limit").textContent="What this does not prove: "+s.limit;
+ const link=$("pp-links");link.replaceChildren();const label=document.createElement("a");label.href=guides[s.link];label.textContent="Read the matching detailed guide →";link.appendChild(label);
+ $("pp-results").hidden=false;$("pp-results").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"});
+});
+})();
+</script></body></html>

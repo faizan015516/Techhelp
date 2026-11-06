@@ -1,6 +1,6 @@
 # Printer Resolve — Quality & Design Rebuild Plan
 
-**Status:** Work in progress. All changes are isolated to draft PR #15 on `redesign/apple-3d-printerresolve`. Nothing in this document is evidence of Google AdSense approval.
+**Status:** Ongoing editorial review. Earlier design and test changes have already shipped. Current substantive content/privacy work is tracked in `ADSENSE-THIRD-REVIEW-QUALITY-AUDIT.md`; no AdSense approval or third-review readiness is asserted.
 
 ## Goal
 Make Printer Resolve a useful, technically careful publisher with a modern, readable, responsive Apple-inspired design. Editorial quality and user outcomes take priority over animation.
