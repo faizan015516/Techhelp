@@ -22,3 +22,11 @@ jobs:
           node-version: '22'
       - name: Run static site and tool tests
         run: node --test tests/site-integrity.test.cjs tests/content-uniqueness.test.cjs tests/printer-360.test.cjs tests/site-discovery.test.cjs tests/brand-hero.test.cjs tests/guide-evidence-workbook.test.cjs tests/editorial-transparency.test.cjs
+      - name: Audit broken fragment navigation and overlapping editorial content
+        run: node tools/day1-website-audit.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: printerresolve-day1-audit
+          path: test-artifacts/day1-website-audit.json
+          if-no-files-found: ignore
