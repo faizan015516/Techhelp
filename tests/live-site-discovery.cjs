@@ -58,7 +58,7 @@ async function verifySuggestions(page){
 async function verifySearch(page){
  const form=page.locator(".pr-top-search");
  await form.locator("input").fill("Epson WiFi");
- await form.locator("button").click();
+ await form.locator(".pr-top-search-button").click();
  const dialog=page.locator(".pr-discovery-dialog");
  await dialog.waitFor();
  await page.waitForFunction(()=>document.querySelectorAll(".pr-discovery-dialog .pr-found-card").length>0,{timeout:10000});
