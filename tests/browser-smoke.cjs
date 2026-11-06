@@ -42,6 +42,31 @@ function server(){return http.createServer((req,res)=>{let url;try{url=decodeURI
   await desktop.locator('[data-pr-field="symptom"]').fill("Shows Offline in Windows");
   await desktop.locator("[data-pr-generate]").click();
   assert.match(await desktop.locator("[data-pr-output]").inputValue(),/Shows Offline in Windows/);
+  // Confirm all categories actually receive the new 3D page structure, not just the homepage.
+  const visualPages=[
+    ["printer-offline-windows-11","wifi"],
+    ["printer-driver-unavailable-windows-11","driver"],
+    ["printer-printing-blank-pages","paper"],
+    ["windows-11-disk-100-percent-usage","windows"],
+    ["remote-assistance-safety","safety"]
+  ];
+  for(const [slug,scene] of visualPages){
+    await desktop.goto(base+"/"+slug,{waitUntil:"domcontentloaded"});
+    assert.ok(await desktop.locator(".nx-hero").isVisible(),slug+" animated hero is visible");
+    assert.equal(await desktop.locator(".nx-hero").getAttribute("data-scene"),scene,slug+" illustration category");
+    assert.ok(await desktop.locator(".nx-layout main h1").isVisible(),slug+" article is retained");
+    assert.ok(await desktop.locator(".nx-inline-visual img").count()>0,slug+" has another in-article picture");
+    assert.ok(await desktop.locator(".nx-visual-bottom img").count()>0,slug+" has a closing 3D illustration");
+    assert.ok(await desktop.locator(".nx-outline a").count()>2,slug+" navigable table of contents");
+    const image=await desktop.locator(".nx-hero .nx-scene").evaluate(el=>({loaded:el.complete&&el.naturalWidth>0,src:el.getAttribute("src")}));
+    assert.ok(image.loaded,slug+" illustration actually loads: "+image.src);
+    if(slug==="printer-offline-windows-11"||slug==="printer-driver-unavailable-windows-11"||slug==="printer-printing-blank-pages"){
+      await desktop.screenshot({path:path.join(art,slug+"-desktop.png"),fullPage:true,animations:"disabled"});
+    }
+  }
+  await desktop.goto(base+"/guides",{waitUntil:"domcontentloaded"});
+  assert.equal(await desktop.locator(".nx-category-art").count(),5,"guide library has five 3D category visuals");
+  await desktop.screenshot({path:path.join(art,"guides-3d-desktop.png"),fullPage:true,animations:"disabled"});
   await desktop.close();
   const mobile=await browser.newPage({...devices["Pixel 7"],viewport:{width:393,height:851}});
   await mobile.goto(base+"/",{waitUntil:"domcontentloaded"});
@@ -72,6 +97,17 @@ function server(){return http.createServer((req,res)=>{let url;try{url=decodeURI
     if(data.content>data.viewport+3)overflow.push({path:pageFile,...data});
     assert.ok(data.h1&&data.h1.length>5,"readable H1 for "+route);
   }
+  // Every redesigned guide must show its visual header on mobile.
+  for(const pageFile of allPageFiles.filter(p=>!["index.html","guides.html","tools/connection-path.html","tools/page-fit.html"].includes(p))){
+    await mobile.goto(base+"/"+pageFile.replace(/\.html$/,""),{waitUntil:"domcontentloaded"});
+    assert.ok(await mobile.locator(".nx-hero .nx-scene").isVisible(),pageFile+" mobile 3D hero");
+  }
+  await mobile.goto(base+"/printer-offline-windows-11",{waitUntil:"domcontentloaded"});
+  const articleMotion=await mobile.locator(".nx-hero .nx-scene").evaluate(el=>getComputedStyle(el).animationName);
+  assert.equal(articleMotion,"none","Article 3D art honors reduced-motion accessibility");
+  await mobile.screenshot({path:path.join(art,"article-mobile-3d.png"),fullPage:true,animations:"disabled"});
+  await mobile.goto(base+"/guides",{waitUntil:"domcontentloaded"});
+  await mobile.screenshot({path:path.join(art,"guides-mobile-3d.png"),fullPage:true,animations:"disabled"});
   assert.deepEqual(overflow,[],"Pages with mobile horizontal overflow");
   assert.deepEqual(jsErrors,[],"Client-side script errors while opening guide library");
   await mobile.close();
