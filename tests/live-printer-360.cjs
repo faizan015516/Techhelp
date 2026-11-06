@@ -35,7 +35,7 @@ async function verifyPage(page,{url,kind,file}){
       const canvas=widget.locator("canvas");
       await canvas.screenshot({path:path.join(out,file),animations:"disabled"});
       const before=await canvas.screenshot();
-      await canvas.focus();
+      await widget.locator(".pr360-frame").focus(); // Only the keyboard-accessible frame handles arrow keys; canvas is aria-hidden.
       await page.keyboard.press("ArrowRight");
       const after=await canvas.screenshot();
       assert.ok(!before.equals(after),"Pressing ArrowRight did not change the rendered printer for "+url);
