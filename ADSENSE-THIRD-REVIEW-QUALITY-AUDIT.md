@@ -62,3 +62,29 @@
 
 ## What cannot be guaranteed
 AdSense approval. Google's review method, individual page assessment and exact reasons are not fully disclosed. The 24 October and 5 November 2026 messages used standard generic language; a dashboard screenshot showed “Low-value content” but did not identify which pages or legal disclosures caused it.
+
+
+## Follow-up editorial work — 6 November 2026
+
+**Current release status:** Content improvements committed; AdSense resubmission remains **ON HOLD**. CI success is not equivalent to a Google policy review. The website may still receive a low-value-content rejection if its distinctive value, ongoing maintenance or genuine reader interest is inadequate.
+
+### Substantive changes now committed
+- `hp-printer-offline-connected-wifi.html`: HP Smart Tank 580/590/5100 manufacturer-documented network configuration report steps; explain what printer-side network status, Windows printer entries, and a second-device test each support. Verified against HP documentation. The examples are illustrative, not firsthand tests.
+- `dell-printer-not-connecting-wifi-windows-11.html`: Distinguish legacy Dell C1765nfw, E525w and 3000cn using Dell's published Windows 11 compatibility matrix and E525w driver page. Prevent unsupported assumption that all older Dell models have the same driver or Wi-Fi path.
+- `epson-not-printing-black-ink.html`: ET-2800/2803 model-specific nozzle-check procedure and table distinguishing complete vs gapped vs mostly absent black patterns, with manufacturer-documented safety limits for repeated cleaning.
+- `canon-printer-not-responding-windows-11.html`: TR4700 model-specific differentiation between slow startup, USB/hub, paper mismatch, network settings and large-document processing. Includes Canon LAN report procedure and official manuals.
+- `guides.html`: Symptom-first routing table differentiating association, discovery, Offline, queue and output faults before presenting brand variants.
+- `tests/content-uniqueness.test.cjs`: Regression tests for evidence-led material in the above pages. (These tests assert presence of substantial sections; they do **not** replace independent factual review.)
+- `tests/live-deployment.cjs`: Extend live publication verification of these pages once implemented.
+- Previous `printer-not-found-windows-11.html` network-discovery analysis and print queue/paper fit guide improvements retained.
+
+### Remaining gates before requesting another AdSense review
+1. **True firsthand evidence:** Obtain permissioned real tests from a few Windows/printer combinations; record exact models, OS build, original screenshots, what was observed, and limitations. Never invent results or testimonials.
+2. **Whole-site editorial comparison:** Review every overlapping Offline/Wi-Fi/discovery/Not Printing page for a distinct purpose. Consider consolidating/redirecting only after checking live Search Console URLs, clicks, canonical coverage and existing links.
+3. **Real user interest:** Check Search Console for indexed pages, impressions and genuine clicks and the site's actual audience/use. There is no public numeric traffic threshold for approval and we must not buy, fabricate or artificially drive traffic.
+4. **Official-source QA:** Confirm each manufacturer-specific URL still resolves, supported model and procedure, and limits for destructive or paid steps.
+5. **Manual accessibility and visual QA:** Inspect new tables and interactive tools in a real mobile browser; automated checks alone cannot detect every issue.
+6. **Privacy and consent:** Verify region-specific AdSense consent management in the account if applicable. The policy notice is not the CMP.
+7. **Independent reviewer test:** Have a reader try to solve a printer problem using the articles without ad-serving incentives; collect actual feedback and correct confusing passages.
+
+**Decision:** Not cleared for resubmission. We cannot guarantee that a future Google reviewer will approve the site, but will continue focusing on original utility, transparent source grounding, real-world evidence and genuine users.
