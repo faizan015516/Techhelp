@@ -15,3 +15,9 @@ if(form&&result){form.addEventListener("submit",e=>{e.preventDefault();const sym
 document.getElementById("result-title").textContent=title;document.getElementById("result-body").textContent=body;document.getElementById("result-link").href=href;form.hidden=true;result.hidden=false;result.scrollIntoView({behavior:reduceMotion?"auto":"smooth",block:"nearest"})});
 if(reset)reset.addEventListener("click",()=>{result.hidden=true;form.hidden=false;form.reset();document.getElementById("symptom").focus()})}
 })();
+/* PrinterResolve shared search and brand picker loader */
+(()=>{
+ if(document.querySelector('script[data-pr-discovery]'))return;
+ const style=document.createElement("link");style.rel="stylesheet";style.href="/assets/site-discovery.css?v=20261106-search-1";document.head.appendChild(style);
+ const script=document.createElement("script");script.src="/assets/site-discovery.js?v=20261106-search-1";script.defer=true;script.dataset.prDiscovery="1";document.head.appendChild(script);
+})();
