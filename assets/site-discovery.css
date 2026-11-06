@@ -83,3 +83,13 @@ body.nx-document header.nx-top .nx-top-nav a{font-size:12px!important}
  .pr-dialog-foot{gap:14px}
 }
 @media(prefers-reduced-motion:reduce){.pr-found-card,.pr-brand-button{transition:none!important}}
+
+/* Two-step printer selection polish: keep the chosen brand obvious,
+   and allow changing printers without scrolling through a long result list. */
+.pr-change-printer{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:0 0 14px;padding:9px 13px!important;border:1px solid #6195b2!important;border-radius:999px!important;background:#163b57!important;color:#d7f3ff!important;font:700 12px/1.2 Inter,system-ui,sans-serif!important;cursor:pointer}
+.pr-change-printer:hover{background:#285674!important}
+.pr-change-printer[hidden]{display:none!important}
+.pr-discovery-dialog[data-stage="results"] .pr-brand-list,
+.pr-discovery-dialog[data-stage="results"] .pr-dialog-section-title{display:none!important}
+.pr-discovery-dialog[data-stage="results"] .pr-dialog-hint{margin:4px 0!important}
+.pr-discovery-dialog[data-stage="results"] .pr-dialog-result-zone{margin-top:12px}
