@@ -56,3 +56,21 @@ test("Ink and Canon print-output diagnostics contain source-backed safety branch
  ];
  for(const [file,phrases] of cases){const s=read(file).toLowerCase();for(const phrase of phrases)assert.ok(s.includes(phrase.toLowerCase()),file+" missing: "+phrase)}
 });
+
+test("Evidence-led high-interest guides retain their original decision frameworks",()=>{
+ const sections={
+  "printer-not-printing.html":["id=\"four-test-isolation\"","Built-in page works","printer's own built-in","fix-print-job-stuck-in-queue-errors-in-windows","mainEntityOfPage"],
+  "printer-not-connecting-wifi.html":["id=\"wifi-report-decision\"","169.254.x.x","/tools/connection-path","net_connection_report_codes.html"],
+  "printer-paper-jam-no-paper-stuck.html":["id=\"jam-stage-matrix\"","document feeder","ntr","problem_paper_jam_l3250.html"],
+  "printer-printing-slowly-windows-11.html":["id=\"prt-timing-form\"","/assets/print-timing-lab.js","110","first page","hypothetical"]
+ };
+ for(const [name,patterns] of Object.entries(sections)){const body=read(name).toLowerCase();for(const p of patterns)assert.ok(body.includes(p.toLowerCase()),name+" is missing original reader-value element: "+p);}
+});
+test("Timing calculator interprets reader measurements and rejects impossible input",()=>{
+ const {diagnose}=require("../assets/print-timing-lab.js");
+ const first=diagnose(70,110,5);
+ assert.equal(first.ok,true); assert.equal(first.later,10); assert.equal(first.pattern,"Long first-page delay");
+ const later=diagnose(10,90,5);assert.equal(later.later,20);assert.equal(later.pattern,"Later pages dominate the delay");
+ const balanced=diagnose(20,100,5);assert.equal(balanced.pattern,"No strong first-versus-later imbalance");
+ for(const args of [[0,100,5],[90,60,5],[50,50,5],[10,90,1],[10,90,101],[10,90,2.5]]) assert.equal(diagnose(...args).ok,false);
+});
