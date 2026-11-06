@@ -104,6 +104,17 @@ function server(){return http.createServer((req,res)=>{let url;try{url=decodeURI
       await desktop.screenshot({path:path.join(art,"windows-card-contrast-desktop.png"),fullPage:true,animations:"disabled"});
     }
   }
+  // Editorial copy and sample ink diagrams must remain visible on the dark theme.
+  for(const [slug,selector] of [
+    ["windows-pc-slow-errors",".pr-field-intro"],
+    ["epson-not-printing-black-ink",".nozzle-pattern"],
+    ["printer-faded-streaked-pages",".print-sample.bands"]
+  ]){
+    await desktop.goto(base+"/"+slug,{waitUntil:"domcontentloaded"});
+    const textColor=await desktop.locator(selector).first().evaluate(el=>getComputedStyle(el).color);
+    const rgb=(textColor.match(/[0-9]+/g)||[]).slice(0,3).map(Number);
+    assert.ok(rgb.length===3&&rgb.reduce((sum,n)=>sum+n,0)>530,slug+" "+selector+" must be legible on the dark card: "+textColor);
+  }
   await desktop.close();
   const mobile=await browser.newPage({...devices["Pixel 7"],viewport:{width:393,height:851}});
   await mobile.goto(base+"/",{waitUntil:"domcontentloaded"});

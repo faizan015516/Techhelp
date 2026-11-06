@@ -279,3 +279,26 @@ body.nx-document main :is(.diagnostic-grid,.status-grid,.connection-grid,.diag-g
   min-width:0!important;
  }
 }
+
+
+/* Readability follow-up: the visual redesign nests <main> within .nx-layout.
+   Explicitly override old high-specificity light-theme copy rules. */
+body.nx-document main .pr-field-guide .pr-field-intro{
+ color:#d6e7f7!important;
+}
+body.nx-document main .nozzle-panel .nozzle-pattern{
+ color:#d9f2ff!important;
+}
+body.nx-document main .nozzle-panel.gaps .nozzle-pattern{
+ color:#ffcb87!important;
+}
+body.nx-document main .pattern-card .print-sample{
+ color:#dbeefb!important;
+}
+body.nx-document main .pattern-card .print-sample.faint{
+ color:#acc7db!important;
+ opacity:.55;
+}
+body.nx-document main .pattern-card .print-sample.stripe{
+ background:linear-gradient(to right,transparent 48%,#a8d4f4 48%,#a8d4f4 52%,transparent 52%)!important;
+}
