@@ -11,6 +11,7 @@ const urls=[
  "https://printerresolve.com/?fc=alwaysshow&fctype=gdpr",
  "https://printerresolve.com/?fc=alwaysshow",
  "https://printerresolve.com/?fc=alwaysshow&fctype=gdpr_limited",
+ "https://printerresolve.com/printer-printing-blank-pages?fc=alwaysshow&fctype=gdpr",
  "https://printerresolve.com/"
 ];
 function relevant(u){return /googlesyndication|fundingchoices|googlefc|doubleclick|googleadservices|googleads|google-tag-manager/i.test(u)}
@@ -43,7 +44,7 @@ async function run(browser,url,index){
    }catch(e){cmp.error=e.message}}
    const fcMarkers=[...document.querySelectorAll("[id],[class]")].filter(e=>(String(e.id)+" "+String(e.className)).toLowerCase().includes("googlefc")||(String(e.id)+" "+String(e.className)).includes("fc-consent")).length;
    const overlays=[...document.querySelectorAll('[role="dialog"],iframe')].map(e=>({tag:e.tagName,role:e.getAttribute("role"),src:e.tagName==="IFRAME"?new URL(e.src||location.href).origin:undefined,visible:!!(e.offsetWidth&&e.offsetHeight)}));
-   return {title:document.title,referrerMeta,referrerEffective,script,cmp,hasGooglefc:!!window.googlefc,googlefcInactive:!!window.googlefcInactive,googlefcLoaded:!!window.googlefcLoaded,fcMarkers,overlays:overlays.slice(0,15),hasControlledMessagingFunction:typeof window.googlefc?.controlledMessagingFunction==="function"};
+   return {title:document.title,topLevelWindow:window===window.top,referrerMeta,referrerEffective,script,cmp,hasGooglefc:!!window.googlefc,googlefcInactive:!!window.googlefcInactive,googlefcLoaded:!!window.googlefcLoaded,fcMarkers,overlays:overlays.slice(0,15),hasControlledMessagingFunction:typeof window.googlefc?.controlledMessagingFunction==="function"};
  });
  const screenshot=path.join(root,"ad-consent-public-test-"+index+".png");
  await page.screenshot({path:screenshot,fullPage:false,animations:"disabled"});
