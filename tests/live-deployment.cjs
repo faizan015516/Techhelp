@@ -37,6 +37,13 @@ const expected=[
  ["/assets/printer-360.css","pr360-canvas"],
  ["/assets/printer-360.mjs","WebGLRenderer"],
  ["/privacy","Google Ads Settings"],
+ ["/printer-not-printing","data-diagnostic=\"printing\""],
+ ["/printer-not-connecting-wifi","data-diagnostic=\"wifi\""],
+ ["/printer-paper-jam-no-paper-stuck","data-diagnostic=\"jam\""],
+ ["/printer-printing-cut-off-pages","data-diagnostic=\"clipping\""],
+ ["/epson-printer-not-connecting-wifi","data-diagnostic=\"epsonwifi\""],
+ ["/assets/guide-evidence-workbook.js","function advice("],
+ ["/assets/guide-evidence-workbook.css","pr-diagnostic-workbook"],
  ["/editorial-policy","How we prepare and maintain"],
 ];
 // Read all canonical sitemap routes from the checked-out repository.
