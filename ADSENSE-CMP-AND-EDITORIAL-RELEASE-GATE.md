@@ -37,6 +37,15 @@
 - https://support.google.com/adsense/answer/1348695 — required advertising cookie disclosures
 - https://support.google.com/adsense/answer/7299563 — unique content and visitor usability
 
+## Message site association confirmed in AdSense — 6 November 2026
+
+User-supplied screenshot of the **Your sites** picker shows a single selected site `printerresolve.com`, display name `Printer Resolve`, a logo, and privacy-policy URL `https://printerresolve.com/privacy.html`.
+
+- **Site targeting: verified.** The message is associated with the expected domain.
+- **Privacy page in GitHub: verified.** `privacy.html` has canonical URL `https://printerresolve.com/privacy`, and no direct AdSense advertising script. Cloudflare Pages normally redirects `.html` paths to their extensionless equivalents. Updating the AdSense privacy-policy URL to the canonical `https://printerresolve.com/privacy` would avoid that redirect, but the current `.html` URL is not proof of a delivery failure.
+- **Remaining unresolved issue:** Google Publisher tag loads, but the Google consent interface and TCF API did not initialize in independently reproduced forced-preview tests. The screenshot alone does not explain the cause.
+- **Operational next steps:** Prefer canonical `/privacy` in the existing site profile without creating or unpublishing a message; verify the AdSense **Sites** review status. If the message still does not load, escalate the detailed browser evidence to AdSense support/community. Do not claim the pending approval status causes the failure without Google confirmation.
+
 ## Public delivery investigation — 6 November 2026
 
 **User-supplied browser evidence:** On Chrome Incognito, `https://printerresolve.com/?fc=alwaysshow&fctype=gdpr` showed the normal homepage without a consent message. The URL was correctly formed (not the previously malformed `%26` variant).
