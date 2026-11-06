@@ -8,7 +8,10 @@ const cases=[
  {route:"/printer-not-connecting-wifi",topic:"wifi",input:"status",value:"ssid",expected:"SSID"},
  {route:"/printer-paper-jam-no-paper-stuck",topic:"jam",input:"stage",value:"adf",expected:"ADF"},
  {route:"/printer-printing-cut-off-pages",topic:"clipping",input:"paper",value:"no",expected:"A4"},
- {route:"/epson-printer-not-connecting-wifi",topic:"epsonwifi",input:"code",value:"e8",expected:"IP"}
+ {route:"/epson-printer-not-connecting-wifi",topic:"epsonwifi",input:"code",value:"e8",expected:"IP"},
+ {route:"/printer-printing-blank-pages",topic:"blankpages",input:"internal",value:"blank",expected:"internally generated"},
+ {route:"/printer-not-found-windows-11",topic:"discovery",input:"connection",value:"usb",expected:"USB"},
+ {route:"/find-install-printer-driver",topic:"driverchoice",input:"system",value:"arm",expected:"ARM-based"}
 ];
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function view(page,record){
@@ -52,6 +55,8 @@ async function view(page,record){
   const mobile=await browser.newPage({...devices["Pixel 7"],viewport:{width:393,height:851}});
   await view(mobile,cases[4]);
   await view(mobile,cases[2]);
-  console.log("FLAGSHIP_EVIDENCE_SUMMARY 7/7 interactive panels and branching tested, no mobile horizontal overflow");
+  await view(mobile,cases[7]);
+  await view(mobile,cases[5]);
+  console.log("FLAGSHIP_EVIDENCE_SUMMARY 12/12 interactive panels and branching tested, no mobile horizontal overflow");
  }finally{await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});
