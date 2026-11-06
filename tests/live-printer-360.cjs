@@ -87,6 +87,15 @@ async function verifyPage(page,{url,kind,file}){
   });
   assert.ok(layout.viewerTop>=layout.buttonBottom+6,"Mobile 3D viewer overlaps hero actions: "+JSON.stringify(layout));
   assert.ok(layout.scrollWidth<=layout.viewport+2,"Mobile viewport overflow: "+JSON.stringify(layout));
+  const captions=await mobile.evaluate(()=>{
+    const a=document.querySelector(".pr360-note")?.getBoundingClientRect();
+    const b=document.querySelector(".pr-brand-disclosure")?.getBoundingClientRect();
+    const art=document.querySelector(".pr-brand-hero .nx-hero-art")?.getBoundingClientRect();
+    return {instructionsBottom:a?.bottom,disclosureTop:b?.top,disclosureBottom:b?.bottom,artBottom:art?.bottom};
+  });
+  assert.ok(captions.disclosureTop>=captions.instructionsBottom+5,"Brand image copyright note overlaps 3D controls: "+JSON.stringify(captions));
+  assert.ok(captions.artBottom>=captions.disclosureBottom-2,"Brand art frame cuts off disclosure: "+JSON.stringify(captions));
+
   await mobile.locator(".nx-hero").screenshot({path:path.join(out,"LIVE-printer-360-brother-mobile-full-hero.png"),animations:"disabled"});
   await verifyPage(mobile,{url:"/",kind:"home",file:"LIVE-printer-360-home-mobile.png"});
   const homeLayout=await mobile.evaluate(()=>{
