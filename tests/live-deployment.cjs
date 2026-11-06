@@ -16,6 +16,11 @@ const expected=[
  ["/tools/connection-path","Printer Connection Lab"],
  ["/tools/page-fit","Paper Fit"],
  ["/tools/print-path-lab","pp-form"],
+ ["/hp-printer-offline-connected-wifi","hp-smart-tank-report"],
+ ["/dell-printer-not-connecting-wifi-windows-11","dell-model-compatibility"],
+ ["/epson-not-printing-black-ink","et2800-nozzle-check"],
+ ["/canon-printer-not-responding-windows-11","canon-tr4700-print-notrespond"],
+ ["/guides","id=\"choose-path\""],
  ["/privacy","Google Ads Settings"],
  ["/editorial-policy","How we prepare and maintain"],
 ];
