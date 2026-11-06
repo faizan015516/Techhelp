@@ -45,3 +45,14 @@ test("Search and printer-picker code parses and is loaded on every published pag
  }
  assert.ok(read("assets/site-discovery.css").includes("@media(max-width:580px)"));
 });
+
+test("Global search treats Wi Fi, Wi-Fi and WiFi spellings consistently",()=>{
+ const source=read("assets/site-discovery.js");
+ const match=source.match(/const norm=text=>([^\n;]+);/);
+ assert.ok(match,"search normalizer missing");
+ const normalize=vm.runInNewContext("(text)=>"+match[1]);
+ for(const form of ["WiFi","wi-fi","Wi Fi","WI-FI","Wi   Fi"])
+  assert.equal(normalize(form),"wifi","search spelling differs: "+form);
+ const entries=index.entries.filter(e=>/epson.*wi-fi|wi-fi.*epson/i.test(e.title+" "+e.description));
+ assert.ok(entries.length>0,"search index should retain an Epson Wi-Fi result");
+});
