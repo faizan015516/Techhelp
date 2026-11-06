@@ -44,6 +44,13 @@ const expected=[
  ["/epson-printer-not-connecting-wifi","data-diagnostic=\"epsonwifi\""],
  ["/assets/guide-evidence-workbook.js","function advice("],
  ["/assets/guide-evidence-workbook.css","pr-diagnostic-workbook"],
+ ["/printer-not-printing","class=\"pr-editorial-credit\""],
+ ["/epson-not-printing-black-ink","class=\"pr-editorial-credit\""],
+ ["/canon-printer-not-responding-windows-11","class=\"pr-editorial-credit\""],
+ ["/privacy","working consent-management mechanism"],
+ ["/about","about-accountable-publisher"],
+ ["/editorial-policy","id=\"documentation-checks\""],
+ ["/assets/editorial-attribution.css","pr-editorial-credit"],
  ["/editorial-policy","How we prepare and maintain"],
 ];
 // Read all canonical sitemap routes from the checked-out repository.
