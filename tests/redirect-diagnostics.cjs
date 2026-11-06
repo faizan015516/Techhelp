@@ -6,7 +6,13 @@ const cases = [
   ["https://www.printerresolve.com/", "https://printerresolve.com/"],
   ["https://printerresolve.com/printer-offline-windows-11.html", "https://printerresolve.com/printer-offline-windows-11"],
   ["https://printerresolve.com/printer-print-queue-stuck-windows-11.html", "https://printerresolve.com/printer-print-queue-stuck-windows-11"],
-  ["https://printerresolve.com/hp-printer-offline-connected-wifi.html", "https://printerresolve.com/hp-printer-offline-connected-wifi"]
+  ["https://printerresolve.com/hp-printer-offline-connected-wifi.html", "https://printerresolve.com/hp-printer-offline-connected-wifi"],
+  // Search Console has recorded impressions for old .html variants and the retired refunds URL.
+  ["https://printerresolve.com/printer-not-found-windows-11.html", "https://printerresolve.com/printer-not-found-windows-11"],
+  ["https://printerresolve.com/find-install-printer-driver.html", "https://printerresolve.com/find-install-printer-driver"],
+  ["https://printerresolve.com/printer-printing-blank-pages.html", "https://printerresolve.com/printer-printing-blank-pages"],
+  ["https://printerresolve.com/printer-not-printing.html", "https://printerresolve.com/printer-not-printing"],
+  ["https://printerresolve.com/refunds.html", "https://printerresolve.com/terms"]
 ];
 async function check(start, expected) {
   let url=start;
