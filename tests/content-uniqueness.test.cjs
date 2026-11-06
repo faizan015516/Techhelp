@@ -130,3 +130,42 @@ test("Day 2 driver guide avoids x64 on ARM and pointless third-party downloads",
   'hardware drivers still require compatible ARM64 support'
  ]) assert.ok(s.includes(phrase),"Missing driver preflight safeguard: "+phrase);
 });
+
+test("Independent content audit preserves exact connection decisions instead of generic setup filler",()=>{
+ const s=read("device-setup-installation.html");
+ for(const text of ['id="first-print-path-specific"','USB cable directly into your PC',
+  'Ethernet cable to your router or network','Wi-Fi Direct or a direct printer hotspot',
+  'Shared printer from another PC or print server','same network','ARM-based',
+  'share-a-printer-as-a-network-printer'])
+  assert.ok(s.includes(text),"Missing first-print decision: "+text);
+});
+test("Brother guide distinguishes two documented MFC-L2710DW report types",()=>{
+ const s=read("brother-printer-offline-windows-11.html");
+ for(const text of ['id="brother-report-interpretation"','WLAN Report','Network Configuration Report',
+  '0.0.0.0','wait one minute','Menu → Print Reports → Network Config → Start',
+  'faq00000027_514','faq00002796_514'])
+  assert.ok(s.includes(text),"Missing Brother model-specific evidence: "+text);
+});
+test("Remote assistance safety guide gives concrete scam decisions and source",()=>{
+ const s=read("remote-assistance-safety.html");
+ for(const text of ['id="remote-support-red-flags-decision"',
+  'A pop-up says','Someone calls or messages you unexpectedly',
+  'gift cards, crypto, bank transfer','You already allowed suspicious remote control',
+  'consumer.ftc.gov/articles/how-spot-avoid-and-report-tech-support-scams'])
+  assert.ok(s.includes(text),"Missing safety decision: "+text);
+});
+test("General Windows slowdown guide distinguishes actual printer bottlenecks",()=>{
+ const s=read("windows-pc-slow-errors.html");
+ for(const text of ['id="printing-slow-windows-vs-printer"',
+  'large PDF is sent to print','Task Manager shows heavy disk use',
+  'when no printing','/printer-printing-slowly-windows-11',
+  '/printer-print-queue-stuck-windows-11','troubleshoot-printing-scenarios'])
+  assert.ok(s.includes(text),"Missing printer-specific slow PC decision: "+text);
+});
+test("Substantive 7 November improvements have honest sitemap lastmod entries",()=>{
+ const sm=read("sitemap.xml");
+ for(const slug of ['device-setup-installation','brother-printer-offline-windows-11',
+  'remote-assistance-safety','windows-pc-slow-errors']){
+  assert.ok(sm.includes('<loc>https://printerresolve.com/'+slug+'</loc><lastmod>2026-11-07</lastmod>'));
+ }
+});
