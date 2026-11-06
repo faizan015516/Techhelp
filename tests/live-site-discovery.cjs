@@ -10,6 +10,13 @@ async function waitForRelease(page,url){
   try{
    await page.goto(base+url+(url.includes("?")?"&":"?")+"discoveryAudit="+Date.now()+"-"+attempt,{waitUntil:"domcontentloaded",timeout:25000});
    await page.locator(".pr-discovery-controls .pr-top-search-input").waitFor({timeout:6500});
+   // The header inputs are injected before the asynchronously loaded CSS finishes.
+   // Do not mistake temporary unstyled geometry for a permanent mobile layout failure.
+   await page.waitForFunction(()=>{
+     const link=document.querySelector('link[href*="/assets/site-discovery.css"]');
+     const control=document.querySelector(".pr-discovery-controls");
+     return !!(link?.sheet&&control&&getComputedStyle(control).display==="flex"&&control.getBoundingClientRect().width>150);
+   },null,{timeout:12000});
    return;
   }catch(error){lastError=error.message;}
   if(attempt<8)await new Promise(r=>setTimeout(r,8000));
@@ -37,8 +44,12 @@ async function verifyPrinter(page){
  const dialog=page.locator(".pr-discovery-dialog");
  await dialog.waitFor();
  assert.equal(await dialog.locator(".pr-brand-button").count(),6,"Five brands plus other/unsure required");
+ await page.waitForFunction(()=>{
+   const status=document.querySelector(".pr-discovery-dialog .pr-result-status");
+   return status?.textContent&& !status.textContent.includes("Loading");
+ },null,{timeout:12000});
  await dialog.locator('[data-brand="canon"]').click();
- assert.ok(await dialog.locator(".pr-change-printer").isVisible(),"Change printer control missing");
+ await dialog.locator(".pr-change-printer").waitFor({state:"visible",timeout:5000});
  assert.match(await dialog.locator("#pr-dialog-title").textContent(),/Canon printer guides/);
  await dialog.locator(".pr-change-printer").click();
  assert.ok(await dialog.locator('[data-brand="epson"]').isVisible(),"Selecting a different printer should be possible");
