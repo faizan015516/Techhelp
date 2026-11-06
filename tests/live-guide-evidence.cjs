@@ -47,6 +47,35 @@ async function view(page,record){
  await panel.screenshot({path:path.join(root,"LIVE-evidence-"+record.topic+"-"+page.viewportSize().width+".png"),animations:"disabled"});
  console.log("FLAGSHIP_EVIDENCE_PASS "+JSON.stringify({route:record.route,...info,advice:actual.slice(0,135)}));
 }
+async function controlledTest(page,label){
+ const base="https://printerresolve.com/tools/print-path-lab";
+ let ready=false;
+ for(let attempt=0;attempt<18;attempt++){
+  await page.goto(base+"?controlledEvidence="+Date.now()+"-"+attempt,{waitUntil:"domcontentloaded",timeout:35000});
+  ready=await page.locator('#pr-controlled-form[data-ready="yes"]').count()===1;
+  if(ready)break;
+  if(attempt<17)await pause(8000);
+ }
+ assert.ok(ready,"Controlled test log not deployed or not initialized on "+base);
+ await page.locator("#pr-controlled-model").fill("Epson ET-2800");
+ await page.locator("#pr-controlled-before").selectOption("waiting");
+ await page.locator("#pr-controlled-action").selectOption("destination");
+ await page.locator("#pr-controlled-after").selectOption("printed");
+ for(const id of ["same-printer","same-input","same-connection","one-change"])
+  await page.locator("#pr-controlled-"+id).check();
+ await page.locator('#pr-controlled-form button[type="submit"]').click();
+ await page.locator("#pr-controlled-result").waitFor({state:"visible"});
+ assert.match(await page.locator("#pr-controlled-title").textContent(),/Improvement observed/);
+ assert.match(await page.locator("#pr-controlled-output").inputValue(),/not proof of causation or a durable repair/);
+ const metrics=await page.evaluate(()=>({width:document.documentElement.scrollWidth,viewport:innerWidth}));
+ assert.ok(metrics.width<=metrics.viewport+3,"Controlled log mobile horizontal overflow: "+JSON.stringify(metrics));
+ await page.locator("#controlled-test-log").screenshot({path:path.join(root,"LIVE-evidence-controlled-"+label+".png"),animations:"disabled"});
+ await page.locator("#pr-controlled-same-input").uncheck();
+ await page.locator('#pr-controlled-form button[type="submit"]').click();
+ assert.match(await page.locator("#pr-controlled-title").textContent(),/not controlled/);
+ console.log("CONTROLLED_EVIDENCE_BROWSER_PASS "+JSON.stringify({layout:label,...metrics,recovered:true,uncontrolledCaution:true}));
+}
+
 (async()=>{
  const browser=await chromium.launch({headless:true});
  try{
@@ -57,6 +86,8 @@ async function view(page,record){
   await view(mobile,cases[2]);
   await view(mobile,cases[7]);
   await view(mobile,cases[5]);
+  await controlledTest(desktop,"desktop");
+  await controlledTest(mobile,"mobile");
   console.log("FLAGSHIP_EVIDENCE_SUMMARY 12/12 interactive panels and branching tested, no mobile horizontal overflow");
  }finally{await browser.close();}
 })().catch(e=>{console.error(e.stack);process.exitCode=1;});

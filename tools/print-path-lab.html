@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Printer Failure Isolation Lab — Evidence-Based Print Path Guide | Printer Resolve</title>
-<meta name="description" content="Compare an internal printer test, another device, network status and Windows queue to isolate printer, network, driver and document problems. Private browser-only diagnostic worksheet.">
+<meta name="description" content="Compare printer tests, network status and Windows queues, then record controlled before-and-after results without uploading data. Free private printer diagnostic lab.">
 <link rel="canonical" href="https://printerresolve.com/tools/print-path-lab">
 <meta name="theme-color" content="#0b1422">
 <link rel="stylesheet" href="/assets/experience.css"><link rel="stylesheet" href="/assets/future-2.css?v=20261106-contrast-4">
@@ -50,7 +50,7 @@
 .pp-footer a{margin:0 9px;color:#b2e7ff}
 @media(max-width:830px){.pp-layout{grid-template-columns:1fr}.pp-hero{padding:65px 0 55px}.pp-hero img{opacity:.12;width:76vw}.pp-card{padding:22px}.pp-main{padding:35px 0 60px}.pp-article{margin-top:45px}}
 @media(prefers-reduced-motion:reduce){.pp-hero img{animation:none!important}}
-</style><link rel="stylesheet" href="/assets/site-discovery.css?v=20261106-search-2"><script defer src="/assets/site-discovery.js?v=20261106-search-3"></script></head><body class="nx-lab">
+</style><link rel="stylesheet" href="/assets/site-discovery.css?v=20261106-search-2"><script defer src="/assets/site-discovery.js?v=20261106-search-3"></script><link rel="stylesheet" href="/assets/controlled-test-log.css?v=20261106-day3-1"><script defer src="/assets/controlled-test-log.js?v=20261106-day3-1"></script></head><body class="nx-lab">
 <a href="#main" class="skip">Skip to content</a>
 <header class="site-header"><div class="shell nav-wrap"><a class="brand" href="/">PrinterResolve</a><nav class="nav-links" aria-label="Navigation"><a href="/guides">All guides</a><a href="/tools/connection-path">IPv4 lab</a><a href="/privacy">Privacy</a></nav></div></header>
 <main id="main">
@@ -94,7 +94,47 @@
 <div class="pp-source"><a href="https://learn.microsoft.com/en-us/powershell/module/printmanagement/get-printerport?view=windowsserver2025-ps" rel="noopener noreferrer">Microsoft Learn — Get-PrinterPort</a><p>Read-only listing of Windows printer ports; support depends on the installed module.</p></div>
 <div class="pp-source"><a href="https://learn.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2025-ps" rel="noopener noreferrer">Microsoft Learn — Test-NetConnection</a><p>Details and limits of testing a known TCP endpoint. Do not assume all printers use port 9100.</p></div>
 <p><strong>Editorial boundary:</strong> This worksheet and sample scenarios are original analytical illustrations based on documented behavior, not reports of hands-on testing on a particular printer model. There is no remote support, login requirement or payment. See <a href="/editorial-policy">our editorial policy</a> and <a href="/privacy">Privacy Policy</a>.</p>
-</article></div></div></main>
+</article>
+<section id="controlled-test-log" class="pp-card pp-controlled" aria-labelledby="pr-controlled-heading">
+<p class="pp-label">Reader-operated test log · Not a publisher hardware test</p>
+<h2 id="pr-controlled-heading">Did one change actually improve your printer?</h2>
+<p class="pp-controlled-lede">Use the <strong>same printer, same input and same connection</strong> before and after one permitted change. Choose the outcomes you personally saw. This tool reports whether the comparison is meaningful—it cannot certify a fix, prove causation or access your hardware.</p>
+<p class="pp-controlled-notice"><strong>Privacy and safety:</strong> This worksheet runs only in your browser. Nothing is uploaded or saved to an account. Do not enter serial numbers, network passwords, IP addresses, full document titles or workplace identifiers. Never change settings on a shared or managed printer without permission.</p>
+<form id="pr-controlled-form" class="pp-controlled-form">
+<div><label for="pr-controlled-model">Printer model or family (optional)</label><input id="pr-controlled-model" type="text" maxlength="80" autocomplete="off" placeholder="Example: Epson ET-2800 (no serial number)"><p class="pp-controlled-help">Use a model name only; leave blank if unsure.</p></div>
+<div><label for="pr-controlled-test">Which single test are you comparing?</label><select id="pr-controlled-test" required>
+<option value="plain">Same one-line Windows document</option><option value="pdf">Same PDF from the same application</option><option value="internal">Same printer-generated status/nozzle test</option><option value="network">Same one-page network print from this PC</option><option value="other">Another repeatable one-page print</option>
+</select></div>
+<div><label for="pr-controlled-before">What happened BEFORE?</label><select id="pr-controlled-before" required>
+<option value="unknown">Not tested / not recorded</option><option value="printed">Expected content printed</option><option value="blank">Blank or incomplete output</option><option value="waiting">Remained queued / did not print</option><option value="error">Printer or Windows displayed an error</option>
+</select></div>
+<div><label for="pr-controlled-action">What ONE change did you make?</label><select id="pr-controlled-action" required>
+<option value="none">No deliberate change: repeated the same test</option><option value="destination">Selected the verified physical printer</option><option value="cable">Checked or reseated one permitted cable</option><option value="queue">Changed a pause/offline setting for own queue</option><option value="settings">Changed one print-dialog setting</option><option value="viewer">Reopened the file with a trusted application</option><option value="official">Applied one authorized official driver step</option><option value="other">Made another single documented change</option>
+</select></div>
+<div><label for="pr-controlled-after">What happened AFTER?</label><select id="pr-controlled-after" required>
+<option value="unknown">Not tested / not recorded</option><option value="printed">Expected content printed</option><option value="blank">Blank or incomplete output</option><option value="waiting">Remained queued / did not print</option><option value="error">Printer or Windows displayed an error</option>
+</select></div>
+<fieldset class="pp-controlled-full" style="border:1px solid #547b9d;border-radius:13px;padding:17px 19px"><legend style="padding:0 6px;color:#eaf8ff;font-weight:750">Verify the comparison conditions</legend>
+<div class="pp-controlled-checks">
+<label><input id="pr-controlled-same-printer" type="checkbox">Same physical printer both times</label>
+<label><input id="pr-controlled-same-input" type="checkbox">Same one-page input / test pattern</label>
+<label><input id="pr-controlled-same-connection" type="checkbox">Same computer/device and connection</label>
+<label><input id="pr-controlled-one-change" type="checkbox">No more than one deliberate change</label>
+</div></fieldset>
+<div class="pp-controlled-full"><button type="submit" class="pp-button">Compare my real observations</button><p class="pp-controlled-help">Unconfirmed conditions produce an “not comparable” result, not an invented conclusion.</p></div>
+</form>
+<div id="pr-controlled-result" class="pp-controlled-result" hidden aria-labelledby="pr-controlled-title">
+<h3 id="pr-controlled-title"></h3>
+<p id="pr-controlled-why"></p>
+<p><strong>Next safe check:</strong> <span id="pr-controlled-next"></span></p>
+<label for="pr-controlled-output" style="display:block;color:#e8f6ff;font-weight:750">Your private, editable-by-copy observation note</label>
+<textarea id="pr-controlled-output" readonly aria-label="Generated private printer observation record"></textarea>
+<button type="button" class="pp-button" id="pr-controlled-copy">Copy my record</button>
+</div>
+<p id="pr-controlled-status" class="pp-controlled-status" role="status" aria-live="polite"></p>
+<p class="pp-controlled-help">The result is an interpretation of your answers, not a measured repair success rate. A PDF printing after one adjustment does not establish that a future PDF will print, and an intermittent problem can recover without a lasting fix. Consult the <a href="/editorial-policy">editorial methodology</a>.</p>
+</section>
+</div></div></main>
 <footer class="pp-footer"><nav aria-label="Information pages"><a href="/">Home</a><a href="/guides">Guides</a><a href="/about">About</a><a href="/editorial-policy">Editorial policy</a><a href="/privacy">Privacy</a><a href="/contact">Contact</a></nav><p>© 2026 Printer Resolve · Independent educational publisher</p></footer>
 <script>
 (()=>{"use strict";
