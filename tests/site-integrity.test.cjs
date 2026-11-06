@@ -38,3 +38,26 @@ test("AdSense privacy notices and evidence-led diagnostic pages are included",()
   assert.match(read("printer-not-connecting-wifi.html"),/wifi-four-stages/);
   assert.match(read("printer-printing-blank-pages.html"),/blank-source-study/);
 });
+
+test("PrinterResolve has a consistent branded favicon on every page",()=>{
+  assert.ok(known.has("favicon.svg"),"Missing scalable PrinterResolve favicon");
+  assert.ok(known.has("favicon.ico"),"Missing legacy browser favicon");
+  const graphic=read("favicon.svg");
+  assert.match(graphic,/<svg\b/);
+  assert.match(graphic,/PrinterResolve printer icon/);
+  assert.match(graphic,/#173B59|#0B192B/);
+  const icon=fs.readFileSync(path.join(root,"favicon.ico"));
+  assert.ok(icon.length>1000,"ICO file unexpectedly small");
+  assert.equal(icon.readUInt16LE(0),0,"ICO reserved field");
+  assert.equal(icon.readUInt16LE(2),1,"ICO image type");
+  assert.equal(icon.readUInt16LE(4),1,"ICO entry count");
+  assert.equal(icon.readUInt8(6),32,"ICO width");
+  assert.equal(icon.readUInt8(7),32,"ICO height");
+  assert.equal(icon.readUInt32LE(14),icon.length-22,"ICO embedded image length");
+  assert.equal(pages.length,39,"Expected all 39 published HTML pages");
+  for(const p of pages){
+    const html=read(p);
+    assert.ok(html.includes('href="/favicon.ico?v=20261107-1"'),p+" missing fallback favicon");
+    assert.ok(html.includes('href="/favicon.svg?v=20261107-1"'),p+" missing scalable favicon");
+  }
+});
