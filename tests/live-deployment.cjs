@@ -21,6 +21,11 @@ const expected=[
  ["/epson-not-printing-black-ink","et2800-nozzle-check"],
  ["/canon-printer-not-responding-windows-11","canon-tr4700-print-notrespond"],
  ["/guides","id=\"choose-path\""],
+ ["/printer-not-printing","four-test-isolation"],
+ ["/printer-not-connecting-wifi","wifi-report-decision"],
+ ["/printer-paper-jam-no-paper-stuck","jam-stage-matrix"],
+ ["/printer-printing-slowly-windows-11","prt-timing-form"],
+ ["/assets/print-timing-lab.js","function diagnose"],
  ["/privacy","Google Ads Settings"],
  ["/editorial-policy","How we prepare and maintain"],
 ];
