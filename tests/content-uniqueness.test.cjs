@@ -35,3 +35,16 @@ test("Core troubleshooting guides distinguish causes rather than promising one u
  };
  for(const [file,phrases] of Object.entries(checks)){const s=read(file).toLowerCase();for(const phrase of phrases)assert.ok(s.includes(phrase.toLowerCase()),file+" missing: "+phrase)}
 });
+
+test("Manufacturer-specific procedures are backed by their primary sources",()=>{
+ const cases=[
+ ["hp-printer-offline-connected-wifi.html",["hp-smart-tank-report","Information","Resume","ish_6721056-6721100-16","not the result of a hands-on printer test"]],
+ ["dell-printer-not-connecting-wifi-windows-11.html",["dell-model-compatibility","C1765nfw","E525w","3000cn","000133596","not a device test"]]
+ ];
+ for(const [file,phrases] of cases){const s=read(file).toLowerCase();for(const phrase of phrases)assert.ok(s.includes(phrase.toLowerCase()),file+" missing primary-source specificity: "+phrase)}
+});
+test("Guide library routes distinct symptoms to distinct first steps",()=>{
+ const s=read("guides.html");
+ for(const target of ["id=\"choose-path\"","/printer-not-connecting-wifi","/printer-not-found-windows-11","/printer-offline-windows-11","/printer-print-queue-stuck-windows-11","/printer-printing-blank-pages","/printer-printing-cut-off-pages"])
+  assert.ok(s.includes(target),"Missing decision guide route "+target);
+});
