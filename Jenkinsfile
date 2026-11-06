@@ -61,9 +61,11 @@ pipeline {
 
             withSonarQubeEnv('SonarQube') {withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]){
                 sh """
-                    ${scannerHome}/bin/sonar-scanner \
-                      -Dsonar.projectKey=cicd \
-                      -Dsonar.sources=. \
+                    ${scannerHome}/bin/sonar-scanner \\
+                      -Dsonar.projectKey=cicd \\
+                      -Dsonar.sources=. \\
+                      -Dsonar.token=\$SONAR_TOKEN \\
+                      -Dsonar.host.url=${SONAR_HOST_URL} \\
                       -Dsonar.exclusions=**/.git/**,**/node_modules/**,**/dist/**,**/build/**
                 """
                  }
@@ -89,10 +91,10 @@ pipeline {
 
         stage('ECR Login') {
             steps {
-                sh '''
-                   aws ecr get-login-password --region ap-south-1 
-                   | docker login --username AWS --password-stdin 414343714505.dkr.ecr.ap-south-1.amazonaws.com
-                   """
+                sh """
+                    aws ecr get-login-password --region ${AWS_REGION} | \\
+                    docker login --username AWS --password-stdin ${ECR_REGISTRY}
+                """
             }
         }
 
@@ -109,12 +111,12 @@ pipeline {
             steps {
                 sh """
                     docker pull ${FULL_IMAGE}
-                    docker rm -f techhelp
+                    docker rm -f techhelp || true
 
-                    docker run -d \
-                      --name techhelp \
-                      --restart unless-stopped \
-                      -p 80:81 \
+                    docker run -d \\
+                      --name techhelp \\
+                      --restart unless-stopped \\
+                      -p 80:81 \\
                       "${FULL_IMAGE}"
                 """
             }
