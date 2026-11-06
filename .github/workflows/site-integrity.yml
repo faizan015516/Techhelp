@@ -21,4 +21,4 @@ jobs:
         with:
           node-version: '22'
       - name: Run static site and tool tests
-        run: node --test tests/site-integrity.test.cjs tests/content-uniqueness.test.cjs
+        run: node --test tests/site-integrity.test.cjs tests/content-uniqueness.test.cjs tests/printer-360.test.cjs
