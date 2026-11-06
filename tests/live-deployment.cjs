@@ -2,8 +2,14 @@
 const assert=require("node:assert/strict");
 const base="https://printerresolve.com";
 const expected=[
- ["/","The problem"],
- ["/guides","The complete library"],
+ ["/","nx-home-showcase"],
+ ["/guides","nx-category-art"],
+ ["/printer-offline-windows-11","nx-document"],
+ ["/printer-driver-unavailable-windows-11","nx-hero"],
+ ["/printer-printing-blank-pages","nx-inline-visual"],
+ ["/assets/scene-wifi.svg","<svg"],
+ ["/assets/scene-driver.svg","<svg"],
+ ["/assets/future-2.css","nx-home-showcase"],
  ["/tools/connection-path","Printer Connection Lab"],
  ["/tools/page-fit","Paper Fit"],
  ["/editorial-policy","How we prepare and maintain"],
@@ -23,5 +29,5 @@ async function get(path){const url=base+path+"?qa="+Date.now();const response=aw
   if(attempt<8)await delay(10000)
  }
  assert.ok(success,"Live deployment not verified. Check Cloudflare Pages deployment source/status and DNS: "+failures.join("; "));
- process.stdout.write("Live PrinterResolve verified: homepage, guides, IPv4 lab, paper-fit lab and editorial policy.\n");
+ process.stdout.write("Live PrinterResolve FULL 3D verified: homepage multi-scene gallery, guide library, articles, category SVGs, shared 3D styles, labs and editorial policy.\n");
 })().catch(err=>{process.stderr.write(err.stack+"\n");process.exitCode=1});
