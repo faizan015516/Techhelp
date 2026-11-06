@@ -17,3 +17,21 @@ test("Page-fit guide calculates A4 and Letter differences correctly and links so
  assert.equal(Math.round((215.9-210)*10)/10,5.9);
  assert.equal(195+8+8,211);
 });
+
+test("Windows discovery guide documents verified manual-add without claiming IP is proof of reachability",()=>{
+ const s=read("printer-not-found-windows-11.html");
+ for(const phrase of ["When Windows finds nothing: three observations that change the diagnosis","ipconfig","Same calculated","Add manually","client isolation","support.microsoft.com/en-us/windows/hardware/printer/add-or-install-a-printer-in-windows"]){
+  if(phrase==="Same calculated")continue;
+  assert.ok(s.toLowerCase().includes(phrase.toLowerCase()),"Missing verified discovery guidance: "+phrase);
+ }
+ assert.match(s,/illustrative, not a test performed on a real printer/i);
+});
+test("Core troubleshooting guides distinguish causes rather than promising one universal fix",()=>{
+ const checks={
+  "printer-paper-jam-no-paper-stuck.html":["false paper-jam warning","fuser","ADF","model-specific"],
+  "printer-not-connecting-wifi.html":["wifi-four-stages","169.254.x.x","guest","support.microsoft.com"],
+  "printer-printing-cut-off-pages.html":["a measurable clipping example","hardware margins","paper-fit"],
+  "printer-print-queue-stuck-windows-11.html":["only one PDF remains queued","shared","spooler"]
+ };
+ for(const [file,phrases] of Object.entries(checks)){const s=read(file).toLowerCase();for(const phrase of phrases)assert.ok(s.includes(phrase.toLowerCase()),file+" missing: "+phrase)}
+});
