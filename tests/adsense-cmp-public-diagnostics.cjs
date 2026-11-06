@@ -24,11 +24,13 @@ async function run(browser,url,index){
  page.on("pageerror",e=>errors.push("pageerror "+e.message.slice(0,500)));
  const started=Date.now();
  let navigation;
- try{const response=await page.goto(url,{waitUntil:"domcontentloaded",timeout:35000});navigation={status:response?.status(),url:page.url()};}
+ try{const response=await page.goto(url,{waitUntil:"domcontentloaded",timeout:35000});const headers=response?.headers()||{};navigation={status:response?.status(),url:page.url(),referrerPolicy:headers["referrer-policy"]||"(none: default policy)",contentSecurityPolicy:headers["content-security-policy"]||"(none)",crossOriginOpenerPolicy:headers["cross-origin-opener-policy"]||"(none)"};}
  catch(e){navigation={error:e.message,url:page.url()}}
  await page.waitForTimeout(11000);
  const status=await page.evaluate(async()=>{
    const script=Array.from(document.querySelectorAll('script[src]')).filter(s=>/adsbygoogle|fundingchoices|googlefc/i.test(s.src)).map(s=>({origin:new URL(s.src).origin,path:new URL(s.src).pathname,publisherId:s.src.match(/ca-pub-\d+/)?.[0]||null}));
+   const referrerMeta=document.querySelector('meta[name="referrer"]')?.content||null;
+   const referrerEffective=document.referrer? "present" : "(top-level direct navigation)";
    const cmp={exists:typeof window.__tcfapi==="function"};
    if(cmp.exists){try{
      const result=await Promise.race([
@@ -40,7 +42,7 @@ async function run(browser,url,index){
    }catch(e){cmp.error=e.message}}
    const fcMarkers=[...document.querySelectorAll("[id],[class]")].filter(e=>(String(e.id)+" "+String(e.className)).toLowerCase().includes("googlefc")||(String(e.id)+" "+String(e.className)).includes("fc-consent")).length;
    const overlays=[...document.querySelectorAll('[role="dialog"],iframe')].map(e=>({tag:e.tagName,role:e.getAttribute("role"),src:e.tagName==="IFRAME"?new URL(e.src||location.href).origin:undefined,visible:!!(e.offsetWidth&&e.offsetHeight)}));
-   return {title:document.title,script,cmp,hasGooglefc:!!window.googlefc,googlefcInactive:!!window.googlefcInactive,googlefcLoaded:!!window.googlefcLoaded,fcMarkers,overlays:overlays.slice(0,15),hasControlledMessagingFunction:typeof window.googlefc?.controlledMessagingFunction==="function"};
+   return {title:document.title,referrerMeta,referrerEffective,script,cmp,hasGooglefc:!!window.googlefc,googlefcInactive:!!window.googlefcInactive,googlefcLoaded:!!window.googlefcLoaded,fcMarkers,overlays:overlays.slice(0,15),hasControlledMessagingFunction:typeof window.googlefc?.controlledMessagingFunction==="function"};
  });
  const screenshot=path.join(root,"ad-consent-public-test-"+index+".png");
  await page.screenshot({path:screenshot,fullPage:false,animations:"disabled"});
