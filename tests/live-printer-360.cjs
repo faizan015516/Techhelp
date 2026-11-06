@@ -55,8 +55,23 @@ async function verifyPage(page,{url,kind,file}){
   for(const spec of cases)await verifyPage(page,spec);
   const mobile=await browser.newPage({...devices["Pixel 7"],viewport:{width:393,height:851}});
   await verifyPage(mobile,{url:"/brother-printer-offline-windows-11",kind:"brother",file:"LIVE-printer-360-brother-mobile.png"});
-  const scroll=await mobile.evaluate(()=>({w:document.documentElement.scrollWidth,v:window.innerWidth}));
-  assert.ok(scroll.w<=scroll.v+2,"Mobile viewport overflow: "+JSON.stringify(scroll));
-  console.log("360_VISUAL_SUMMARY 5 out of 5 3D viewers mounted and arrow-key rotation changed canvas; mobile layout fits");
+  const layout=await mobile.evaluate(()=>{
+    const box=s=>document.querySelector(s)?.getBoundingClientRect();
+    const button=box(".nx-hero-actions"),viewer=box(".pr360"),hero=box(".nx-hero-art");
+    return {buttonBottom:button?.bottom,viewerTop:viewer?.top,heroTop:hero?.top,viewport:window.innerWidth,scrollWidth:document.documentElement.scrollWidth};
+  });
+  assert.ok(layout.viewerTop>=layout.buttonBottom+6,"Mobile 3D viewer overlaps hero actions: "+JSON.stringify(layout));
+  assert.ok(layout.scrollWidth<=layout.viewport+2,"Mobile viewport overflow: "+JSON.stringify(layout));
+  await mobile.locator(".nx-hero").screenshot({path:path.join(out,"LIVE-printer-360-brother-mobile-full-hero.png"),animations:"disabled"});
+  await verifyPage(mobile,{url:"/",kind:"home",file:"LIVE-printer-360-home-mobile.png"});
+  const homeLayout=await mobile.evaluate(()=>{
+    const actions=document.querySelector(".hero-actions").getBoundingClientRect();
+    const viewer=document.querySelector(".hero-art .pr360").getBoundingClientRect();
+    return {actionsBottom:actions.bottom,viewerTop:viewer.top,scrollWidth:document.documentElement.scrollWidth,viewport:window.innerWidth};
+  });
+  assert.ok(homeLayout.viewerTop>=homeLayout.actionsBottom-3,"Home 3D collides with hero action buttons: "+JSON.stringify(homeLayout));
+  assert.ok(homeLayout.scrollWidth<=homeLayout.viewport+2,"Home mobile overflow: "+JSON.stringify(homeLayout));
+  await mobile.locator(".hero").screenshot({path:path.join(out,"LIVE-printer-360-home-mobile-full-hero.png"),animations:"disabled"});
+  console.log("360_VISUAL_SUMMARY 6 out of 6 3D viewers mounted and keyboard rotation changed canvas; mobile hero layouts don't overlap");
  }finally{await browser.close()}
 })().catch(e=>{console.error(e.stack);process.exitCode=1});
