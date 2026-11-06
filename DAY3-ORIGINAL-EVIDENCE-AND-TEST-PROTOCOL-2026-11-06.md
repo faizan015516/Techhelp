@@ -21,7 +21,7 @@ The reader records:
 - actual **after** outcome
 - independent confirmation of the same physical printer, the same test input, the same device/connection, and no more than one deliberate change
 
-The comparison engine intentionally has **seven** distinct outcomes:
+The comparison engine intentionally has **eight** distinct outcomes:
 
 1. `incomplete`: two real results were not recorded.
 2. `not-comparable`: controls were not confirmed; cannot interpret an apparent improvement.
@@ -29,7 +29,8 @@ The comparison engine intentionally has **seven** distinct outcomes:
 4. `recovered`: expected page printed following one change; helpful observation, not causal proof or durable repair.
 5. `regression`: a previously passing test now fails; stop stacking changes.
 6. `stable`: both trials succeeded; no failure was reproduced.
-7. `unresolved` / `changed`: both failed in the same or different ways, respectively; don't declare success.
+7. `unresolved`: both attempts failed in the same way; no success was observed.
+8. `changed`: both attempts failed differently; an altered symptom is not a repair.
 
 All note generation occurs in browser memory. The reader may copy a textual report manually; the website performs **no telemetry, upload, cookie access or storage** through this new component. It does not scan or print to devices. Real-user observations are neither collected by the publisher nor presented as publisher-certified success stories.
 
