@@ -74,3 +74,17 @@ test("Timing calculator interprets reader measurements and rejects impossible in
  const balanced=diagnose(20,100,5);assert.equal(balanced.pattern,"No strong first-versus-later imbalance");
  for(const args of [[0,100,5],[90,60,5],[50,50,5],[10,90,1],[10,90,101],[10,90,2.5]]) assert.equal(diagnose(...args).ok,false);
 });
+
+test("Spooler crash guide distinguishes event-timing evidence from an offline queue",()=>{
+ const s=read("print-spooler-keeps-stopping-windows-11.html");
+ for(const expected of [
+  'id="spooler-event-evidence"',
+  'Service Control Manager',
+  'PrintService',
+  'Service remains Running; printer is Offline.',
+  'A repeatable timing relationship',
+  'fix-print-spooler-service-not-running-errors-in-windows',
+  'Free independent educational website; not affiliated with manufacturers.'
+ ]) assert.ok(s.includes(expected), "Missing spooler diagnostic evidence: "+expected);
+ assert.doesNotMatch(s,/Independent service; not affiliated with manufacturers\./);
+});
