@@ -20,7 +20,7 @@ const featuredPaths=[
 ];
 const labels={printer:"Printer guide",hp:"HP",canon:"Canon",epson:"Epson",brother:"Brother",dell:"Dell",tool:"Interactive tool",windows:"Windows guide",info:"Information",library:"Library",home:"Home"};
 let entries=null,loadPromise=null,dialog,results,dialogTitle,dialogIntro,status,searchBox,brandFilter,brandRegion,selectedBrand=null,currentMode="printer";
-const norm=text=>String(text||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/wi[\s-]?fi/g,"wifi").replace(/[^a-z0-9]+/g," ").trim();
+const norm=text=>String(text||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/wi[\s-]*fi/g,"wifi").replace(/[^a-z0-9]+/g," ").trim();
 const safePath=v=>/^\/(?!\/)[a-z0-9\-/]*$/i.test(v);
 function fetchIndex(){
  if(entries)return Promise.resolve(entries);
