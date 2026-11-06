@@ -95,6 +95,12 @@ function renderBrand(){
  if(!entries)return;
  results.replaceChildren();
  brandRegion.querySelectorAll("button[data-brand]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.brand===selectedBrand)));
+ dialog.dataset.stage=selectedBrand?"results":"choose";
+ const changeBtn=dialog.querySelector(".pr-change-printer");
+ if(changeBtn)changeBtn.hidden=!selectedBrand;
+ const chosen=BRAND_INFO.find(b=>b.id===selectedBrand);
+ dialogTitle.textContent=selectedBrand?(selectedBrand==="any"?"Guides for any printer":chosen.name+" printer guides"):"Which printer are you troubleshooting?";
+ dialogIntro.textContent=selectedBrand?"Choose the closest problem below, or use Change printer to select another brand.":"Choose an available brand, then pick the symptom that matches your problem.";
  if(!selectedBrand){
   status.textContent="Choose one of the "+(BRAND_INFO.length-1)+" listed printer brands or select “Other / unsure”.";
   results.appendChild(el("p","pr-no-results","The matching guides will appear here after you choose a printer. Exact button menus and driver procedures vary by model."));
@@ -108,7 +114,13 @@ function renderBrand(){
   return typed.split(" ").filter(Boolean).every(t=>hay.includes(t));
  };
  const specific=entries.filter(e=>e.category===selectedBrand&&matchesTerms(e));
- const general=entries.filter(e=>["printer","tool"].includes(e.category)&&e.path!=="/guides"&&matchesTerms(e));
+ const general=entries.filter(e=>["printer","tool"].includes(e.category)&&e.path!=="/guides"&&matchesTerms(e))
+  .sort((a,b)=>{
+   const classA=a.category==="printer"?0:1,classB=b.category==="printer"?0:1;
+   if(classA!==classB)return classA-classB;
+   const ia=featuredPaths.indexOf(a.path),ib=featuredPaths.indexOf(b.path);
+   return (ia<0?999:ia)-(ib<0?999:ib);
+  });
  status.textContent=(specific.length+general.length)+" relevant guide"+(specific.length+general.length===1?"":"s")+" for "+(selectedBrand==="any"?"any printer":brandName);
  if(specific.length){sectionHeading(brandName+" troubleshooting guides");renderCards(specific)}
  if(general.length){
@@ -121,7 +133,7 @@ function ensureUI(){
  if(dialog)return;
  const overlay=el("dialog","pr-discovery-dialog");
  overlay.setAttribute("aria-labelledby","pr-dialog-title");
- overlay.innerHTML='<div class="pr-dialog-shell"><div class="pr-dialog-top"><div><p class="pr-dialog-kicker">PRINTERRESOLVE · FIND WHAT YOU NEED</p><h2 id="pr-dialog-title">Choose your printer</h2><p class="pr-dialog-intro">Start with a brand, then open the appropriate guide.</p></div><button class="pr-dialog-close" type="button" aria-label="Close dialog">×</button></div><div class="pr-dialog-printer"><p class="pr-dialog-section-title">Printers with dedicated guides</p><div class="pr-brand-list" role="group" aria-label="Available printer brands"></div><label class="pr-filter-label" for="pr-brand-filter">Narrow guides by problem <span>(optional)</span></label><input id="pr-brand-filter" class="pr-dialog-input" type="search" placeholder="Offline, Wi-Fi, ink, driver, paper jam…" autocomplete="off"><p class="pr-dialog-hint">We list only brands and guides that exist on this website. These are educational pages, not a complete manufacturer model database.</p></div><div class="pr-dialog-search" hidden><label class="pr-filter-label" for="pr-search-full">Search articles and tools</label><input id="pr-search-full" class="pr-dialog-input" type="search" placeholder="Try “Epson black ink” or “printer paper jam”" autocomplete="off"></div><div class="pr-dialog-result-zone"><p class="pr-result-status" role="status" aria-live="polite"></p><div class="pr-search-results"></div></div><div class="pr-dialog-foot"><a href="/guides">Browse all guides</a><a href="/printer-problem-checker">Not sure? Use problem checker</a></div></div>';
+ overlay.innerHTML='<div class="pr-dialog-shell"><div class="pr-dialog-top"><div><p class="pr-dialog-kicker">PRINTERRESOLVE · FIND WHAT YOU NEED</p><h2 id="pr-dialog-title">Choose your printer</h2><p class="pr-dialog-intro">Start with a brand, then open the appropriate guide.</p></div><button class="pr-dialog-close" type="button" aria-label="Close dialog">×</button></div><div class="pr-dialog-printer"><button class="pr-change-printer" type="button" hidden>← Change printer</button><p class="pr-dialog-section-title">Printers with dedicated guides</p><div class="pr-brand-list" role="group" aria-label="Available printer brands"></div><label class="pr-filter-label" for="pr-brand-filter">Narrow guides by problem <span>(optional)</span></label><input id="pr-brand-filter" class="pr-dialog-input" type="search" placeholder="Offline, Wi-Fi, ink, driver, paper jam…" autocomplete="off"><p class="pr-dialog-hint">We list only brands and guides that exist on this website. These are educational pages, not a complete manufacturer model database.</p></div><div class="pr-dialog-search" hidden><label class="pr-filter-label" for="pr-search-full">Search articles and tools</label><input id="pr-search-full" class="pr-dialog-input" type="search" placeholder="Try “Epson black ink” or “printer paper jam”" autocomplete="off"></div><div class="pr-dialog-result-zone"><p class="pr-result-status" role="status" aria-live="polite"></p><div class="pr-search-results"></div></div><div class="pr-dialog-foot"><a href="/guides">Browse all guides</a><a href="/printer-problem-checker">Not sure? Use problem checker</a></div></div>';
  document.body.appendChild(overlay);
  dialog=overlay;
  dialogTitle=dialog.querySelector("#pr-dialog-title");
@@ -144,7 +156,12 @@ function ensureUI(){
   if(!btn)return;
   selectedBrand=btn.dataset.brand;
   renderBrand();
-  dialog.querySelector(".pr-dialog-result-zone").scrollIntoView({block:"nearest",behavior:"auto"});
+  dialog.scrollTop=0;
+ });
+ const changePrinter=dialog.querySelector(".pr-change-printer");
+ changePrinter.addEventListener("click",()=>{
+  selectedBrand=null;brandFilter.value="";renderBrand();dialog.scrollTop=0;
+  brandRegion.querySelector("button[data-brand]")?.focus();
  });
  searchBox.addEventListener("input",renderSearch);
  brandFilter.addEventListener("input",renderBrand);
@@ -156,6 +173,7 @@ function ensureUI(){
 async function open(mode,query=""){
  ensureUI();
  currentMode=mode;
+ dialog.dataset.stage=mode==="search"?"search":"choose";
  dialogTitle.textContent=mode==="search"?"Search PrinterResolve":"Which printer are you troubleshooting?";
  dialogIntro.textContent=mode==="search"?"Find a published article, guide or interactive tool.":"Choose an available brand, then pick the symptom that matches your problem.";
  dialog.querySelector(".pr-dialog-printer").hidden=mode!=="printer";
