@@ -51,3 +51,9 @@ if("IntersectionObserver" in window){
   links.forEach(({h})=>observer.observe(h));
 }
 })();
+/* PrinterResolve shared search and brand picker loader */
+(()=>{
+ if(document.querySelector('script[data-pr-discovery]'))return;
+ const style=document.createElement("link");style.rel="stylesheet";style.href="/assets/site-discovery.css?v=20261106-search-1";document.head.appendChild(style);
+ const script=document.createElement("script");script.src="/assets/site-discovery.js?v=20261106-search-1";script.defer=true;script.dataset.prDiscovery="1";document.head.appendChild(script);
+})();
