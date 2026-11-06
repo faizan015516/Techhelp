@@ -150,6 +150,7 @@ function ensureUI(){
  brandFilter.addEventListener("input",renderBrand);
  dialog.querySelector(".pr-dialog-close").addEventListener("click",()=>dialog.close());
  dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
+ dialog.addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();e.stopPropagation();dialog.close()}});
  dialog.addEventListener("close",()=>{document.body.classList.remove("pr-discovery-open")});
 }
 async function open(mode,query=""){
