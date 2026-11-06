@@ -15,6 +15,8 @@ const cases=[
  {url:"/dell-printer-not-connecting-wifi-windows-11",kind:"dell",file:"LIVE-printer-360-dell-desktop.png"}
 ];
 async function verifyPage(page,{url,kind,file}){
+ // Emulate a second PC requesting reduced motion: requested site design still auto-rotates.
+ if(kind==="home"&&page.viewportSize().width>500)await page.emulateMedia({reducedMotion:"reduce"});
  let error="";
  for(let attempt=1;attempt<=8;attempt++){
   await page.goto("https://printerresolve.com"+url+"?visualAudit="+Date.now()+"-"+attempt,{waitUntil:"domcontentloaded",timeout:30000});
@@ -29,19 +31,25 @@ async function verifyPage(page,{url,kind,file}){
       if(attempt<8){await new Promise(r=>setTimeout(r,6000));continue}
     }else{
       assert.ok(result.hasCanvas&&result.canvasWidth>150&&result.canvasHeight>150,"3D canvas dimensions invalid "+JSON.stringify(result));
-      const spin=widget.locator(".pr360-spin");
-      await spin.click();
-      assert.equal((await spin.textContent()).trim(),"Auto rotate");
+      assert.equal(await widget.locator(".pr360-spin").count(),0,"Pause rotation control must be removed");
+      assert.equal(await widget.locator(".pr360-reset").count(),1,"Front view reset remains available");
+      await widget.scrollIntoViewIfNeeded();
       const canvas=widget.locator("canvas");
-      await canvas.screenshot({path:path.join(out,file),animations:"disabled"});
+      await page.waitForTimeout(300);
       const before=await canvas.screenshot();
+      await page.waitForTimeout(850);
+      const automatic=await canvas.screenshot();
+      assert.ok(!before.equals(automatic),"Printer failed to rotate automatically on "+url);
+      await canvas.screenshot({path:path.join(out,file),animations:"disabled"});
       await widget.locator(".pr360-frame").focus(); // Only the keyboard-accessible frame handles arrow keys; canvas is aria-hidden.
       await page.keyboard.press("ArrowRight");
       const after=await canvas.screenshot();
       assert.ok(!before.equals(after),"Pressing ArrowRight did not change the rendered printer for "+url);
       await widget.locator(".pr360-reset").click();
-      await spin.click();
-      assert.equal((await spin.textContent()).trim(),"Pause rotation");
+      const resetFrame=await canvas.screenshot();
+      await page.waitForTimeout(850);
+      const postResetFrame=await canvas.screenshot();
+      assert.ok(!resetFrame.equals(postResetFrame),"Auto rotation stopped after Front view reset on "+url);
       if(kind!=="home"){
         const hero=page.locator(".pr-brand-hero");
         const info=await hero.evaluate(el=>({
@@ -106,6 +114,6 @@ async function verifyPage(page,{url,kind,file}){
   assert.ok(homeLayout.viewerTop>=homeLayout.actionsBottom-3,"Home 3D collides with hero action buttons: "+JSON.stringify(homeLayout));
   assert.ok(homeLayout.scrollWidth<=homeLayout.viewport+2,"Home mobile overflow: "+JSON.stringify(homeLayout));
   await mobile.locator(".hero").screenshot({path:path.join(out,"LIVE-printer-360-home-mobile-full-hero.png"),animations:"disabled"});
-  console.log("360_VISUAL_SUMMARY 9 out of 9 3D viewers mounted and keyboard rotation changed canvas; original brand visuals and mobile layouts confirmed");
+  console.log("360_VISUAL_SUMMARY 9 out of 9 3D printers auto-rotated, keyboard rotation and reset succeeded, no pause buttons, mobile and brand visuals confirmed");
  }finally{await browser.close()}
 })().catch(e=>{console.error(e.stack);process.exitCode=1});

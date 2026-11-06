@@ -2,7 +2,6 @@
  * One lightweight, procedural WebGL printer per page. No product photo is copied.
  * THREE is requested only when a viewer becomes visible. Static SVG is the fallback.
  */
-const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 const widgets = [...document.querySelectorAll(".pr360[data-printer]")];
 
 const profiles = {
@@ -24,9 +23,8 @@ function setup(element,THREE){
   const frame=element.querySelector(".pr360-frame");
   const poster=element.querySelector(".pr360-fallback");
   const status=element.querySelector(".pr360-status");
-  const spin=element.querySelector(".pr360-spin");
-  const reset=element.querySelector(".pr360-reset");
-  if(!frame || !spin || !reset)return;
+    const reset=element.querySelector(".pr360-reset");
+  if(!frame || !reset)return;
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(34,1,0.1,100);
   camera.position.set(0,2.64,7.55);
@@ -162,7 +160,7 @@ function setup(element,THREE){
 
   group.rotation.y=-.52;
   let yaw=-.52,tilt=0;
-  let auto=!reduced.matches,dragging=false,moved=false,px=0,py=0,last=0;
+  let auto=true,dragging=false,moved=false,px=0,py=0,last=0;
   let visible=true,raf=0,disposed=false;
   function resize(){
     const w=Math.max(260,Math.round(frame.clientWidth)),h=Math.max(190,Math.round(frame.clientHeight));
@@ -180,8 +178,6 @@ function setup(element,THREE){
   }
   function schedule(){if(!raf&&auto&&visible&&!document.hidden)raf=requestAnimationFrame(tick);}
   function stop(){if(raf)cancelAnimationFrame(raf);raf=0;last=0;}
-  function updateButton(){spin.textContent=auto?"Pause rotation":"Auto rotate";spin.setAttribute("aria-pressed",String(auto));}
-  updateButton();
   function pointerDown(e){
     if(e.pointerType==="mouse"&&e.button!==0)return;
     dragging=true;moved=false;px=e.clientX;py=e.clientY;frame.setPointerCapture(e.pointerId);stop();frame.classList.add("is-dragging");
@@ -201,18 +197,18 @@ function setup(element,THREE){
     if(e.key!=="ArrowLeft"&&e.key!=="ArrowRight")return;
     e.preventDefault();yaw+=(e.key==="ArrowLeft"?-.18:.18);render();
   });
-  spin.addEventListener("click",()=>{auto=!auto;updateButton();if(auto)schedule();else stop();});
   reset.addEventListener("click",()=>{yaw=-.52;tilt=0;render();});
   const resizeObserver=new ResizeObserver(resize);resizeObserver.observe(frame);
   const viewObserver=new IntersectionObserver(entries=>{
     visible=entries.some(x=>x.isIntersecting);if(visible){render();schedule();}else stop();
   },{threshold:0.02});viewObserver.observe(frame);
   document.addEventListener("visibilitychange",()=>document.hidden?stop():schedule());
-  window.addEventListener("pagehide",()=>{stop();disposed=true;resizeObserver.disconnect();viewObserver.disconnect();renderer.dispose();});
+  window.addEventListener("pagehide",e=>{stop();if(e.persisted)return;disposed=true;resizeObserver.disconnect();viewObserver.disconnect();renderer.dispose();});
+  window.addEventListener("pageshow",()=>{if(!disposed){last=0;resize();schedule();}});
   frame.prepend(renderer.domElement);
   resize();
   if(poster)poster.hidden=true;
-  if(status)status.textContent="Drag to rotate 360°. Use arrow keys for finer control.";
+  if(status)status.textContent="Automatic 360° rotation is on. Drag or use arrow keys to change the angle.";
   element.classList.add("pr360-ready");
   schedule();
 }
@@ -227,8 +223,8 @@ if(widgets.length){
       loadThree().then(THREE=>setup(w,THREE)).catch(error=>{
         w.classList.add("pr360-fallback-only");
         if(status)status.textContent="3D unavailable here. Static printer illustration displayed.";
-        const spin=w.querySelector(".pr360-spin"),reset=w.querySelector(".pr360-reset");
-        if(spin)spin.disabled=true;if(reset)reset.disabled=true;
+        const reset=w.querySelector(".pr360-reset");
+        if(reset)reset.disabled=true;
         console.warn("PrinterResolve 3D viewer fallback:",error.message);
       });
     }

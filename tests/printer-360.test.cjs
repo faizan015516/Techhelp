@@ -29,14 +29,17 @@ test("All seven brand guide pages show their own rotating printer category",()=>
  for(const [file,brand] of Object.entries(brandPages)){
    const h=read(file);
    assert.ok(h.includes('data-printer="'+brand+'"'),file+" missing matching viewer");
-   assert.ok(h.includes('pr360-spin'),file+" missing spin control");
+   assert.ok(!h.includes('pr360-spin'),file+" still exposes a pause or spin control");
+   assert.ok(!h.includes('Pause rotation'),file+" still offers a pause button");
+   assert.ok(h.includes('Automatically rotates through 360°'),file+" missing auto-rotation explanation");
+   assert.ok(h.includes('printer-360.mjs?v=20261106-autospin-3'),file+" might load stale 3D viewer");
    assert.ok(h.includes('pr360-reset'),file+" missing reset control");
    assert.ok(h.includes('class="pr360-fallback"'),file+" missing image fallback");
    assert.ok(h.includes('type="module" src="/assets/printer-360.mjs'),file+" missing renderer");
    assert.ok(!/<img class="nx-scene"/.test(h),file+" still renders irrelevant hero scene");
  }
 });
-test("Viewer is interactive, lazy-loaded, accessible, mobile-aware and respects reduced motion",()=>{
+test("Viewer automatically rotates on every capable device with drag, keyboard and reset controls",()=>{
  const s=read("assets/printer-360.mjs");
  for(const text of ["pointerdown","pointermove","ArrowLeft","ArrowRight","ResizeObserver","IntersectionObserver","prefers-reduced-motion","static printer illustration","setPointerCapture","WebGLRenderer","renderer.dispose"]){
   if(text==="static printer illustration")continue;
@@ -45,6 +48,13 @@ test("Viewer is interactive, lazy-loaded, accessible, mobile-aware and respects 
  assert.ok(s.includes('powerPreference:"low-power"'));
  assert.ok(s.includes('Math.min(window.devicePixelRatio||1,1.6)'));
  assert.ok(s.includes('import("https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js")'));
+ assert.ok(s.includes("let auto=true"),"Auto rotation must start enabled, including when OS reduced motion is set");
+ assert.ok(s.includes("yaw+=delta*.00019"),"Animation must advance every visible animation frame");
+ assert.ok(!s.includes("Pause rotation")&&!s.includes("pr360-spin"),"Manual pause toggle must not be present");
+ assert.ok(s.includes('window.addEventListener("pageshow"'),"Back-forward navigation should restart auto-rotation");
+ const home=read("index.html");
+ assert.ok(!home.includes("pr360-spin")&&!home.includes("Pause rotation"));
+ assert.ok(home.includes("Automatically rotates through 360°"));
  const css=read("assets/printer-360.css");
  assert.ok(css.includes("touch-action:pan-y"));
  assert.ok(css.includes("max-width:600px"));
