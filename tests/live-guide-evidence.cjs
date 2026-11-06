@@ -20,6 +20,14 @@ async function view(page,record){
   await pause(8000);
  }
  await page.waitForFunction(()=>!!document.querySelector(".pr-diagnostic-workbook .pr-diagnostic-advice")?.textContent.trim(),null,{timeout:18000});
+ const byline=page.locator(".pr-editorial-credit");
+ await byline.waitFor({state:"visible",timeout:10000});
+ const credit=await byline.evaluate(el=>{
+  const css=getComputedStyle(el),box=el.getBoundingClientRect(),p=el.querySelector("p");
+  return {background:css.backgroundImage,color:getComputedStyle(p).color,width:box.width,height:box.height,viewport:innerWidth,text:el.textContent};
+ });
+ assert.ok(credit.background.includes("gradient")&&credit.height>28,"Editorial credit is not visibly styled: "+JSON.stringify(credit));
+ assert.ok(credit.width<=credit.viewport&&credit.text.includes("AI-assisted"),"Missing or overflowed truthful attribution "+JSON.stringify(credit));
  const panel=page.locator('.pr-diagnostic-workbook[data-diagnostic="'+record.topic+'"]');
  const choice=panel.locator('select[data-observation="'+record.input+'"]');
  await choice.selectOption(record.value);
