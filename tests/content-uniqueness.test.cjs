@@ -88,3 +88,45 @@ test("Spooler crash guide distinguishes event-timing evidence from an offline qu
  ]) assert.ok(s.includes(expected), "Missing spooler diagnostic evidence: "+expected);
  assert.doesNotMatch(s,/Independent service; not affiliated with manufacturers\./);
 });
+
+test("Day 2 blank pages guide documents the ET-2800 decision with required cleaning limits",()=>{
+ const s=read("printer-printing-blank-pages.html");
+ for(const phrase of [
+  'id="et2800-blank-test-decision"',
+  'EcoTank ET-2800 or ET-2803',
+  'Maintenance',
+  'Nozzle Check',
+  'each tank be at least one-third full',
+  '12 hours',
+  'power_cleaning_lcd_et2800_l3260.html',
+  'does not claim that we operated these printers'
+ ]) assert.ok(s.includes(phrase),"Blank-page source/method warning absent: "+phrase);
+ assert.ok(s.indexOf('id="et2800-blank-test-decision"')<s.indexOf("1. Print a built-in test page"));
+});
+
+test("Day 2 discovery guide separates USB, manual-IP, Wi-Fi Direct and shared queues",()=>{
+ const s=read("printer-not-found-windows-11.html");
+ for(const phrase of [
+  'id="windows11-printer-not-found-route"',
+  'Direct USB printer; Windows finds nothing.',
+  'auto-discovery finds nothing.',
+  'Wi-Fi Direct mode only',
+  'company print server',
+  'printer is already listed but marked Offline',
+  'help-with-installing-printers-on-arm-pcs'
+ ]) assert.ok(s.includes(phrase),"Missing distinct printer-discovery decision: "+phrase);
+});
+
+test("Day 2 driver guide avoids x64 on ARM and pointless third-party downloads",()=>{
+ const s=read("find-install-printer-driver.html");
+ for(const phrase of [
+  'id="driver-download-preflight-matrix"',
+  'Windows already prints correctly',
+  'Printer isn\u0027t listed at all',
+  'ARM-based processor',
+  'Windows Update',
+  'extra function',
+  'Windows ARM driver compatibility',
+  'hardware drivers still require compatible ARM64 support'
+ ]) assert.ok(s.includes(phrase),"Missing driver preflight safeguard: "+phrase);
+});
