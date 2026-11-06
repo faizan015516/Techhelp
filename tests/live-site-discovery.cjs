@@ -15,13 +15,45 @@ async function waitForRelease(page,url){
    await page.waitForFunction(()=>{
      const link=document.querySelector('link[href*="/assets/site-discovery.css"]');
      const control=document.querySelector(".pr-discovery-controls");
-     return !!(link?.sheet&&control&&getComputedStyle(control).display==="flex"&&control.getBoundingClientRect().width>150);
+     const input=document.querySelector("#pr-top-site-search[role=combobox]");const form=document.querySelector(".pr-top-search");
+     return !!(link?.sheet&&control&&["flex","grid"].includes(getComputedStyle(control).display)
+       &&control.getBoundingClientRect().width>150&&form?.getBoundingClientRect().height>=52
+       &&input&&parseFloat(getComputedStyle(input).fontSize)>=14
+       &&document.querySelector("#pr-top-suggestions-list"));
    },null,{timeout:12000});
    return;
   }catch(error){lastError=error.message;}
   if(attempt<8)await new Promise(r=>setTimeout(r,8000));
  }
  throw new Error("New search UI not visible at "+url+" : "+lastError);
+}
+async function verifySuggestions(page){
+ const input=page.locator(".pr-top-search-input");
+ await input.fill("paper jam");
+ const dropdown=page.locator(".pr-top-suggestions");
+ await dropdown.waitFor({state:"visible",timeout:12000});
+ await page.waitForFunction(()=>document.querySelectorAll('.pr-top-suggestion[role="option"]').length>0,null,{timeout:12000});
+ const found=await dropdown.locator(".pr-top-suggestion").evaluateAll(nodes=>nodes.map(n=>n.getAttribute("href")));
+ assert.ok(found.includes("/printer-paper-jam-no-paper-stuck"),"Autocomplete missed paper jam: "+JSON.stringify(found));
+ assert.equal(await input.getAttribute("aria-expanded"),"true");
+ const geometry=await page.evaluate(()=>{
+  const r=document.querySelector(".pr-top-suggestions").getBoundingClientRect();
+  const form=document.querySelector(".pr-top-search").getBoundingClientRect();
+  return {formHeight:form.height,dropdownWidth:r.width,viewport:window.innerWidth,scrollWidth:document.documentElement.scrollWidth,popupLeft:r.left,popupRight:r.right};
+ });
+ assert.ok(geometry.formHeight>=52&&geometry.dropdownWidth>=200&&geometry.scrollWidth<=geometry.viewport+2&&geometry.popupLeft>=-1&&geometry.popupRight<=geometry.viewport+1,
+  "Autocomplete clipped or top bar too small: "+JSON.stringify(geometry));
+ await dropdown.screenshot({path:path.join(out,"LIVE-top-suggestions-"+page.viewportSize().width+".png"),animations:"disabled"});
+ await input.press("ArrowDown");
+ assert.equal(await input.getAttribute("aria-activedescendant"),"pr-top-suggestion-0");
+ assert.equal(await dropdown.locator("#pr-top-suggestion-0").getAttribute("aria-selected"),"true");
+ await input.press("Escape");
+ assert.equal(await input.getAttribute("aria-expanded"),"false");
+ assert.ok(await dropdown.isHidden(),"Escape failed to close suggestions");
+ await input.fill("my printer won't print");
+ await page.waitForFunction(()=>Array.from(document.querySelectorAll('.pr-top-suggestion')).some(a=>a.getAttribute("href")==="/printer-not-printing"),null,{timeout:7000});
+ await input.press("Escape");
+ console.log("SITE_AUTOCOMPLETE_PASS "+JSON.stringify({viewport:geometry.viewport,results:found.length,formHeight:geometry.formHeight,keyboard:true,naturalLanguage:true}));
 }
 async function verifySearch(page){
  const form=page.locator(".pr-top-search");
@@ -71,6 +103,7 @@ async function verifyPrinter(page){
  try{
   const page=await browser.newPage({viewport:{width:1440,height:900}});
   await waitForRelease(page,"/");
+  await verifySuggestions(page);
   await verifySearch(page);
   await verifyPrinter(page);
   await page.locator(".pr-top-printer-button").click();
@@ -88,6 +121,7 @@ async function verifyPrinter(page){
   }
   const mobile=await browser.newPage({...devices["Pixel 7"],viewport:{width:393,height:851}});
   await waitForRelease(mobile,"/");
+  await verifySuggestions(mobile);
   const m=await mobile.evaluate(()=>{
    const header=document.querySelector("header.site-header");
    const control=document.querySelector(".pr-discovery-controls");

@@ -20,6 +20,7 @@ const featuredPaths=[
 ];
 const labels={printer:"Printer guide",hp:"HP",canon:"Canon",epson:"Epson",brother:"Brother",dell:"Dell",tool:"Interactive tool",windows:"Windows guide",info:"Information",library:"Library",home:"Home"};
 let entries=null,loadPromise=null,dialog,results,dialogTitle,dialogIntro,status,searchBox,brandFilter,brandRegion,selectedBrand=null,currentMode="printer";
+let topInput=null,topSuggest=null,topSuggestionList=null,topSuggestionItems=[],topActive=-1;
 const norm=text=>String(text||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/wi[\s-]*fi/g,"wifi").replace(/[^a-z0-9]+/g," ").trim();
 const safePath=v=>/^\/(?!\/)[a-z0-9\-/]*$/i.test(v);
 function fetchIndex(){
@@ -62,20 +63,36 @@ function renderCards(list,emptyText){
  for(const e of list)results.appendChild(makeCard(e));
 }
 function rank(query,list){
- const terms=norm(query).split(" ").filter(Boolean);
+ // Ignore conversational filler and recognize common ways people describe failures.
+ const standardized=norm(query)
+  .replace(/\bwon t print\b|\bwont print\b|\bcan t print\b|\bcant print\b/g,"not printing")
+  .replace(/\bnot working\b|\bdoes not work\b/g,"not printing")
+  .replace(/\bnot detecting\b/g,"not found");
+ const stopwords=new Set(["my","the","is","are","was","a","an","on","in","with","to","from","how","do","does","did","why","when","i","can","please","help","me","it","of","not","says","say","issue","issues","problem","problems"]);
+ const terms=standardized.split(" ").filter(t=>t&&!stopwords.has(t));
  if(!terms.length)return [];
- return list.map(e=>{
+ const scored=list.map(e=>{
   const t=norm(e.title),d=norm(e.description),k=norm(e.keywords),c=norm(e.category);
-  let score=0;
+  let score=0,matched=0;
   for(const term of terms){
    const hitTitle=t.includes(term),hitDesc=d.includes(term),hitKeyword=k.includes(term),hitCat=c.includes(term);
-   if(!(hitTitle||hitDesc||hitKeyword||hitCat))return null;
+   if(!(hitTitle||hitDesc||hitKeyword||hitCat))continue;
+   matched++;
    score+=hitTitle?16:hitKeyword?8:hitCat?6:2;
    if(t.startsWith(term))score+=3;
   }
+  if(!matched)return null;
   if(t.includes(terms.join(" ")))score+=12;
-  return {entry:e,score};
- }).filter(Boolean).sort((a,b)=>b.score-a.score||a.entry.title.localeCompare(b.entry.title)).map(x=>x.entry);
+  for(const symptom of ["not printing","not found","paper jam","driver unavailable","offline"]){
+   if(standardized.includes(symptom)&&t.includes(symptom))score+=35;
+  }
+  return {entry:e,score,matched};
+ }).filter(Boolean);
+ const complete=scored.filter(x=>x.matched===terms.length);
+ // If no exact multi-term match exists, show the closest real guides rather than a blank list.
+ // Results always come from the vetted site index; they are not invented articles.
+ const candidates=complete.length?complete:scored.filter(x=>x.matched>=Math.max(1,terms.length-1));
+ return candidates.sort((a,b)=>b.matched-a.matched||b.score-a.score||a.entry.title.localeCompare(b.entry.title)).map(x=>x.entry);
 }
 function renderSearch(){
  if(!entries)return;
@@ -194,6 +211,63 @@ async function open(mode,query=""){
   results.appendChild(note);
  }
 }
+// Header autocomplete reads the same verified 39-page index as the full search dialog.
+// The input stays editable, and suggestion links navigate only to approved local paths.
+function closeTopSuggestions(){
+ if(!topSuggest||!topInput)return;
+ topSuggest.hidden=true;topActive=-1;topSuggestionItems=[];
+ topInput.setAttribute("aria-expanded","false");topInput.removeAttribute("aria-activedescendant");
+}
+function setTopActive(index){
+ if(!topSuggestionList||!topInput||!topSuggestionItems.length)return;
+ topActive=(index+topSuggestionItems.length)%topSuggestionItems.length;
+ topSuggestionList.querySelectorAll('[role="option"]').forEach((option,i)=>{
+  const active=i===topActive;
+  option.setAttribute("aria-selected",String(active));
+  option.classList.toggle("is-active",active);
+ });
+ topInput.setAttribute("aria-activedescendant","pr-top-suggestion-"+topActive);
+ topSuggestionList.querySelector("#pr-top-suggestion-"+topActive)?.scrollIntoView({block:"nearest"});
+}
+function renderTopSuggestions(){
+ if(!topSuggest||!topInput||document.activeElement!==topInput)return;
+ const query=topInput.value.trim();
+ const loading=!entries;
+ const matches=loading?[]:query?rank(query,entries).slice(0,6):
+  featuredPaths.slice(0,5).map(path=>entries.find(e=>e.path===path)).filter(Boolean);
+ topSuggestionList.replaceChildren();
+ topSuggestionItems=matches;topActive=-1;
+ topInput.removeAttribute("aria-activedescendant");
+ const caption=topSuggest.querySelector(".pr-suggestion-caption");
+ caption.textContent=loading?"Loading available printer guides…":
+  query?matches.length?"Suggested guides for “"+query+"”":"No matching guide for “"+query+"”":
+  "Popular troubleshooting guides";
+ if(matches.length){
+  matches.forEach((entry,i)=>{
+   const link=el("a","pr-top-suggestion");link.href=entry.path;
+   link.id="pr-top-suggestion-"+i;link.setAttribute("role","option");link.setAttribute("aria-selected","false");
+   const info=el("span","pr-suggestion-text");
+   info.append(el("strong","pr-suggestion-title",entry.title),el("span","pr-suggestion-description",entry.description));
+   link.append(info,el("span","pr-suggestion-category",labels[entry.category]||"Guide"));
+   link.addEventListener("pointerenter",()=>setTopActive(i));
+   topSuggestionList.appendChild(link);
+  });
+ }else if(!loading){
+  topSuggestionList.appendChild(el("p","pr-suggestion-empty","Try another symptom, brand or error message."));
+ }
+ topSuggest.hidden=false;
+ topInput.setAttribute("aria-expanded","true");
+}
+function requestTopSuggestions(){
+ if(entries){renderTopSuggestions();return;}
+ renderTopSuggestions();
+ fetchIndex().then(()=>renderTopSuggestions()).catch(()=>{
+  if(!topSuggest||!topInput||document.activeElement!==topInput)return;
+  topSuggestionList.replaceChildren(el("p","pr-suggestion-empty","Suggestions unavailable. Use Search or browse all guides."));
+  topSuggest.querySelector(".pr-suggestion-caption").textContent="Search temporarily unavailable";
+  topSuggest.hidden=false;topInput.setAttribute("aria-expanded","true");
+ });
+}
 function mountTopBar(){
  const header=document.querySelector("header.site-header .nav-wrap,header.nx-top .nx-top-inner");
  if(!header)return;
@@ -201,11 +275,39 @@ function mountTopBar(){
  const wrapper=el("div","pr-discovery-controls");
  const form=el("form","pr-top-search");form.setAttribute("role","search");
  const label=el("label","pr-visually-hidden","Search PrinterResolve");label.htmlFor="pr-top-site-search";
- const input=el("input","pr-top-search-input");input.type="search";input.name="q";input.id="pr-top-site-search";input.placeholder="Search printer problems…";input.autocomplete="off";
+ const input=el("input","pr-top-search-input");input.type="search";input.name="q";input.id="pr-top-site-search";
+ input.placeholder="Try ‘printer offline’, ‘paper jam’, ‘Epson Wi-Fi’…";input.autocomplete="off";
+ input.setAttribute("role","combobox");input.setAttribute("aria-autocomplete","list");
+ input.setAttribute("aria-haspopup","listbox");input.setAttribute("aria-controls","pr-top-suggestions-list");
+ input.setAttribute("aria-expanded","false");
+ topInput=input;
  const searchBtn=el("button","pr-top-search-button","Search");searchBtn.type="submit";searchBtn.setAttribute("aria-label","Search all guides");
- form.append(label,input,searchBtn);
- form.addEventListener("submit",e=>{e.preventDefault();open("search",input.value)});
- const picker=el("button","pr-top-printer-button","Choose printer");picker.type="button";picker.addEventListener("click",()=>open("printer"));
+ const suggest=el("div","pr-top-suggestions");suggest.hidden=true;suggest.id="pr-top-suggestions";
+ const suggestCaption=el("p","pr-suggestion-caption","Popular troubleshooting guides");
+ const suggestionList=el("div","pr-suggestion-list");suggestionList.id="pr-top-suggestions-list";suggestionList.setAttribute("role","listbox");suggestionList.setAttribute("aria-label","Search suggestions");
+ const footer=el("button","pr-suggestion-all","See all matching articles");footer.type="button";
+ footer.addEventListener("click",()=>{closeTopSuggestions();open("search",input.value)});
+ suggest.append(suggestCaption,suggestionList,footer);topSuggest=suggest;topSuggestionList=suggestionList;
+ form.append(label,input,searchBtn,suggest);
+ input.addEventListener("focus",requestTopSuggestions);
+ input.addEventListener("input",requestTopSuggestions);
+ input.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&!suggest.hidden){e.preventDefault();e.stopPropagation();closeTopSuggestions();return;}
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+   if(suggest.hidden)requestTopSuggestions();
+   if(!topSuggestionItems.length)return;
+   e.preventDefault();
+   const next=e.key==="ArrowDown"?topActive+1:topActive<0?topSuggestionItems.length-1:topActive-1;
+   setTopActive(next);return;
+  }
+  if(e.key==="Enter"&&topActive>=0&&!suggest.hidden&&topSuggestionItems[topActive]){
+   e.preventDefault();window.location.assign(topSuggestionItems[topActive].path);
+  }
+ });
+ form.addEventListener("submit",e=>{e.preventDefault();closeTopSuggestions();open("search",input.value)});
+ document.addEventListener("pointerdown",e=>{if(!form.contains(e.target))closeTopSuggestions()});
+ window.addEventListener("blur",closeTopSuggestions);
+ const picker=el("button","pr-top-printer-button","Choose printer");picker.type="button";picker.addEventListener("click",()=>{closeTopSuggestions();open("printer")});
  wrapper.append(form,picker);
  const brand=header.querySelector(".brand,.nx-wordmark");
  if(brand)brand.after(wrapper);else header.prepend(wrapper);

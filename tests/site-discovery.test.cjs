@@ -56,3 +56,42 @@ test("Global search treats Wi Fi, Wi-Fi and WiFi spellings consistently",()=>{
  const entries=index.entries.filter(e=>/epson.*wi-fi|wi-fi.*epson/i.test(e.title+" "+e.description));
  assert.ok(entries.length>0,"search index should retain an Epson Wi-Fi result");
 });
+
+test("Header search is prominent, suggests real pages and supports accessible keyboard selection",()=>{
+ const js=read("assets/site-discovery.js"),css=read("assets/site-discovery.css");
+ for(const expected of [
+  'pr-top-suggestions','pr-top-suggestions-list','aria-autocomplete','aria-activedescendant',
+  'role","combobox','role","listbox','role","option','ArrowDown','ArrowUp',
+  'closeTopSuggestions','requestTopSuggestions','See all matching articles'
+ ])assert.ok(js.includes(expected),"Missing autocomplete interaction: "+expected);
+ for(const expected of [
+  'max-width:680px','min-height:56px','font:600 15px',
+  '.pr-top-suggestions[hidden]','.pr-top-suggestion.is-active','@media(max-width:580px)'
+ ])assert.ok(css.includes(expected),"Search visibility/responsiveness missing: "+expected);
+ assert.ok(!js.includes("localStorage")&&!js.includes("sessionStorage"),"Search must not retain user queries");
+ for(const loader of ["assets/experience.js","assets/future-2.js","tools/print-path-lab.html","tools/connection-path.html","tools/page-fit.html","guides.html"]){
+  assert.ok(read(loader).includes("20261106-suggest-5"),"Old search assets are cached in "+loader);
+ }
+});
+test("Search ranking understands common natural-language printer problems without inventing URLs",()=>{
+ const src=read("assets/site-discovery.js");
+ const normExpr=src.match(/const norm=text=>([^\n;]+);/)?.[1];
+ const first=src.indexOf("function rank(query,list){");
+ const last=src.indexOf("\nfunction renderSearch(){",first);
+ assert.ok(normExpr&&first>=0&&last>first,"Search ranking definitions not found");
+ const rankCode=src.slice(first,last);
+ const rank=vm.runInNewContext("(function(){const norm=text=>"+normExpr+";"+rankCode+";return rank})()");
+ const scenarios=[
+  ["paper jam","/printer-paper-jam-no-paper-stuck"],
+  ["Epson WiFi","/epson-printer-not-connecting-wifi"],
+  ["why is my printer offline","/printer-offline-windows-11"],
+  ["my printer won't print","/printer-not-printing"],
+  ["hp paper jam","/printer-paper-jam-no-paper-stuck"]
+ ];
+ const allowed=new Set(index.entries.map(e=>e.path));
+ for(const [query,wanted] of scenarios){
+  const found=rank(query,index.entries).slice(0,7).map(e=>e.path);
+  assert.ok(found.includes(wanted),"Search did not suggest relevant existing article for "+query+": "+found.join(","));
+  assert.ok(found.every(p=>allowed.has(p)),"Autocomplete suggested an invented article: "+query);
+ }
+});
