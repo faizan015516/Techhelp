@@ -30,7 +30,7 @@ async function verifySearch(page){
  const total=await page.locator(".pr-discovery-dialog .pr-result-status").textContent();
  assert.ok(total.includes("matching page"),"Search result count missing");
  await page.keyboard.press("Escape");
- assert.ok(!(await dialog.evaluate(el=>el.open)),"Escape should dismiss search dialog");
+ await page.waitForFunction(()=>!document.querySelector(".pr-discovery-dialog")?.open,null,{timeout:5000});
 }
 async function verifyPrinter(page){
  await page.locator(".pr-top-printer-button").click();
