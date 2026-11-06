@@ -38,6 +38,11 @@ async function verifyPrinter(page){
  await dialog.waitFor();
  assert.equal(await dialog.locator(".pr-brand-button").count(),6,"Five brands plus other/unsure required");
  await dialog.locator('[data-brand="canon"]').click();
+ assert.ok(await dialog.locator(".pr-change-printer").isVisible(),"Change printer control missing");
+ assert.match(await dialog.locator("#pr-dialog-title").textContent(),/Canon printer guides/);
+ await dialog.locator(".pr-change-printer").click();
+ assert.ok(await dialog.locator('[data-brand="epson"]').isVisible(),"Selecting a different printer should be possible");
+ await dialog.locator('[data-brand="canon"]').click();
  await page.waitForFunction(()=>document.querySelectorAll(".pr-discovery-dialog .pr-found-card").length>0,{timeout:10000});
  const links=await dialog.locator(".pr-found-card").evaluateAll(nodes=>nodes.map(n=>n.getAttribute("href")));
  assert.ok(links.includes("/canon-printer-not-found-wifi-windows-11"));
