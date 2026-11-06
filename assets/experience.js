@@ -19,5 +19,5 @@ if(reset)reset.addEventListener("click",()=>{result.hidden=true;form.hidden=fals
 (()=>{
  if(document.querySelector('script[data-pr-discovery]'))return;
  const style=document.createElement("link");style.rel="stylesheet";style.href="/assets/site-discovery.css?v=20261106-search-2";document.head.appendChild(style);
- const script=document.createElement("script");script.src="/assets/site-discovery.js?v=20261106-search-3";script.defer=true;script.dataset.prDiscovery="1";document.head.appendChild(script);
+ const script=document.createElement("script");script.src="/assets/site-discovery.js?v=20261106-search-4";script.defer=true;script.dataset.prDiscovery="1";document.head.appendChild(script);
 })();

@@ -47,7 +47,7 @@ function clean(s){
   .replace(/&#(?:\d+|x[0-9a-f]+);/gi," ")
   .replace(/\s+/g," ").trim().toLowerCase();
 }
-const editorialSkip=/Publisher: Printer Resolve|ai-assisted drafting|no physical device test|your selections stay|record what you observed|read our editorial|copy your observations|we do not request remote access|works in your browser|model-specific menus|this is a worked diagnostic example/;
+const editorialSkip=/privacy: your choices stay|Publisher: Printer Resolve|ai-assisted drafting|no physical device test|your selections stay|record what you observed|read our editorial|copy your observations|we do not request remote access|works in your browser|model-specific menus|this is a worked diagnostic example/;
 const guides=files.filter(f=>!f.includes("/")&&/(printer|wi-fi|windows|driver|spooler|device-setup|find-install|epson|brother|canon|hp|dell)/i.test(f))
  .filter(f=>!["index.html","guides.html","printer-problem-checker.html"].includes(f));
 const paragraphs={};
