@@ -125,7 +125,9 @@ function setup(element,THREE){
   cylinder(.044,.012,W*.06,topY-.30,D/2+.14,accent,Math.PI/2);
   cylinder(.028,.012,W*.14,topY-.30,D/2+.14,silver,Math.PI/2);
   // Scanner seam, top rear paper-feed hint, and brand-style label NOT manufacturer's official logo.
-  frontLabel(type==="home"?"P/R STUDIO":type==="epson"?"INK TANK":type==="canon"?"PHOTO JET":type==="hp"?"SMART INK":type==="brother"?"LASER MFP":"OFFICE LASER",W*.44,W*.19,topY-.3,D/2+.085);
+  // Nominative brand identifiers on ORIGINAL concept geometry, not logo art or exact model replicas.
+  const textByType={home:"P/R STUDIO",epson:"EPSON CONCEPT",canon:"CANON CONCEPT",hp:"HP CONCEPT",brother:"BROTHER CONCEPT",dell:"DELL CONCEPT"};
+  frontLabel(textByType[type]||"PRINTER CONCEPT",W*.44,W*.19,topY-.3,D/2+.085);
   // More category-defining details.
   if(p.type==="tank"){
     rounded(.54,.84,.23,W*.35,y0+.55,D/2+.19,black,.035);
