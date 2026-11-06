@@ -7,12 +7,89 @@
 .topic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:29px}.topic-link{display:flex;flex-direction:column;gap:11px;min-height:170px;padding:24px 23px;border:1px solid #d2dce9;border-radius:20px;background:#fff;transition:transform .2s,border-color .2s,box-shadow .2s}.topic-link:hover{transform:translateY(-3px);border-color:#9eb9d6;box-shadow:0 13px 31px rgba(32,63,103,.08)}.topic-link strong{font-size:18px;letter-spacing:-.03em;line-height:1.25}.topic-link span{font-size:13px;color:#526a81;line-height:1.6}.topic-link small{margin-top:auto;color:#3d719c;font-weight:760}
 .library-note{background:#dfeaf4;padding:24px;border-radius:17px;color:#334c64;line-height:1.7}.library-note a{color:#1a588e;text-decoration:underline}
 @media(max-width:760px){.topic-grid{grid-template-columns:1fr}.library-hero{padding:65px 0}.library-body{padding:55px 0}.topic-link{min-height:0}.site-header .nav-links a:not(:first-child){display:none}.site-header .nav-links{display:flex;gap:0}.site-header .nav-wrap{gap:8px}}
-</style><link rel="stylesheet" href="/assets/future-2.css?v=20261106-contrast-4"><link rel="stylesheet" href="/assets/site-discovery.css?v=20261106-search-2"><script defer src="/assets/site-discovery.js?v=20261106-search-3"></script></head><body class="nx-library"><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="shell nav-wrap"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">P<span>R</span></span>Printer<span class="brand-light">Resolve</span></a><nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/printer-problem-checker">Problem checker</a><a href="/tools/connection-path">Connection lab</a><a href="/about">About</a></nav></div></header>
+</style><link rel="stylesheet" href="/assets/future-2.css?v=20261106-contrast-4">
+<style id="pr-choose-path-contrast-fix">
+/* 2026-11-06. Keep the symptom decision table in the same dark theme as the
+   guide library. The former inline white panel made global light headings
+   nearly invisible. Scope every rule so other article tables are unchanged. */
+body.nx-library #choose-path{
+  background:linear-gradient(145deg,#142b43,#0e2034)!important;
+  border:1px solid #41617c!important;
+  border-radius:22px!important;
+  color:#edf7ff!important;
+  box-shadow:0 18px 48px rgba(0,0,0,.20);
+}
+body.nx-library #choose-path .section-kicker{
+  color:#98ddff!important;
+  opacity:1!important;
+}
+body.nx-library #choose-path #choose-path-heading{
+  color:#f6fbff!important;
+  text-shadow:none!important;
+}
+body.nx-library #choose-path p,
+body.nx-library #choose-path > p,
+body.nx-library #choose-path [role="region"]{
+  color:#d7e8f7!important;
+}
+body.nx-library #choose-path table{
+  color:#eaf4ff!important;
+  background:transparent!important;
+  width:100%;
+  border-collapse:separate!important;
+  border-spacing:0;
+}
+body.nx-library #choose-path table th,
+body.nx-library #choose-path table td{
+  color:#ebf5ff!important;
+  text-shadow:none!important;
+  font-weight:450;
+  vertical-align:top;
+  border-color:#44617a!important;
+}
+body.nx-library #choose-path table thead th{
+  background:#264661!important;
+  color:#fff!important;
+  font-weight:760!important;
+}
+body.nx-library #choose-path table tbody tr{
+  background:#12293f!important;
+}
+body.nx-library #choose-path table tbody tr:nth-child(even){
+  background:#1a344c!important;
+}
+body.nx-library #choose-path table a,
+body.nx-library #choose-path p a{
+  color:#a3e9ff!important;
+  text-decoration:underline!important;
+  text-underline-offset:3px;
+  font-weight:700;
+}
+body.nx-library #choose-path table a:hover,
+body.nx-library #choose-path p a:hover{color:#fff!important}
+body.nx-library #choose-path table a:focus-visible,
+body.nx-library #choose-path p a:focus-visible{
+  outline:3px solid #8ce3ff!important;
+  outline-offset:3px;
+}
+body.nx-library #choose-path [role="region"]{
+  scrollbar-color:#7ec8ee #142a40;
+  border:1px solid #43627e;
+  border-radius:12px;
+}
+@media(max-width:700px){
+  body.nx-library #choose-path{padding:20px 16px!important}
+  body.nx-library #choose-path h2{font-size:clamp(25px,7vw,33px)!important;line-height:1.17!important}
+  body.nx-library #choose-path [role="region"]{margin:0 -3px}
+  body.nx-library #choose-path table{font-size:13px!important}
+}
+</style>
+<link rel="stylesheet" href="/assets/site-discovery.css?v=20261106-search-2"><script defer src="/assets/site-discovery.js?v=20261106-search-3"></script></head><body class="nx-library"><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="shell nav-wrap"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">P<span>R</span></span>Printer<span class="brand-light">Resolve</span></a><nav class="nav-links" aria-label="Main navigation"><a href="/">Home</a><a href="/printer-problem-checker">Problem checker</a><a href="/tools/connection-path">Connection lab</a><a href="/about">About</a></nav></div></header>
 <main id="main"><section class="library-hero"><img class="nx-library-intro-art" width="720" height="520" src="/assets/scene-printer.svg" alt="Original floating isometric 3D printer illustration"><div class="shell"><p class="section-kicker">The complete library</p><h1>One problem.<br>One useful place to start.</h1><p>Choose your symptom, connection, or device type. These independent articles explain common troubleshooting paths; model-specific steps should always be checked against manufacturer documentation.</p><a class="button button-primary" href="/printer-problem-checker">Not sure? Start with the problem checker ↗</a></div></section>
 <div class="library-body"><div class="shell">
 
-<section class="library-section" id="choose-path" aria-labelledby="choose-path-heading" style="background:#fff;border:1px solid #d3dfeb;border-radius:22px;padding:clamp(20px,3vw,36px);margin-bottom:60px">
-<p class="section-kicker" style="color:#305d83">START WITH THE OBSERVATION</p>
+<section class="library-section" id="choose-path" aria-labelledby="choose-path-heading" style="padding:clamp(20px,3vw,36px);margin-bottom:60px">
+<p class="section-kicker">START WITH THE OBSERVATION</p>
 <h2 id="choose-path-heading" style="font-size:clamp(27px,3.5vw,42px);line-height:1.1">Five similar symptoms. Five different starting points.</h2>
 <p>Before choosing a printer brand, check exactly where the process stops. An incorrect first diagnosis can lead to unnecessary resets, driver downloads or wasted ink. These descriptions are not a live scan of your equipment.</p>
 <div role="region" tabindex="0" aria-label="Choose a printer troubleshooting guide by observed failure" style="overflow-x:auto;max-width:100%">
@@ -25,7 +102,7 @@
 <tr style="border-bottom:1px solid #e1e8f0"><td style="padding:12px">Print jobs stay queued without completing</td><td style="padding:12px">Check the selected device, a single test document, and spooler status</td><td style="padding:12px"><a href="/printer-print-queue-stuck-windows-11">Print queue</a></td></tr>
 <tr><td style="padding:12px">Paper emerges, but content is absent or clipped</td><td style="padding:12px">Compare an internal printer test with document preview and output</td><td style="padding:12px"><a href="/printer-printing-blank-pages">Blank pages</a> / <a href="/printer-printing-cut-off-pages">Cut-off edges</a></td></tr>
 </tbody></table></div>
-<p style="font-size:14px;color:#50647d;margin-top:15px">A good first record includes the exact printer model, connection type, on-device error, current network report where applicable, and the result of one safe test. Use the <a href="/tools/print-path-lab">Print Path Evidence Lab</a> to compare these observations. Do not share Wi-Fi passwords or full configuration printouts publicly.</p>
+<p style="font-size:14px;margin-top:15px">A good first record includes the exact printer model, connection type, on-device error, current network report where applicable, and the result of one safe test. Use the <a href="/tools/print-path-lab">Print Path Evidence Lab</a> to compare these observations. Do not share Wi-Fi passwords or full configuration printouts publicly.</p>
 </section>
 
 <section class="library-section" aria-labelledby="connection"><img class="nx-category-art" width="720" height="520" loading="lazy" alt="Isometric wifi technical illustration" src="/assets/scene-wifi.svg"><h2 id="connection">Connection &amp; discovery</h2><p>Use these guides when the printer is on, but your computer cannot reliably find or talk to it.</p><div class="topic-grid">
