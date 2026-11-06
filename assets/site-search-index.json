@@ -1,0 +1,279 @@
+{
+  "generated": "2026-11-06",
+  "note": "Only real canonical PrinterResolve routes; no invented printer model pages.",
+  "entries": [
+    {
+      "path": "/",
+      "title": "PrinterResolve — Printer Troubleshooting Home",
+      "description": "Find free diagnostic guides, printer-brand pages and interactive tools",
+      "category": "home",
+      "keywords": " printerresolve — printer troubleshooting home"
+    },
+    {
+      "path": "/guides",
+      "title": "All Printer and Windows Troubleshooting Guides",
+      "description": "Browse printer, connection, driver, paper and Windows guides",
+      "category": "library",
+      "keywords": " all printer and windows troubleshooting guides"
+    },
+    {
+      "path": "/tools/connection-path",
+      "title": "Connection Path Lab — Compare Local IP Addresses",
+      "description": "Check whether two IP addresses share a calculated network range",
+      "category": "tool",
+      "keywords": " connection path lab — compare local ip addresses"
+    },
+    {
+      "path": "/tools/print-path-lab",
+      "title": "Print Path Evidence Lab",
+      "description": "Interpret device, Windows queue and network evidence without remote access",
+      "category": "tool",
+      "keywords": " print path evidence lab"
+    },
+    {
+      "path": "/tools/page-fit",
+      "title": "Paper Fit and Print Margins Tool",
+      "description": "Compare paper dimensions and printing margins",
+      "category": "tool",
+      "keywords": " paper fit and print margins tool"
+    },
+    {
+      "path": "/printer-offline-windows-11",
+      "title": "Printer Offline in Windows 11",
+      "description": "Diagnose printer offline state, local network and Windows queue",
+      "category": "printer",
+      "keywords": " printer offline in windows 11"
+    },
+    {
+      "path": "/about",
+      "title": "About PrinterResolve",
+      "description": "Who publishes the independent guides and how they're prepared",
+      "category": "info",
+      "keywords": " about printerresolve"
+    },
+    {
+      "path": "/editorial-policy",
+      "title": "Editorial Standards and Corrections",
+      "description": "How PrinterResolve prepares, checks and corrects guides",
+      "category": "info",
+      "keywords": " editorial standards and corrections"
+    },
+    {
+      "path": "/contact",
+      "title": "Contact PrinterResolve",
+      "description": "Contact and correction requests",
+      "category": "info",
+      "keywords": " contact printerresolve"
+    },
+    {
+      "path": "/privacy",
+      "title": "Privacy Policy",
+      "description": "How website data, analytics and ads are handled",
+      "category": "info",
+      "keywords": " privacy policy"
+    },
+    {
+      "path": "/terms",
+      "title": "Terms of Use",
+      "description": "Website terms and use conditions",
+      "category": "info",
+      "keywords": " terms of use"
+    },
+    {
+      "path": "/disclaimer",
+      "title": "Independence and Safety Disclaimer",
+      "description": "Third-party brands, safety, and independence disclosures",
+      "category": "info",
+      "keywords": " independence and safety disclaimer"
+    },
+    {
+      "path": "/printer-print-queue-stuck-windows-11",
+      "title": "Print Queue Stuck in Windows 11",
+      "description": "Troubleshoot stalled print jobs, queues and Print Spooler",
+      "category": "printer",
+      "keywords": " print queue stuck in windows 11"
+    },
+    {
+      "path": "/printer-not-connecting-wifi",
+      "title": "Printer Not Connecting to Wi-Fi",
+      "description": "Troubleshoot Wi-Fi setup, network reports, router compatibility and discovery",
+      "category": "printer",
+      "keywords": " printer not connecting to wi-fi"
+    },
+    {
+      "path": "/windows-pc-slow-errors",
+      "title": "Windows PC Slow or Showing Errors",
+      "description": "Windows performance diagnostics and common errors",
+      "category": "windows",
+      "keywords": " windows pc slow or showing errors"
+    },
+    {
+      "path": "/find-install-printer-driver",
+      "title": "Find and Install Official Printer Drivers",
+      "description": "Locate drivers safely from manufacturer support",
+      "category": "printer",
+      "keywords": " find and install official printer drivers"
+    },
+    {
+      "path": "/device-setup-installation",
+      "title": "Printer Device Setup and Installation",
+      "description": "Set up a new printer safely in Windows",
+      "category": "printer",
+      "keywords": " printer device setup and installation"
+    },
+    {
+      "path": "/remote-assistance-safety",
+      "title": "Remote Assistance and Tech Support Safety",
+      "description": "Avoid unsafe or misleading remote support practices",
+      "category": "info",
+      "keywords": " remote assistance and tech support safety"
+    },
+    {
+      "path": "/printer-printing-blank-pages",
+      "title": "Printer Printing Blank Pages",
+      "description": "Diagnose blank sheets, consumables and print-quality issues",
+      "category": "printer",
+      "keywords": " printer printing blank pages"
+    },
+    {
+      "path": "/printer-printing-slowly-windows-11",
+      "title": "Printer Printing Slowly in Windows 11",
+      "description": "Measure first-page and subsequent-page delay with a timing calculator",
+      "category": "printer",
+      "keywords": " printer printing slowly in windows 11"
+    },
+    {
+      "path": "/printer-faded-streaked-pages",
+      "title": "Printer Printing Faded or Streaked Pages",
+      "description": "Compare nozzles, alignment and print quality",
+      "category": "printer",
+      "keywords": " printer printing faded or streaked pages"
+    },
+    {
+      "path": "/wifi-connected-no-internet-windows-11",
+      "title": "Wi-Fi Connected but No Internet — Windows 11",
+      "description": "Investigate PC wireless connection and internet reachability",
+      "category": "windows",
+      "keywords": " wi-fi connected but no internet — windows 11"
+    },
+    {
+      "path": "/windows-11-disk-100-percent-usage",
+      "title": "Windows 11 Disk Usage at 100%",
+      "description": "Disk and startup troubleshooting",
+      "category": "windows",
+      "keywords": " windows 11 disk usage at 100%"
+    },
+    {
+      "path": "/hp-printer-offline-connected-wifi",
+      "title": "HP Printer Offline but Connected to Wi-Fi",
+      "description": "HP Smart Tank style diagnostic guidance for Windows offline",
+      "category": "hp",
+      "keywords": "hewlett packard smart tank envy deskjet laserjet hp printer offline but connected to wi-fi"
+    },
+    {
+      "path": "/canon-printer-not-found-wifi-windows-11",
+      "title": "Canon Printer Not Found on Wi-Fi",
+      "description": "Canon printer discovery and network setup in Windows 11",
+      "category": "canon",
+      "keywords": "pixma maxify tr4700 canon printer not found on wi-fi"
+    },
+    {
+      "path": "/canon-printer-not-responding-windows-11",
+      "title": "Canon Printer Not Responding in Windows 11",
+      "description": "Canon print queue, Wi-Fi, driver and device diagnosis",
+      "category": "canon",
+      "keywords": "pixma maxify tr4700 canon printer not responding in windows 11"
+    },
+    {
+      "path": "/epson-printer-not-connecting-wifi",
+      "title": "Epson Printer Not Connecting to Wi-Fi",
+      "description": "Epson EcoTank networking and report troubleshooting",
+      "category": "epson",
+      "keywords": "ecotank expression workforce epson printer not connecting to wi-fi"
+    },
+    {
+      "path": "/epson-not-printing-black-ink",
+      "title": "Epson Printer Not Printing Black Ink",
+      "description": "Epson EcoTank nozzle checks and safe ink troubleshooting",
+      "category": "epson",
+      "keywords": "ecotank expression workforce epson printer not printing black ink"
+    },
+    {
+      "path": "/brother-printer-offline-windows-11",
+      "title": "Brother Printer Offline in Windows 11",
+      "description": "Brother Windows printer offline and network diagnostics",
+      "category": "brother",
+      "keywords": "laser mfc dcp brother printer offline in windows 11"
+    },
+    {
+      "path": "/wifi-keeps-disconnecting-windows-11",
+      "title": "Wi-Fi Keeps Disconnecting in Windows 11",
+      "description": "Diagnose unreliable computer wireless networking",
+      "category": "windows",
+      "keywords": " wi-fi keeps disconnecting in windows 11"
+    },
+    {
+      "path": "/windows-11-slow-startup-fixes",
+      "title": "Windows 11 Slow Startup",
+      "description": "Investigate startup apps, resources and disk",
+      "category": "windows",
+      "keywords": " windows 11 slow startup"
+    },
+    {
+      "path": "/printer-not-found-windows-11",
+      "title": "Printer Not Found in Windows 11",
+      "description": "Printer discovery, IP networking and driver path diagnostics",
+      "category": "printer",
+      "keywords": " printer not found in windows 11"
+    },
+    {
+      "path": "/printer-driver-unavailable-windows-11",
+      "title": "Printer Driver Is Unavailable in Windows 11",
+      "description": "Driver compatibility and safe installation",
+      "category": "printer",
+      "keywords": " printer driver is unavailable in windows 11"
+    },
+    {
+      "path": "/print-spooler-keeps-stopping-windows-11",
+      "title": "Print Spooler Keeps Stopping in Windows 11",
+      "description": "Diagnose Windows Print Spooler service errors",
+      "category": "printer",
+      "keywords": " print spooler keeps stopping in windows 11"
+    },
+    {
+      "path": "/printer-not-printing",
+      "title": "Printer Not Printing? Windows 11 Checklist",
+      "description": "Printer, Wi-Fi, queue and driver diagnostic decision guide",
+      "category": "printer",
+      "keywords": " printer not printing? windows 11 checklist"
+    },
+    {
+      "path": "/dell-printer-not-connecting-wifi-windows-11",
+      "title": "Dell Printer Not Connecting to Wi-Fi in Windows 11",
+      "description": "Dell printer model compatibility and network troubleshooting",
+      "category": "dell",
+      "keywords": "laser printer office c1765nfw e525w 3000cn dell printer not connecting to wi-fi in windows 11"
+    },
+    {
+      "path": "/printer-paper-jam-no-paper-stuck",
+      "title": "Printer Says Paper Jam but No Paper Stuck",
+      "description": "Check feed path, document feeder and safe paper clearing",
+      "category": "printer",
+      "keywords": " printer says paper jam but no paper stuck"
+    },
+    {
+      "path": "/printer-printing-cut-off-pages",
+      "title": "Printer Printing Cut-Off Text or Pages",
+      "description": "Correct paper size, print scaling, margins and clipped edges",
+      "category": "printer",
+      "keywords": " printer printing cut-off text or pages"
+    },
+    {
+      "path": "/printer-problem-checker",
+      "title": "Printer Problem Checker",
+      "description": "Choose a symptom and get matching first checks",
+      "category": "tool",
+      "keywords": " printer problem checker"
+    }
+  ]
+}
