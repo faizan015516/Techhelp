@@ -196,3 +196,86 @@ body.nx-document main article,body.nx-document main section{min-width:0}
 body.nx-document main .quick[style*="overflow-x"],body.nx-document main [role="region"][style*="overflow-x"]{scrollbar-color:#5584a9 #172c43}
 body.nx-document main table{overflow-wrap:break-word}
 @media(max-width:580px){body.nx-document .nx-wordmark{font-size:16px!important}body.nx-document .nx-wordmark > span:last-child{white-space:nowrap}body.nx-document main .quick:has(table){overflow-x:auto!important}body.nx-document main .pr-field-grid{min-width:0}body.nx-document main .nx-inline-visual{overflow:hidden}}
+
+/* 2026-11-06 accessibility repair.
+ * Earlier article-specific diagrams had pale cards underneath a dark article
+ * template. The template intentionally sets light headings / copy, making
+ * text illegible on those legacy bright backgrounds. These overrides normalize
+ * all known legacy diagram surfaces to dark and keep original diagrams usable.
+ */
+body.nx-document main :is(
+ .diagnostic-flow,.status-visual,.connection-visual,.diagnostic,
+ .diag,.nozzle-visual,.channel-flow,.network-map,.driver-flow,.diagram,
+ .checklist,.quick-flow,.paper-guide,.decision,.net-flow,.wifi-flow,
+ .disk-flow,.startup-flow,.route,.diagnosis,.source,.sources,.refs,
+ .disk-sources,.startup-sources,.related
+){
+ background:#14283d!important;
+ border:1px solid rgba(137,201,244,.32)!important;
+ border-radius:20px!important;
+ color:#e5f2ff!important;
+ box-shadow:0 12px 28px rgba(0,0,0,.15)!important;
+}
+body.nx-document main :is(
+ .diagnostic-card,.status-panel,.status-indicator,.connection-mode,
+ .connection-node,.diagnostic-step,.diag-cell,.nozzle-panel,.flow-step,
+ .pattern-card,.decision-card,.net-step,.wifi-step,.disk-step,
+ .startup-step,.paper-tile
+){
+ background:#203a54!important;
+ border:1px solid rgba(151,211,251,.37)!important;
+ border-radius:15px!important;
+ color:#f0f8ff!important;
+ box-shadow:0 8px 19px rgba(0,0,0,.12)!important;
+}
+body.nx-document main .route article,
+body.nx-document main .diagnosis article,
+body.nx-document main .checklist article{
+ background:#203a54!important;
+ color:#f0f8ff!important;
+ border:1px solid rgba(151,211,251,.28)!important;
+}
+body.nx-document main .diagnostic-flow figcaption,
+body.nx-document main :is(.status-visual,.connection-visual,.diagnostic,.diag,.nozzle-visual,.driver-flow,.diagram,.paper-guide,.decision,.net-flow,.wifi-flow,.disk-flow,.startup-flow) figcaption{
+ color:#f2f9ff!important;
+ font-weight:800!important;
+}
+body.nx-document main :is(
+ .diagnostic-card,.status-panel,.status-indicator,.connection-mode,
+ .connection-node,.diagnostic-step,.diag-cell,.nozzle-panel,.flow-step,
+ .pattern-card,.decision-card,.net-step,.wifi-step,.disk-step,
+ .startup-step,.paper-tile
+) :is(strong,small,p,span,label,h3){
+ color:#f0f8ff!important;
+}
+body.nx-document main :is(
+ .diagnostic-card,.status-panel,.connection-mode,.diagnostic-step,.diag-cell,
+ .nozzle-panel,.flow-step,.pattern-card,.decision-card,.net-step,.wifi-step,
+ .disk-step,.startup-step,.paper-tile
+) :is(small,p){color:#c8dced!important}
+body.nx-document main :is(.diagnostic-flow,.status-visual,.connection-visual,.diagnostic,.diag,.nozzle-visual,.driver-flow,.diagram,.paper-guide,.decision,.net-flow,.wifi-flow,.disk-flow,.startup-flow) .num{
+ color:#ccf4ff!important;
+ background:#24496c!important;
+ border:1px solid #83d7ff!important;
+ border-radius:999px!important;
+}
+body.nx-document main :is(.diagnostic-flow,.status-visual,.connection-visual,.diagnostic,.diag,.nozzle-visual,.driver-flow,.diagram,.paper-guide,.decision,.net-flow,.wifi-flow,.disk-flow,.startup-flow) :is(.flow-help,.help,.caption){
+ color:#c1d8e9!important;
+}
+/* Keep the light paper previews in a few printing diagrams intentionally light,
+ * but make foreground markings readable on those preview sheets. */
+body.nx-document main .print-sample{
+ color:#15314d!important;
+}
+/* A user can enlarge these diagrams on narrow screens without horizontal spill. */
+body.nx-document main :is(.diagnostic-grid,.status-grid,.connection-grid,.diag-grid,.decision-grid,.net-grid,.wifi-grid,.disk-grid,.startup-grid){
+ min-width:0!important;
+}
+@media(max-width:700px){
+ body.nx-document main :is(.diagnostic-grid,.status-grid,.connection-grid,.diag-grid,.decision-grid,.net-grid,.wifi-grid,.disk-grid,.startup-grid){
+  grid-template-columns:minmax(0,1fr)!important;
+ }
+ body.nx-document main :is(.diagnostic-card,.status-panel,.connection-mode,.diagnostic-step,.diag-cell,.nozzle-panel,.flow-step,.pattern-card,.decision-card,.net-step,.wifi-step,.disk-step,.startup-step,.paper-tile){
+  min-width:0!important;
+ }
+}
