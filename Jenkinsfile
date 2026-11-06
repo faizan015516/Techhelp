@@ -33,7 +33,7 @@ pipeline {
 
         dependencyCheck(
             odcInstallation: 'Dependency-Check',
-            nvdCredentialsId: ''nvd-api-key',
+            nvdCredentialsId: 'nvd-api-key',
             additionalArguments: '--scan . --format XML --format HTML --out reports/dependency-check'
          )
 
