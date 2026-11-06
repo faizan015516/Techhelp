@@ -1,0 +1,22 @@
+/* PrinterResolve editorial attribution: visible, factual and non-endorsement based. */
+.pr-editorial-credit {
+  box-sizing:border-box;
+  margin:14px 0 25px;
+  padding:13px 16px;
+  border:1px solid #54718c;
+  border-left:4px solid #69c2ef;
+  border-radius:11px;
+  background:linear-gradient(115deg,#153149,#10283b);
+  color:#e5f5ff;
+  font:500 13px/1.62 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  overflow-wrap:anywhere;
+}
+.pr-editorial-credit p {margin:0!important;color:#e5f5ff!important;line-height:1.65!important;font-size:13px!important}
+.pr-editorial-credit p + p {margin-top:5px!important}
+.pr-editorial-credit strong {color:#fff!important;font-weight:750!important}
+.pr-editorial-credit a {color:#afe9ff!important;text-decoration:underline!important;text-underline-offset:3px!important}
+.pr-editorial-credit a:hover {color:#fff!important}
+.pr-editorial-credit a:focus-visible {outline:3px solid #a6edff!important;outline-offset:3px}
+.pr-editorial-credit .pr-credit-limits {font-size:12px!important;color:#bfdaec!important}
+@media (max-width:600px){.pr-editorial-credit{margin:12px 0 22px;padding:12px 13px}.pr-editorial-credit p{font-size:12px!important}}
+@media (prefers-contrast:more){.pr-editorial-credit{border:2px solid #b5ecff}}
