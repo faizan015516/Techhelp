@@ -30,7 +30,7 @@ test("Core troubleshooting guides distinguish causes rather than promising one u
  const checks={
   "printer-paper-jam-no-paper-stuck.html":["false paper-jam warning","fuser","ADF","model-specific"],
   "printer-not-connecting-wifi.html":["wifi-four-stages","169.254.x.x","guest","support.microsoft.com"],
-  "printer-printing-cut-off-pages.html":["a measurable clipping example","hardware margins","paper-fit"],
+  "printer-printing-cut-off-pages.html":["a measurable clipping example","hardware margins","/tools/page-fit"],
   "printer-print-queue-stuck-windows-11.html":["only one PDF remains queued","shared","spooler"]
  };
  for(const [file,phrases] of Object.entries(checks)){const s=read(file).toLowerCase();for(const phrase of phrases)assert.ok(s.includes(phrase.toLowerCase()),file+" missing: "+phrase)}
