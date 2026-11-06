@@ -1,0 +1,80 @@
+"use strict";
+const assert=require("node:assert/strict");
+const fs=require("node:fs");
+const path=require("node:path");
+const http=require("node:http");
+const {chromium,devices}=require("playwright");
+const root=path.resolve(__dirname,".."),art=path.join(root,"test-artifacts");fs.mkdirSync(art,{recursive:true});
+const mime={".html":"text/html; charset=utf-8",".css":"text/css; charset=utf-8",".js":"text/javascript; charset=utf-8",".svg":"image/svg+xml",".xml":"application/xml",".txt":"text/plain"};
+function server(){return http.createServer((req,res)=>{let url;try{url=decodeURIComponent(new URL(req.url,"http://localhost").pathname)}catch{res.writeHead(400).end();return}let requested=url==="/"?"/index.html":url;if(requested.endsWith("/"))requested+="index.html";if(!path.extname(requested))requested+=".html";const file=path.resolve(root,"."+requested);if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403).end();return}fs.readFile(file,(e,data)=>{if(e){res.writeHead(404).end("Not found: "+requested);return}res.writeHead(200,{"content-type":mime[path.extname(file)]||"application/octet-stream"});res.end(data)})})}
+(async()=>{
+ const app=server();await new Promise(ok=>app.listen(0,"127.0.0.1",ok));
+ const base="http://127.0.0.1:"+app.address().port;
+ const browser=await chromium.launch({headless:true});
+ try{
+  const desktop=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+  await desktop.goto(base+"/",{waitUntil:"domcontentloaded"});
+  assert.ok(await desktop.locator("#hero-title").isVisible(),"desktop heading");
+  assert.ok(await desktop.locator("#printer-model").isVisible(),"3D printer illustration");
+  await desktop.screenshot({path:path.join(art,"home-desktop.png"),fullPage:true,animations:"disabled"});
+  await desktop.locator("#symptom").selectOption("offline");
+  await desktop.locator("#connection").selectOption("wifi");
+  await desktop.locator("#diagnose-form button[type=submit]").click();
+  assert.ok(await desktop.locator("#diagnose-result").isVisible(),"diagnosis result");
+  assert.match(await desktop.locator("#result-body").innerText(),/wi-fi symbol/i);
+  await desktop.goto(base+"/tools/connection-path",{waitUntil:"domcontentloaded"});
+  await desktop.locator("#computer-ip").fill("192.168.1.24");
+  await desktop.locator("#printer-ip").fill("192.168.1.88");
+  await desktop.locator("#prefix").selectOption("24");
+  await desktop.locator("#lab-form button[type=submit]").click();
+  assert.match(await desktop.locator("#lab-title").innerText(),/Same calculated/);
+  await desktop.locator("#printer-ip").fill("192.168.2.88");
+  await desktop.locator("#lab-form button[type=submit]").click();
+  assert.match(await desktop.locator("#lab-title").innerText(),/Different calculated/);
+  await desktop.goto(base+"/tools/page-fit",{waitUntil:"domcontentloaded"});
+  assert.equal(await desktop.locator("#fit-result").getAttribute("data-outcome"),"fits");
+  await desktop.locator("#paper").selectOption("letter");
+  assert.equal(await desktop.locator("#fit-result").getAttribute("data-outcome"),"does-not-fit");
+  await desktop.screenshot({path:path.join(art,"paper-fit-desktop.png"),fullPage:true,animations:"disabled"});
+  await desktop.goto(base+"/printer-offline-windows-11",{waitUntil:"domcontentloaded"});
+  assert.ok(await desktop.locator(".pr-evidence").isVisible(),"original diagnostic section");
+  await desktop.locator(".pr-notes summary").click();
+  await desktop.locator('[data-pr-field="symptom"]').fill("Shows Offline in Windows");
+  await desktop.locator("[data-pr-generate]").click();
+  assert.match(await desktop.locator("[data-pr-output]").inputValue(),/Shows Offline in Windows/);
+  await desktop.close();
+  const mobile=await browser.newPage({...devices["Pixel 7"],viewport:{width:393,height:851}});
+  await mobile.goto(base+"/",{waitUntil:"domcontentloaded"});
+  assert.ok(await mobile.locator("#hero-title").isVisible(),"mobile heading");
+  const dims=await mobile.evaluate(()=>({viewport:document.documentElement.clientWidth,content:document.documentElement.scrollWidth}));
+  assert.ok(dims.content<=dims.viewport+3,"mobile horizontal overflow: "+JSON.stringify(dims));
+  await mobile.locator("#menu-button").click();
+  assert.equal(await mobile.locator("#menu-button").getAttribute("aria-expanded"),"true");
+  assert.ok(await mobile.locator('#nav-links a[href="/guides"]').isVisible(),"mobile navigation");
+  await mobile.screenshot({path:path.join(art,"home-mobile.png"),fullPage:true,animations:"disabled"});
+  await mobile.emulateMedia({reducedMotion:"reduce"});
+  const animation=await mobile.locator("#printer-model").evaluate(el=>getComputedStyle(el).animationName);
+  assert.equal(animation,"none","reduced-motion option should disable model animation");
+  await mobile.goto(base+"/tools/page-fit",{waitUntil:"domcontentloaded"});
+  assert.ok(await mobile.locator("#paper-svg").isVisible(),"mobile preview");
+  const toolsDims=await mobile.evaluate(()=>({viewport:document.documentElement.clientWidth,content:document.documentElement.scrollWidth}));
+  assert.ok(toolsDims.content<=toolsDims.viewport+3,"mobile tool horizontal overflow: "+JSON.stringify(toolsDims));
+  // Visit every published document at Android width, catching hidden overflow and runtime errors.
+  const allPageFiles=fs.readdirSync(root).filter(p=>p.endsWith(".html")).concat(["tools/connection-path.html","tools/page-fit.html"]);
+  const jsErrors=[];
+  mobile.on("pageerror",err=>jsErrors.push(err.message));
+  const overflow=[];
+  for(const pageFile of allPageFiles){
+    const route="/"+pageFile.replace(/\.html$/,"");
+    const response=await mobile.goto(base+route,{waitUntil:"domcontentloaded"});
+    assert.equal(response.status(),200,"HTTP 200 for "+route);
+    const data=await mobile.evaluate(()=>({viewport:document.documentElement.clientWidth,content:document.documentElement.scrollWidth,title:document.title,h1:document.querySelector("h1")?.textContent?.trim()}));
+    if(data.content>data.viewport+3)overflow.push({path:pageFile,...data});
+    assert.ok(data.h1&&data.h1.length>5,"readable H1 for "+route);
+  }
+  assert.deepEqual(overflow,[],"Pages with mobile horizontal overflow");
+  assert.deepEqual(jsErrors,[],"Client-side script errors while opening guide library");
+  await mobile.close();
+  process.stdout.write("Browser smoke passed: every page opens at mobile width; 3D hero, menu, reduced motion, no overflow, diagnostics, page fit, local notes.\n");
+ }finally{await browser.close();await new Promise(ok=>app.close(ok))}
+})().catch(e=>{process.stderr.write(e.stack+"\n");process.exitCode=1});

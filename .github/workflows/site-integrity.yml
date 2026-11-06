@@ -1,0 +1,24 @@
+name: PrinterResolve site integrity
+on:
+  push:
+    branches:
+      - main
+      - 'redesign/**'
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run static site and tool tests
+        run: node --test tests/site-integrity.test.cjs

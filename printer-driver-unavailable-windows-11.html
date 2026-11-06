@@ -35,7 +35,7 @@ a{color:#175cd3}li{margin:.55rem 0}section{margin:22px 0}
 @media(max-width:650px){.flow-grid{grid-template-columns:1fr}.driver-flow{padding:15px}.quick{overflow-x:auto;padding:12px}.quick table{min-width:480px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Printer Driver Is Unavailable in Windows 11? Fix It Safely","description":"Safe steps for a printer driver unavailable message on Windows 11, including Windows Update, official manufacturer support, and ARM compatibility.","author":{"@type":"Organization","name":"Printer Resolve"},"publisher":{"@type":"Organization","name":"Printer Resolve"},"dateModified":"2026-10-27","mainEntityOfPage":"https://printerresolve.com/printer-driver-unavailable-windows-11"}</script>
-</head>
+<script defer src="/assets/guide-tools.js"></script></head>
 <body>
 <header><a href="/">Printer Resolve</a></header>
 <main>
@@ -44,7 +44,7 @@ a{color:#175cd3}li{margin:.55rem 0}section{margin:22px 0}
 <h1>Printer Driver Is Unavailable in Windows 11? How to Fix It Safely</h1><nav aria-label="Article sections" style="margin:20px 0;padding:16px;background:#f1f6fc;border-radius:10px"><strong>Jump to:</strong> <a href="#checks">Troubleshooting steps</a> · <a href="#faq">Frequently asked questions</a></nav>
 <p>If Windows 11 displays <strong>Driver is unavailable</strong> next to a printer, Windows may be missing a suitable driver, using a driver that no longer works, or having trouble completing printer setup. The message does not automatically mean your HP, Canon, Epson or Brother printer is broken.</p>
 <p>Work through the checks below in order. Begin with the steps built into Windows before downloading software or deleting printer entries.</p>
-<p><small>Updated <time datetime="2026-10-27">27 October 2026</time> · Independent troubleshooting guide</small></p>
+<p><small>Reviewed <time datetime="2026-11-06">6 November 2026</time> · Independent troubleshooting guide</small></p>
 <div class="note warning"><strong>Safety first:</strong> Record your exact printer model and save open work. Avoid “driver updater” ads, registry cleaners, unknown remote-support services and factory resets. If this is an office or school computer, ask your administrator before replacing drivers.</div>
 <figure class="driver-flow" aria-label="Printer driver unavailable three-step diagnostic sequence">
 <figcaption>Start with three low-risk checks</figcaption>
@@ -63,6 +63,19 @@ a{color:#175cd3}li{margin:.55rem 0}section{margin:22px 0}
 <tr><td><strong>Printer offline</strong></td><td>Check the printer's network connection and Windows print queue.</td></tr>
 <tr><td><strong>Driver installer won't run</strong></td><td>Check Windows version and whether your PC uses an ARM-based processor.</td></tr>
 </tbody></table></section>
+<section class="pr-evidence" id="driver-evidence" aria-labelledby="driver-evidence-title">
+<p class="pr-evidence-kicker">Troubleshooting lab · Reproducible checks</p>
+<h2 id="driver-evidence-title">Find out whether the driver is actually blocking printing.</h2>
+<p>Before downloading a new driver, separate three different outcomes. A printer listed in Windows, a successful Windows test page and printing from your usual app are <em>different checks</em>. Record which ones work; an error in one place does not automatically mean every part is broken.</p>
+<div class="pr-result-cards">
+<div><strong>A. The printer is missing from Windows</strong><p>First check power and USB or Wi-Fi connectivity. Windows cannot use a driver for a printer it has not discovered or configured. Start with the <a href="/printer-not-found-windows-11">printer-not-found diagnostic</a>.</p></div>
+<div><strong>B. Windows lists the printer but shows “Driver is unavailable”</strong><p>Record the exact model and the PC's <strong>System type</strong>. Try Windows Update, then the manufacturer's official model-specific installer if necessary. On ARM-based PCs, start with Windows <strong>Add device</strong> unless the manufacturer gives different instructions.</p></div>
+<div><strong>C. Windows test page prints but one app fails</strong><p>The printer and at least one printing path are working. Check that app's printer selection, print dialog, file format and permissions before replacing the driver.</p></div>
+<div><strong>D. Printing works but scanning fails</strong><p>Confirm whether your all-in-one needs a separate manufacturer scan utility or supported scan app. This is not, by itself, evidence that the Windows printer driver needs replacing.</p></div>
+</div>
+<p class="pr-evidence-disclosure"><strong>Worked example, not a device test:</strong> Suppose Windows 11 lists a printer, its test page prints, but a spreadsheet will not print. Because the test page succeeds, first check the spreadsheet app's selected printer and print options. Reinstalling a driver may add work without addressing the observed failure.</p>
+<p>References: <a href="https://support.microsoft.com/en-us/windows/hardware/printer/download-and-install-the-latest-printer-drivers" rel="noopener noreferrer">Microsoft: driver installation and ARM-device exception</a> · <a href="https://support.microsoft.com/en-us/windows/hardware/printer/fix-printing-problems-in-word-excel-or-other-apps" rel="noopener noreferrer">Microsoft: troubleshooting printing in applications</a>.</p>
+</section>
 <section><h2>1. Confirm your exact printer model</h2>
 <p>Look at the manufacturer's label, display, or documentation for the complete model name. An HP DeskJet, Canon PIXMA, Epson EcoTank or Brother printer with a similar name may need different software. If Windows shows several entries for the same device, note their names before changing anything.</p>
 <p>Open <strong>Settings → Bluetooth &amp; devices → Printers &amp; scanners</strong> and select the printer that shows the error. If the printer is not listed at all, start with our <a href="printer-not-found-windows-11">Windows 11 printer-not-found guide</a>.</p></section>
@@ -112,7 +125,7 @@ a{color:#175cd3}li{margin:.55rem 0}section{margin:22px 0}
 <tr><td>Only scanning fails, but Windows test printing works</td><td>Check the manufacturer's official scan support; scanning software can be separate from the printer driver.</td><td>Removing a working printer configuration before investigating scanning</td></tr>
 <tr><td>Printer is missing entirely from Windows</td><td>Confirm USB or network connectivity and follow the <a href="printer-not-found-windows-11">printer-not-found checklist</a> before installing more drivers.</td><td>Assuming a driver can fix a disconnected device</td></tr>
 </tbody></table></div>
-<h3>Confirm the outcome</h3><p>After any change, compare three results: (1) Does Windows list the intended printer? (2) Does a Windows test page print? (3) Can you print from the original application? If the first two succeed but the third fails, focus on that application. On office or school computers, ask IT before changing Protected Print Mode or deleting shared printer queues.</p>
+<h3>Confirm the outcome</h3><p>After any change, compare three results: (1) Does Windows list the intended printer? (2) Does a Windows test page print? (3) Can you print from the original application? Record these outcomes separately. If Windows has the printer and a test page prints, stop changing drivers and investigate the application or document instead. On office or school computers, ask IT before changing Protected Print Mode or deleting shared printer queues.</p>
 </section>
 <section><h2 id="faq">Frequently asked questions</h2>
 <h3>Why does my HP printer say “Driver is unavailable” in Windows 11?</h3>
@@ -142,9 +155,9 @@ a{color:#175cd3}li{margin:.55rem 0}section{margin:22px 0}
 <li><a href="printer-print-queue-stuck-windows-11">Fix a stuck printer queue</a></li>
 <li><a href="brother-printer-offline-windows-11">Brother printer offline in Windows 11</a></li>
 </ul></section>
-<section class="note" aria-label="More free troubleshooting guides"><h2>Explore more free guides</h2><p>Check related troubleshooting steps or browse our free printer, Wi-Fi and Windows articles. We do not request remote access or payment to read the guides.</p><a href="/#guides">Browse free troubleshooting guides →</a></section>
+<section class="note" aria-label="More free troubleshooting guides"><h2>Explore more free guides</h2><p>Check related troubleshooting steps or browse our free printer, Wi-Fi and Windows articles. We do not request remote access or payment to read the guides.</p><a href="/guides">Browse all troubleshooting guides →</a></section>
 </article>
-</main>
+<details class="pr-notes" aria-label="Private troubleshooting record"><summary>Keep a private troubleshooting record</summary><p>Record what you observed. Your entries stay in this browser until you copy them. Never include passwords, serial numbers or personal information.</p><div class="pr-note-grid"><label>Printer or device model<input data-pr-field="model" placeholder="Exact model, if known"></label><label>Connection<select data-pr-field="connection"><option value="">Choose...</option><option>Wi-Fi</option><option>Ethernet</option><option>USB</option><option>Other / not sure</option></select></label><label>Exact symptom<textarea data-pr-field="symptom"></textarea></label><label>Test you performed<textarea data-pr-field="test"></textarea></label><label>Observed result<textarea data-pr-field="result"></textarea></label></div><button type="button" data-pr-generate>Prepare notes</button><button type="button" data-pr-copy hidden>Copy notes</button><p data-pr-status role="status" aria-live="polite"></p><textarea data-pr-output readonly hidden aria-label="Generated notes"></textarea></details></main>
 <footer><nav aria-label="Site information"><a href="/">Home</a> · <a href="about">About</a> · <a href="contact">Contact</a> · <a href="privacy">Privacy</a> · <a href="terms">Terms</a> · <a href="disclaimer">Independent Service Disclaimer</a></nav><p>© 2026 Printer Resolve. Free independent troubleshooting guides.</p></footer>
 </body>
 </html>
