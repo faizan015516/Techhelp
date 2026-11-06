@@ -39,7 +39,7 @@ test("Diagnostic logic changes recommendations by observed evidence",()=>{
   ["jam",{stage:"adf"},"ADF"],
   ["jam",{stage:"duplex"},"duplex"],
   ["jam",{stage:"repeat"},"service"],
-  ["clipping",{preview:"yes"},"print preview"],
+  ["clipping",{preview:"yes"},"app preview"],
   ["clipping",{paper:"no"},"A4"],
   ["clipping",{selftest:"yes"},"hardware"],
   ["epsonwifi",{model:"et2800",code:"e8"},"ET-2800"],
