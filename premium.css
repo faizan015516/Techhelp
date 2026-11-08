@@ -90,3 +90,67 @@ body:has(> main):not(:has(.hero)) article>p{font-size:16px}
 body:has(> main):not(:has(.hero)) article a:not(.contact-button):hover{text-decoration:underline}
 body:has(> main):not(:has(.hero)) footer{background:linear-gradient(125deg,#06172d,#103660)!important}
 @media(max-width:760px){body:has(> main):not(:has(.hero)) main{padding:22px 18px!important;border-radius:19px!important}body:has(> main):not(:has(.hero)) article>h1,body:has(> main):not(:has(.hero)) main>h1{padding:32px 23px!important;border-radius:17px;font-size:clamp(28px,8vw,38px)!important}body:has(> main):not(:has(.hero)) article>h2,body:has(> main):not(:has(.hero)) main>h2{padding:13px 12px}body:has(> main):not(:has(.hero)) article>ol,body:has(> main):not(:has(.hero)) article>ul{padding:16px 16px 16px 35px}}
+
+/* 2026 Printer Resolve 3D editorial refresh: shared guide-page design.
+   Keeps all existing article copy, anchors, and SEO addresses intact. */
+:root{--pr-graphite:#0b111b;--pr-ink:#1b3046;--pr-muted:#5d6c80;--pr-cyan:#8bd8f2}
+body:has(> main):not(:has(.hero)){background:linear-gradient(180deg,#0c1421 0,#162639 230px,#edf2f8 231px,#edf2f8 100%)!important;color:var(--pr-ink)!important;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important}
+body:has(> main):not(:has(.hero)) header{position:relative!important;top:auto!important;background:rgba(9,15,25,.95)!important;border-bottom:1px solid #34465e!important;box-shadow:none!important;padding:21px clamp(20px,4vw,60px)!important}
+body:has(> main):not(:has(.hero)) header a{color:#f0f6fc!important;font-size:clamp(20px,2.5vw,26px)!important;letter-spacing:-.04em!important;font-weight:740!important}
+body:has(> main):not(:has(.hero)) header a:before{content:"P/R"!important;width:39px!important;height:39px!important;border-radius:11px!important;background:linear-gradient(125deg,#334b67,#1b293e)!important;border:1px solid #506783!important;color:#cbeeff!important;font-size:10px!important;letter-spacing:-.1em!important}
+body:has(> main):not(:has(.hero)) main{max-width:970px!important;width:min(970px,calc(100% - 30px))!important;background:#fff!important;border:1px solid #e3eaf2!important;border-radius:28px!important;padding:clamp(25px,5vw,66px)!important;margin:45px auto 70px!important;box-shadow:0 28px 75px rgba(14,34,63,.10)!important;overflow:visible!important}
+body:has(> main):not(:has(.hero)) main:before{background:linear-gradient(90deg,#143655,#65b0df,#bddce9)!important;height:5px!important}
+body:has(> main):not(:has(.hero)) main h1,body:has(> main):not(:has(.hero)) main article>h1{font-size:clamp(34px,5.6vw,57px)!important;background:none!important;box-shadow:none!important;text-shadow:none!important;color:#152b42!important;padding:12px 0 0!important;line-height:1.12!important;letter-spacing:-.055em!important;margin:15px 0 24px!important}
+body:has(> main):not(:has(.hero)) main h2{background:none!important;border-radius:0!important;padding:0!important;color:#1f3a53!important;font-size:clamp(24px,3vw,31px)!important;letter-spacing:-.04em!important;margin-top:38px!important}
+body:has(> main):not(:has(.hero)) main h3{color:#2c536c!important}
+body:has(> main):not(:has(.hero)) main p,body:has(> main):not(:has(.hero)) main li{color:#455b70!important;line-height:1.8!important}
+body:has(> main):not(:has(.hero)) main a:not(.contact-button){color:#225d94!important;text-decoration-thickness:1px;text-underline-offset:4px}
+body:has(> main):not(:has(.hero)) main a:not(.contact-button):hover{color:#123c6a!important;text-decoration:underline}
+body:has(> main):not(:has(.hero)) main .note{background:#f0f6fc!important;border:1px solid #cbddec!important;border-left:4px solid #457cae!important;border-radius:16px!important;box-shadow:none!important}
+body:has(> main):not(:has(.hero)) main .contact-button{background:#174873!important;color:#fff!important}
+body:has(> main):not(:has(.hero)) main .eyebrow{color:#356d9c!important;background:#eaf3fb!important;border-color:#d3e2f0!important}
+body:has(> main):not(:has(.hero)) footer{background:linear-gradient(120deg,#0a121f,#17283d)!important;border-top:1px solid #2a415b!important;color:#c7d7e6!important}
+body:has(> main):not(:has(.hero)) footer a{color:#bcd2e8!important}
+@media(max-width:760px){body:has(> main):not(:has(.hero)) main{margin:22px auto 45px!important;width:calc(100% - 20px)!important;padding:25px 19px!important;border-radius:20px!important}body:has(> main):not(:has(.hero)) main h1,body:has(> main):not(:has(.hero)) main article>h1{padding:10px 0 0!important;margin-top:5px!important}}
+@media(prefers-reduced-motion:reduce){body:has(> main):not(:has(.hero)) *{animation:none!important;scroll-behavior:auto!important}}
+
+/* Reusable evidence-led diagnostic panels: helpful content is primary, animation is secondary. */
+main .pr-evidence{margin:34px 0 44px;padding:clamp(20px,4vw,34px);border:1px solid #c5d8e6;border-radius:23px;background:linear-gradient(145deg,#edf5fb,#f7fbfe);box-shadow:0 16px 35px rgba(22,50,79,.06)}
+main .pr-evidence .pr-evidence-kicker{font-size:11px!important;letter-spacing:.15em!important;font-weight:800!important;text-transform:uppercase!important;color:#326a99!important;margin:0 0 15px!important}
+main .pr-evidence h2{font-size:clamp(25px,3vw,34px)!important;line-height:1.22!important;letter-spacing:-.04em!important;margin:0 0 17px!important;color:#183b55!important}
+main .pr-evidence p{font-size:15px!important;line-height:1.75!important;color:#455f77!important}
+main .pr-evidence-steps{padding-left:22px;margin:19px 0 24px}
+main .pr-evidence-steps li{padding:0 0 7px 4px!important;color:#435e74!important}
+main .pr-result-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:25px 0}
+main .pr-result-cards>div{min-width:0;background:#fff;border:1px solid #cddfea;border-radius:14px;padding:21px}
+main .pr-result-cards strong{font-size:15px;line-height:1.55;color:#1a4562}
+main .pr-result-cards p{margin:9px 0 0!important;font-size:14px!important;line-height:1.7!important}
+main .pr-evidence .pr-evidence-disclosure{font-size:13px!important;border-left:3px solid #6ca3c4;padding-left:14px;margin-top:18px}
+main .pr-evidence a{overflow-wrap:anywhere}
+@media(max-width:660px){main .pr-evidence{padding:20px 17px;border-radius:17px}main .pr-result-cards{grid-template-columns:1fr}main .pr-result-cards>div{padding:16px}}
+
+/* Diagnostic field notes and reader-owned troubleshooting record, v1. */
+main .pr-field-guide{margin:32px 0 42px!important;padding:clamp(21px,4vw,33px);border:1px solid #bfd3e5;border-radius:23px;background:linear-gradient(155deg,#f1f8fc,#fff);box-shadow:0 17px 35px rgba(26,65,101,.065)}
+main .pr-field-guide>h2{font-size:clamp(25px,3vw,33px)!important;line-height:1.2!important;margin:6px 0 16px!important}
+main .pr-field-guide .pr-kicker{font-size:11px!important;text-transform:uppercase;font-weight:800!important;letter-spacing:.13em!important;color:#356e9b!important;margin:0 0 9px!important}
+main .pr-field-guide .pr-field-intro{font-size:15px!important;color:#455c70!important;line-height:1.7!important}
+main .pr-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:21px 0}
+main .pr-field-grid>div{padding:19px;border:1px solid #d4e3ef;border-radius:15px;background:#fff}
+main .pr-field-grid strong{display:block;font-size:16px;line-height:1.45;color:#193955}
+main .pr-field-grid p{font-size:14px!important;line-height:1.7!important;margin:10px 0 0}
+main .pr-field-guide .pr-observation{font-size:11px;font-weight:800;letter-spacing:.09em;color:#407aa2;text-transform:uppercase;display:block;margin-bottom:7px}
+main .pr-field-guide .pr-why{border-radius:13px;border-left:3px solid #528eb8;background:#e8f2fa;padding:17px 20px;font-size:14px;line-height:1.72;color:#38526b}
+main .pr-field-guide .pr-boundary{font-size:13px!important;color:#4d677e!important}
+main .pr-notes{margin:40px 0;padding:23px 25px;border:1px solid #c8d9e8;border-radius:19px;background:#f6f9fd}
+main .pr-notes summary{cursor:pointer;font-size:18px;font-weight:750;color:#1c4768}
+main .pr-notes>p,main .pr-notes p{font-size:13px!important;color:#536981!important;margin:12px 0}
+main .pr-note-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+main .pr-notes label{display:block;font-size:13px;font-weight:750;color:#294b65}
+main .pr-notes input,main .pr-notes select,main .pr-notes textarea{display:block;width:100%;max-width:100%;margin:7px 0 0;padding:12px 13px;border:1px solid #aebfd0;border-radius:10px;background:#fff;color:#1e3750;font:inherit;font-size:14px;min-height:42px}
+main .pr-notes textarea{min-height:83px;resize:vertical}
+main .pr-notes button{border:none;border-radius:10px;background:#214a70;color:#fff;padding:12px 17px;font-weight:750;cursor:pointer;margin:6px 10px 6px 0}
+main .pr-notes button:hover{background:#103251}
+main .pr-notes [data-pr-output]{min-height:180px;font-family:ui-monospace,monospace}
+main .pr-notes [hidden]{display:none!important}
+@media(max-width:700px){main .pr-field-guide{padding:19px 17px}main .pr-field-grid,main .pr-note-grid{grid-template-columns:1fr}main .pr-field-grid>div{padding:16px}main .pr-notes{padding:20px 16px}}
+@media print{main .pr-notes{display:none!important}main .pr-field-guide{box-shadow:none!important}main .pr-field-grid{break-inside:avoid}body:has(> main):not(:has(.hero)) main{box-shadow:none!important;border:none!important}}

@@ -1,0 +1,30 @@
+/* Private controlled-test worksheet appended to the existing Print Path Lab */
+.pp-controlled{margin-top:55px}
+.pp-controlled .pp-controlled-lede{max-width:850px;color:#c9dff2}
+.pp-controlled-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px;margin-top:20px}
+.pp-controlled-form label{display:block;color:#e5f4ff;font-weight:730;font-size:14px;margin-bottom:7px}
+.pp-controlled-form select,.pp-controlled-form input,.pp-controlled-result textarea{
+  width:100%;box-sizing:border-box;background:#0a1c2e;border:1px solid #668aa8;border-radius:10px;
+  color:#f2faff;padding:13px 14px;font:inherit;font-size:15px
+}
+.pp-controlled-form [type=checkbox]{width:18px;height:18px;accent-color:#a9e5fb;flex:0 0 auto}
+.pp-controlled-form select:focus-visible,.pp-controlled-form input:focus-visible,.pp-controlled-result textarea:focus-visible,.pp-controlled button:focus-visible{
+ outline:3px solid #a4ebff;outline-offset:3px
+}
+.pp-controlled-full{grid-column:1/-1}
+.pp-controlled-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 20px}
+.pp-controlled-checks label{display:flex;align-items:flex-start;gap:10px;line-height:1.5;font-weight:500}
+.pp-controlled-notice{padding:15px 17px;border-left:3px solid #ecc185;background:#23313c;border-radius:9px;color:#f5e6d3}
+.pp-controlled-result{margin-top:26px;background:#132f43;padding:21px;border:1px solid #5c9abc;border-radius:13px}
+.pp-controlled-result[hidden]{display:none}
+.pp-controlled-result h3{margin:0 0 8px;color:#f6fcff}
+.pp-controlled-result textarea{min-height:240px;margin:12px 0 4px;resize:vertical;font-family:ui-monospace,monospace;font-size:13px}
+.pp-controlled button{cursor:pointer}
+.pp-controlled-status{min-height:1.6em;font-size:13px;color:#c6ecff}
+.pp-controlled .pp-controlled-help{font-size:13px;color:#bdd5e8;margin-top:5px}
+@media(max-width:680px){
+ .pp-controlled-form,.pp-controlled-checks{grid-template-columns:1fr}
+ .pp-controlled{margin-top:36px}
+ .pp-controlled-result{padding:16px}
+}
+@media(prefers-reduced-motion:reduce){.pp-controlled *, .pp-controlled *::before,.pp-controlled *::after{scroll-behavior:auto!important;transition:none!important}}

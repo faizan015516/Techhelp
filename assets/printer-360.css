@@ -1,0 +1,71 @@
+/* PrinterResolve interactive 360 printer presentation, shared by home and brand guides. */
+.pr360{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;width:min(100%,630px);height:min(100%,525px);min-height:390px;isolation:isolate;color:#e1edfa;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.pr360-frame{position:relative;width:min(100%,600px);height:clamp(290px,33vw,425px);border-radius:26px;overflow:hidden;touch-action:pan-y;cursor:grab;outline-offset:3px;isolation:isolate;background:radial-gradient(ellipse at 48% 62%,rgba(77,148,211,.14),transparent 64%);box-shadow:inset 0 1px rgba(209,233,255,.1)}
+.pr360-frame.is-dragging{cursor:grabbing}
+.pr360-frame:focus-visible{outline:3px solid #9fefff}
+.pr360-canvas{display:block;position:absolute;inset:0;width:100%!important;height:100%!important;z-index:2}
+.pr360-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:.84;filter:drop-shadow(0 20px 18px rgba(0,0,0,.2))}
+.pr360-fallback[hidden]{display:none!important}
+.pr360-frame:after{content:"";pointer-events:none;position:absolute;inset:auto 8% 3% 8%;height:22px;background:radial-gradient(ellipse,rgba(37,64,104,.28),transparent 70%);filter:blur(11px)}
+.pr360-controls{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;z-index:6;position:relative;margin:5px 0 7px}
+.pr360 .pr360-controls button{appearance:none;background:rgba(12,31,52,.88)!important;color:#e1f4ff!important;border:1px solid rgba(139,204,247,.47)!important;border-radius:999px!important;padding:10px 16px!important;min-height:41px!important;font:600 12px/1.25 Inter,system-ui,sans-serif!important;letter-spacing:0!important;box-shadow:0 10px 28px rgba(1,8,22,.22)!important;cursor:pointer!important}
+.pr360 .pr360-controls button:hover{background:rgba(30,71,107,.94)!important;border-color:#b1e4ff!important}
+.pr360 .pr360-controls button:focus-visible{outline:3px solid #b1eeff!important;outline-offset:3px}
+.pr360 .pr360-controls button:disabled{opacity:.55!important;cursor:not-allowed!important}
+.pr360-note{font-size:11px!important;text-align:center!important;line-height:1.5!important;letter-spacing:0!important;color:#b7cde4!important;margin:3px 18px 0!important;max-width:510px!important}
+.pr360-status{position:absolute;bottom:18px;left:0;right:0;text-align:center;pointer-events:none;color:#b6cfe4;font-size:11px;z-index:3;opacity:.86}
+.pr360-ready .pr360-status{position:static;padding:0;margin:2px 12px 0;opacity:.86}
+.pr360-ready .pr360-frame{background:radial-gradient(ellipse at 48% 58%,rgba(74,135,200,.19),transparent 70%)}
+.pr360[data-printer="epson"]{--pr360-accent:#64e3d6}
+.pr360[data-printer="canon"]{--pr360-accent:#ffb6ae}
+.pr360[data-printer="hp"]{--pr360-accent:#8cceff}
+.pr360[data-printer="brother"]{--pr360-accent:#a6d1ff}
+.pr360[data-printer="dell"]{--pr360-accent:#8dc7f6}
+.pr360-ready .pr360-controls button:first-child{border-color:var(--pr360-accent,#91dcff)!important}
+.hero-art>.pr360{margin:0 auto;max-width:610px;height:540px}
+body.nx-document .nx-hero-art>.pr360{width:100%;max-width:600px;min-height:440px;margin:0 auto}
+body.nx-document .nx-hero-art .nx-orbit{pointer-events:none}
+body.nx-document .nx-hero-art .pr360 *{box-sizing:border-box}
+.hero-art>.art-caption,.nx-hero-art>.nx-visual-credit{display:none}
+.pr360-fallback-only .pr360-controls{display:none}
+@media (max-width:900px){.hero-art>.pr360{min-height:380px;height:470px}.pr360-frame{height:340px}body.nx-document .nx-hero-art>.pr360{min-height:370px}}
+@media (max-width:600px){.pr360{min-height:310px;height:auto}.pr360-frame{height:clamp(250px,70vw,355px);border-radius:18px}.pr360-controls{margin-top:6px}.pr360 .pr360-controls button{padding:10px 12px!important;font-size:11px!important}.hero-art>.pr360{height:390px;min-height:310px}body.nx-document .nx-hero-art>.pr360{min-height:325px}.pr360-note{font-size:10px!important;padding:0 8px}}
+@media (prefers-reduced-motion:reduce){.pr360-frame,.pr360-controls button{scroll-behavior:auto!important;transition:none!important}}
+
+/* 3D mobile collision repair — keep the model below the hero's call-to-action row. */
+.pr360-ready .pr360-status{
+ position:absolute!important;
+ width:1px!important;height:1px!important;
+ padding:0!important;margin:-1px!important;
+ overflow:hidden!important;white-space:nowrap!important;
+ clip-path:inset(50%)!important;border:0!important;
+}
+@media(max-width:840px){
+ body.nx-document .nx-hero-art:has(>.pr360){
+  height:440px!important;min-height:440px!important;
+  margin-top:8px!important;margin-bottom:8px!important;
+  align-items:center!important;
+ }
+ body.nx-document .nx-hero-art>.pr360{
+  min-height:400px!important;height:408px!important;
+  justify-content:center!important;
+ }
+ body.nx-document .nx-hero-art .pr360-frame{
+  height:min(320px,62vw)!important;
+  min-height:250px!important;
+ }
+}
+@media(max-width:580px){
+ body.nx-document .nx-hero-art:has(>.pr360){
+  height:405px!important;min-height:405px!important;
+  margin-top:20px!important;margin-bottom:12px!important;
+ }
+ body.nx-document .nx-hero-art>.pr360{
+  min-height:375px!important;height:386px!important;
+ }
+ body.nx-document .nx-hero-art .pr360-frame{
+  height:278px!important;min-height:278px!important;
+ }
+ body.nx-document .nx-hero-art .nx-tag-a{top:17%!important}
+ body.nx-document .nx-hero-art .nx-tag-b{bottom:20%!important}
+}

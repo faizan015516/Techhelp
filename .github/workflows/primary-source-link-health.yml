@@ -1,0 +1,30 @@
+name: PrinterResolve official reference link health
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - 'tools/**/*.html'
+      - 'tests/primary-source-link-health.cjs'
+      - '.github/workflows/primary-source-link-health.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect-documentation-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check reference URL reachability without declaring blocked sites broken
+        run: node tests/primary-source-link-health.cjs
+      - name: Upload detailed official-source URL audit
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: primary-source-link-audit
+          path: test-artifacts/primary-source-link-audit.json
+          if-no-files-found: error

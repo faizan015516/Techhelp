@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="625" viewBox="0 0 480 625" role="img" aria-labelledby="title desc">
+<title id="title">How to investigate blank printer pages</title>
+<desc id="desc">Start with a printer-built-in status or test page. If the built-in page is blank, investigate printer supplies, cartridge installation and printer-side errors. If it prints normally, investigate the document, print preview, app settings, selected printer and driver.</desc>
+<rect width="480" height="625" rx="20" fill="#f5f9ff"/>
+<text x="25" y="43" fill="#102a4c" font-family="Arial,sans-serif" font-size="24" font-weight="700">Blank pages: what to check first</text>
+<text x="25" y="73" fill="#43536b" font-family="Arial,sans-serif" font-size="16">A built-in test helps isolate the cause.</text>
+<rect x="25" y="98" width="430" height="108" rx="15" fill="#ffffff" stroke="#b8cbe9" stroke-width="2"/>
+<text x="44" y="134" fill="#102a4c" font-family="Arial,sans-serif" font-size="20" font-weight="700">Print from the printer itself</text>
+<text x="44" y="164" fill="#344054" font-family="Arial,sans-serif" font-size="16">Find a built-in status, quality or nozzle</text>
+<text x="44" y="185" fill="#344054" font-family="Arial,sans-serif" font-size="16">test in the model's official manual.</text>
+<path d="M240 207 V234" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+<path d="M230 224 L240 236 L250 224" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="25" y="242" width="430" height="130" rx="15" fill="#fffaf2" stroke="#d4a056" stroke-width="2"/>
+<text x="44" y="275" fill="#795000" font-family="Arial,sans-serif" font-size="20" font-weight="700">If the built-in page is blank</text>
+<text x="44" y="304" fill="#344054" font-family="Arial,sans-serif" font-size="16">Check ink or toner, protective seals,</text>
+<text x="44" y="326" fill="#344054" font-family="Arial,sans-serif" font-size="16">nozzle pattern or printer error codes.</text>
+<text x="44" y="348" fill="#344054" font-family="Arial,sans-serif" font-size="16">Follow model-specific instructions.</text>
+<text x="240" y="399" text-anchor="middle" fill="#475467" font-family="Arial,sans-serif" font-size="18" font-weight="700">OR</text>
+<rect x="25" y="418" width="430" height="129" rx="15" fill="#edf6ff" stroke="#9cc0e8" stroke-width="2"/>
+<text x="44" y="451" fill="#124294" font-family="Arial,sans-serif" font-size="20" font-weight="700">If the built-in page is normal</text>
+<text x="44" y="480" fill="#344054" font-family="Arial,sans-serif" font-size="16">Check the document and print preview,</text>
+<text x="44" y="502" fill="#344054" font-family="Arial,sans-serif" font-size="16">then the Windows printer selection,</text>
+<text x="44" y="524" fill="#344054" font-family="Arial,sans-serif" font-size="16">app settings and driver.</text>
+<text x="25" y="588" fill="#43536b" font-family="Arial,sans-serif" font-size="15">Stop if the printer overheats, leaks or</text>
+<text x="25" y="609" fill="#43536b" font-family="Arial,sans-serif" font-size="15">reports a serious hardware error.</text>
+</svg>
