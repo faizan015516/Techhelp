@@ -1,0 +1,19 @@
+/* Shared human publisher / business leadership card.
+   An initials monogram is deliberately shown until the owner supplies a real portrait.
+   No fabricated photograph or claimed certification. */
+.pr-person{display:grid;grid-template-columns:112px minmax(0,1fr);gap:24px;align-items:center;margin:27px 0 34px;padding:25px 28px;background:#f2f8fc;border:1px solid #cbdce8;border-radius:21px;box-shadow:0 13px 38px rgba(14,45,68,.06)}
+.pr-person__avatar{width:112px;height:112px;display:grid;place-items:center;border-radius:22px;overflow:hidden;border:1px solid #73b8b9;background:linear-gradient(135deg,#174d60,#226d79 70%,#162f59);color:#eafdfb;font:700 31px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;letter-spacing:-.04em}
+.pr-person__avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.pr-person__eyebrow{font:800 11px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-transform:uppercase;letter-spacing:.14em;color:#1b6575;margin:0 0 6px}
+.pr-person__name{font:750 clamp(22px,2.6vw,31px)/1.2 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;letter-spacing:-.045em;color:#13283b;margin:0 0 6px}
+.pr-person__role{font:700 13px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#196578;margin:0 0 10px}
+.pr-person__bio{font:400 14px/1.7 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#40586a;margin:0 0 9px}
+.pr-person__links{font:600 13px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;margin:0}
+.pr-person__links a{color:#125d85;text-decoration:underline;text-underline-offset:3px}
+.pr-person--dark{background:linear-gradient(125deg,#173448,#102535);border-color:rgba(153,220,228,.27);box-shadow:0 25px 80px rgba(0,0,0,.16)}
+.pr-person--dark .pr-person__name{color:#f2fbff}
+.pr-person--dark .pr-person__role,.pr-person--dark .pr-person__eyebrow{color:#a5ece2}
+.pr-person--dark .pr-person__bio{color:#adc9d7}
+.pr-person--dark .pr-person__links a{color:#b2ebed}
+.pr-person--dark .pr-person__avatar{box-shadow:0 0 0 5px rgba(98,185,177,.075)}
+@media(max-width:620px){.pr-person{grid-template-columns:1fr;gap:17px;padding:22px}.pr-person__avatar{width:90px;height:90px;border-radius:19px;font-size:27px}}
