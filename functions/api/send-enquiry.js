@@ -99,7 +99,7 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, code: "verification_unavailable", message: "Security verification is unavailable. Please try again or email us." }, 502);
   }
   if (!checked || checked.success !== true || !PROD_HOSTS.has(checked.hostname) ||
-      (checked.action && checked.action !== "enquiry")) {
+      checked.action !== "enquiry") {
     return json({ ok: false, code: "verification_failed", message: "Security verification expired or failed. Please retry." }, 400);
   }
   const subject = "New AI automation enquiry | " + business.slice(0, 75);
