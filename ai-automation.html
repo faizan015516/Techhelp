@@ -30,6 +30,27 @@
     .note{padding:22px 26px;background:#10283a;border:1px solid #365a70;border-radius:17px;color:#c7dcea;margin-top:24px}.note strong{color:#f0faff}.faq details{border-bottom:1px solid var(--line);padding:17px 0}.faq summary{cursor:pointer;font-weight:700}.faq details p{margin-bottom:4px}.cta{background:linear-gradient(120deg,#142d47,#0d2438);padding:38px;border:1px solid #40657e;border-radius:25px;margin:24px 0 36px}
     footer{border-top:1px solid var(--line);padding:35px 0;color:#91a9be;font-size:13px}footer nav{display:flex;flex-wrap:wrap;gap:18px}footer a{text-decoration:none}.footer-line{margin-top:14px;font-size:12px}
     @media(max-width:850px){.hero-grid{grid-template-columns:1fr}.scene{min-height:310px}.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}@media(max-width:560px){.shell{width:min(100% - 28px,1160px)}.top .shell{align-items:flex-start;padding:15px 0;flex-direction:column}.nav{gap:15px}.hero{padding:55px 0}.grid,.steps{grid-template-columns:1fr}.cta{padding:24px}.scene{display:none}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  
+    /* Premium agency polish and checkout status states */
+    body{background:radial-gradient(ellipse 850px 540px at 86% 3%,rgba(43,108,158,.23),transparent 70%),radial-gradient(ellipse 500px 420px at 2% 27%,rgba(18,113,109,.08),transparent 75%),var(--bg)}
+    .top{box-shadow:0 10px 34px rgba(1,9,18,.18)}
+    .nav a{transition:color .18s ease}.hero h1{font-weight:760;text-wrap:balance}
+    .hero h1 em{background:linear-gradient(100deg,#a5eeeb,#85c5ff 65%,#b0b7ff);background-clip:text;-webkit-background-clip:text;color:transparent}
+    .scene{transform:perspective(1300px) rotateY(-3deg);transition:transform .35s ease,box-shadow .35s ease}.scene:hover{transform:perspective(1300px) rotateY(0deg) translateY(-4px);box-shadow:0 42px 90px rgba(0,0,0,.33)}
+    .tile{transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}.tile:hover{transform:translateY(-5px);border-color:rgba(125,215,230,.45);box-shadow:0 14px 42px rgba(1,13,27,.23)}
+    .btn{transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}.btn:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 9px 28px rgba(40,130,160,.15)}
+    .tile h3,.step h3{color:#f0faff}.step{position:relative}.step:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--mint);position:absolute;top:-5px;left:0}
+    .faq details[open]{background:rgba(32,73,102,.14);padding-left:16px;border-radius:12px}.faq summary{list-style-position:outside}.faq summary:hover{color:#a7f5e7}
+    .checkout-panel{padding:28px;border-radius:24px;border:1px solid rgba(135,204,235,.33);background:linear-gradient(115deg,rgba(19,49,73,.95),rgba(15,35,55,.9));display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:30px;align-items:center}
+    .checkout-panel h2{font-size:clamp(25px,3vw,34px);margin:8px 0 15px}.checkout-panel p{font-size:14px}.checkout-panel .mini-label{font-size:11px;color:#9fe4dd;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+    .checkout-panel .checkout-side{border:1px solid rgba(135,204,235,.2);padding:24px;border-radius:18px;background:rgba(4,15,26,.38)}
+    .checkout-panel button{font:700 14px/1.3 inherit;cursor:pointer;border:0;border-radius:999px;background:#c9f3ff;color:#09283b;padding:14px 21px;min-height:48px;width:100%}
+    .checkout-panel button:hover:not(:disabled){background:#f1fdff}.checkout-panel button:disabled{opacity:.55;cursor:not-allowed}
+    .checkout-panel #razorpay-test-status[data-state="success"]{color:#a9f8d5}.checkout-panel #razorpay-test-status[data-state="error"]{color:#ffb8bf}.checkout-panel #razorpay-test-status[data-state="warning"]{color:#ffe2a0}
+    #razorpay-test-status{min-height:42px;font-size:13px;line-height:1.6;color:#b6cfe0}
+    @media(max-width:850px){.checkout-panel{grid-template-columns:1fr}}
+    @media(max-width:560px){.scene{transform:none}.checkout-panel{padding:21px}}
+    @media(prefers-reduced-motion:reduce){.scene,.tile,.btn{transition:none}.scene:hover,.tile:hover,.btn:hover{transform:none}}
   </style>
 </head>
 <body>
@@ -58,7 +79,27 @@
       <details><summary>Is this the same as the free printer guides?</summary><p>No. Printer Resolve's troubleshooting articles remain free educational resources. Custom business automation is a separate, proposal-based service.</p></details>
     </div></section>
     <section class="section"><div class="shell"><div class="cta"><p class="eyebrow">Business enquiries</p><h2>Tell us what your team handles every day.</h2><p>Share your industry, preferred contact channel, and the repetitive tasks you want to improve. Please do not email patient records, passwords, card information or confidential customer data.</p><a class="btn btn-primary" href="mailto:support@printerresolve.com?subject=AI%20automation%20business%20enquiry">Email about AI automation ↗</a><p class="small">Printer Resolve is operated from Kashmir, India. We discuss custom projects remotely; availability and scope are confirmed in writing.</p></div></div></section>
+    <section class="section" id="checkout-test" aria-labelledby="checkout-test-title">
+      <div class="shell">
+        <div class="checkout-panel">
+          <div>
+            <p class="mini-label">Payment integration · Test environment</p>
+            <h2 id="checkout-test-title">Secure checkout, verified behind the scenes.</h2>
+            <p>Explore a simulated Razorpay Standard Checkout transaction to validate the payment connection. This is a development test only, not a service fee, paid order, contract, or invoice.</p>
+            <p class="small">Test amount: ₹100 (10,000 paise). No real funds are charged. Actual project fees are agreed in a separate written proposal. International card acceptance is subject to approval.</p>
+            <a href="/terms">Review business-service payment terms ↗</a>
+          </div>
+          <div class="checkout-side">
+            <div class="mini-label" style="margin-bottom:14px">Razorpay · simulated test</div>
+            <button id="razorpay-test-button" type="button" disabled aria-describedby="razorpay-test-status">Checking test checkout…</button>
+            <p id="razorpay-test-status" role="status" aria-live="polite">Checking whether this Cloudflare environment has test checkout configured…</p>
+            <p class="small">To discuss a real project or request an invoice, <a href="mailto:support@printerresolve.com?subject=AI%20automation%20proposal%20request">contact us by email</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <footer><div class="shell"><nav aria-label="Footer"><a href="/">Home</a><a href="/guides">Free guides</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/editorial-policy">Editorial policy</a></nav><p class="footer-line">© 2026 Printer Resolve · Independent technical education and separately scoped business automation services. No manufacturer affiliation or live patient booking implied.</p></div></footer>
+  <script defer src="/assets/razorpay-test-checkout.js?v=20261108-1"></script>
 </body>
 </html>
