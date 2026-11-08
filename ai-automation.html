@@ -180,7 +180,7 @@
             <p class="hint">Based in Kashmir, India · Remote business project discussions in English</p>
           </div>
           <div>
-            <form id="enquiry-form" action="mailto:support@printerresolve.com" method="post" enctype="text/plain">
+            <form id="enquiry-form" action="https://formspree.io/f/xwlvrqkl" method="POST">
               <div class="form-grid">
                 <div class="field"><label for="enquiry-name">Your name *</label><input id="enquiry-name" name="name" type="text" autocomplete="name" maxlength="100" placeholder="Your name" required></div>
                 <div class="field"><label for="enquiry-business">Business name *</label><input id="enquiry-business" name="business" type="text" autocomplete="organization" maxlength="120" placeholder="Company or clinic" required></div>
@@ -188,11 +188,11 @@
                 <div class="field"><label for="enquiry-service">Interested in *</label><select id="enquiry-service" name="service" required><option value="">Select a service</option><option value="Website AI assistant">Website AI assistant</option><option value="WhatsApp inquiry workflow">WhatsApp inquiry workflow</option><option value="Appointment-request automation">Appointment-request automation</option><option value="Combined business automation">Combined business automation</option><option value="Not sure yet">Not sure yet</option></select></div>
                 <div class="field full"><label for="enquiry-message">What would you like to improve? *</label><textarea id="enquiry-message" name="message" minlength="10" maxlength="1200" placeholder="Example: Our reception team handles repeated questions about opening hours and appointments." required></textarea></div>
               </div>
-              <div class="enquiry-honeypot" aria-hidden="true"><label for="enquiry-company-website">Leave this website field empty</label><input id="enquiry-company-website" type="text" name="company_website" tabindex="-1" autocomplete="off"></div>
-              <div id="enquiry-turnstile" class="enquiry-security" hidden aria-label="Security verification"></div>
+              <div class="enquiry-honeypot" aria-hidden="true"><label for="enquiry-company-website">Leave this website field empty</label><input id="enquiry-company-website" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+              <input type="hidden" name="_subject" value="New AI automation enquiry - Printer Resolve">
               <div class="form-actions"><button class="btn btn-primary" id="send-enquiry" type="submit">Compose enquiry email ↗</button><button class="btn btn-secondary" id="copy-enquiry" type="button">Copy enquiry</button></div>
               <p id="enquiry-status" role="status" aria-live="polite"></p>
-              <p class="form-note" id="enquiry-note">When secure email submission is active, enquiries are sent directly to our business mailbox through a provider. Otherwise, the button composes an email for you to send. Please avoid sensitive patient information or passwords. <a href="/privacy">Privacy Policy</a>.</p>
+              <p class="form-note" id="enquiry-note">Enquiries are processed by Formspree and forwarded to our official Zoho inbox. Do not include patient records, passwords or payment information. <a href="/privacy">Privacy Policy</a>.</p>
             </form>
           </div>
         </div>
@@ -222,7 +222,7 @@
     </div>
   </footer>
   <script defer src="/assets/ai-automation-interactions.js?v=20261108-5"></script>
-  <script defer src="/assets/enquiry-submit.js?v=20261108-1"></script>
+  <script defer src="/assets/enquiry-submit.js?v=20261108-2"></script>
   <script defer src="/assets/razorpay-test-checkout.js?v=20261108-2"></script>
 </body>
 </html>
