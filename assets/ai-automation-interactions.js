@@ -59,6 +59,18 @@
   const form = document.getElementById("enquiry-form");
   const status = document.getElementById("enquiry-status");
   const copyButton = document.getElementById("copy-enquiry");
+  // Service-card CTAs are ordinary anchor links, with a helpful preselected topic.
+  const serviceField = document.getElementById("enquiry-service");
+  document.querySelectorAll(".feature-link[data-service]").forEach(link => {
+    link.addEventListener("click", () => {
+      if (!serviceField) return;
+      const requested = link.dataset.service;
+      if ([...serviceField.options].some(option => option.value === requested)) {
+        serviceField.value = requested;
+        if (status) status.textContent = "Selected: " + requested + ". Add your details below to compose an enquiry.";
+      }
+    });
+  });
   function notice(message) {
     if (status) status.textContent = message;
   }
