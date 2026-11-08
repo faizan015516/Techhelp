@@ -188,9 +188,11 @@
                 <div class="field"><label for="enquiry-service">Interested in *</label><select id="enquiry-service" name="service" required><option value="">Select a service</option><option value="Website AI assistant">Website AI assistant</option><option value="WhatsApp inquiry workflow">WhatsApp inquiry workflow</option><option value="Appointment-request automation">Appointment-request automation</option><option value="Combined business automation">Combined business automation</option><option value="Not sure yet">Not sure yet</option></select></div>
                 <div class="field full"><label for="enquiry-message">What would you like to improve? *</label><textarea id="enquiry-message" name="message" minlength="10" maxlength="1200" placeholder="Example: Our reception team handles repeated questions about opening hours and appointments." required></textarea></div>
               </div>
-              <div class="form-actions"><button class="btn btn-primary" type="submit">Compose enquiry email <span aria-hidden="true">↗</span></button><button class="btn btn-secondary" id="copy-enquiry" type="button">Copy enquiry</button></div>
+              <div class="enquiry-honeypot" aria-hidden="true"><label for="enquiry-company-website">Leave this website field empty</label><input id="enquiry-company-website" type="text" name="company_website" tabindex="-1" autocomplete="off"></div>
+              <div id="enquiry-turnstile" class="enquiry-security" hidden aria-label="Security verification"></div>
+              <div class="form-actions"><button class="btn btn-primary" id="send-enquiry" type="submit">Compose enquiry email ↗</button><button class="btn btn-secondary" id="copy-enquiry" type="button">Copy enquiry</button></div>
               <p id="enquiry-status" role="status" aria-live="polite"></p>
-              <p class="form-note">This form opens your email application; it does not submit or store information on our website. Please don't include patient records, credentials or sensitive details.</p>
+              <p class="form-note" id="enquiry-note">When secure email submission is active, enquiries are sent directly to our business mailbox through a provider. Otherwise, the button composes an email for you to send. Please avoid sensitive patient information or passwords. <a href="/privacy">Privacy Policy</a>.</p>
             </form>
           </div>
         </div>
@@ -219,7 +221,8 @@
       <div class="footer-bottom"><span>© 2026 Printer Resolve · India</span><span>Independent of printer manufacturers · No live clinic booking integration is implied</span></div>
     </div>
   </footer>
-  <script defer src="/assets/ai-automation-interactions.js?v=20261108-4"></script>
+  <script defer src="/assets/ai-automation-interactions.js?v=20261108-5"></script>
+  <script defer src="/assets/enquiry-submit.js?v=20261108-1"></script>
   <script defer src="/assets/razorpay-test-checkout.js?v=20261108-2"></script>
 </body>
 </html>
