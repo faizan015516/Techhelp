@@ -116,7 +116,7 @@ pipeline {
                     docker run -d \\
                       --name techhelp \\
                       --restart unless-stopped \\
-                      -p 80:81 \\
+                      -p 127.0.0.1:8080:80 \\
                       "${FULL_IMAGE}"
                 """
             }
