@@ -40,12 +40,15 @@
   };
   const patient = document.getElementById("demo-patient");
   const assistant = document.getElementById("demo-assistant");
+  const counter = document.getElementById("demo-position");
   const chips = [...document.querySelectorAll(".demo-chip")];
   function chooseExample(example) {
     const data = examples[example];
     if (!data || !patient || !assistant) return;
     patient.textContent = data.patient;
     assistant.textContent = data.assistant;
+    const index = ["appointment", "services", "afterhours"].indexOf(example) + 1;
+    if (counter) counter.textContent = String(index).padStart(2, "0") + " / 03";
     chips.forEach(chip => chip.setAttribute("aria-pressed", String(chip.dataset.example === example)));
   }
   chips.forEach(chip => {
