@@ -19,12 +19,18 @@
 .publisher-section{background:radial-gradient(circle at 90% 10%,#183349 0,transparent 44%),#0c1623;border-top:1px solid rgba(160,205,237,.17);border-bottom:1px solid rgba(160,205,237,.17)}
 .publisher-section h2{font-size:clamp(38px,5vw,64px);letter-spacing:-.055em;line-height:1.12;margin:0}
 .publisher-section h2 span{color:#a4dff1}
-.publisher-section .pr-person{max-width:970px;margin:34px 0 0;gap:30px;padding:32px}
-.publisher-section .pr-person__avatar{width:120px;height:120px}
-.publisher-section .pr-person__links{display:flex;flex-wrap:wrap;column-gap:18px;row-gap:8px}
+.publisher-section .pr-person{max-width:1100px;grid-template-columns:150px minmax(0,1fr);margin:38px 0 0;gap:36px;padding:40px 44px}
+.publisher-section .pr-person__avatar{width:150px;height:150px}
+.publisher-section .pr-person__name{font-size:clamp(28px,3vw,36px);margin-bottom:9px}
+.publisher-section .pr-person__eyebrow{font-size:12px;margin-bottom:9px}
+.publisher-section .pr-person__role{font-size:15px;margin-bottom:13px}
+.publisher-section .pr-person__bio{font-size:16px;line-height:1.75;margin-bottom:17px}
+.publisher-section .pr-person__links{display:flex;flex-wrap:wrap;column-gap:22px;row-gap:10px;font-size:14px}
 @media(max-width:620px){
-  .publisher-section .pr-person{padding:22px;gap:18px}
-  .publisher-section .pr-person__avatar{width:94px;height:94px}
+  .publisher-section .pr-person{grid-template-columns:1fr;padding:26px;gap:21px}
+  .publisher-section .pr-person__avatar{width:108px;height:108px}
+  .publisher-section .pr-person__name{font-size:29px}
+  .publisher-section .pr-person__bio{font-size:15px}
 }
 </style>
   <script defer src="/assets/experience.js"></script><script type="module" src="/assets/printer-360.mjs?v=20261106-autospin-3"></script>
