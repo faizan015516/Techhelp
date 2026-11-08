@@ -17,3 +17,62 @@
 .pr-person--dark .pr-person__links a{color:#b2ebed}
 .pr-person--dark .pr-person__avatar{box-shadow:0 0 0 5px rgba(98,185,177,.075)}
 @media(max-width:620px){.pr-person{grid-template-columns:1fr;gap:17px;padding:22px}.pr-person__avatar{width:90px;height:90px;border-radius:19px;font-size:27px}}
+
+/* Publisher profile on dark documentation pages:
+   future-2.css uses high-specificity !important rules for all main headings,
+   paragraphs and links. Explicitly scope the profile to match the page theme. */
+body.nx-document main .pr-person{
+  background:linear-gradient(135deg,#182d41 0%,#142639 58%,#16354a 100%)!important;
+  border:1px solid rgba(151,216,235,.34)!important;
+  box-shadow:0 18px 52px rgba(0,0,0,.16)!important;
+  color:#edf7ff!important;
+  align-items:center!important;
+}
+body.nx-document main .pr-person h2.pr-person__name{
+  background:none!important;
+  color:#f5fbff!important;
+  font-size:clamp(23px,2.6vw,30px)!important;
+  letter-spacing:-.035em!important;
+  line-height:1.25!important;
+  margin:0 0 5px!important;
+  padding:0!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+body.nx-document main .pr-person p.pr-person__eyebrow{
+  color:#8fe0db!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  line-height:1.5!important;
+  letter-spacing:.13em!important;
+  margin:0 0 7px!important;
+}
+body.nx-document main .pr-person p.pr-person__role{
+  color:#b6e4f2!important;
+  font-size:13px!important;
+  line-height:1.6!important;
+  margin:0 0 11px!important;
+}
+body.nx-document main .pr-person p.pr-person__bio{
+  color:#d0e0ed!important;
+  font-size:14px!important;
+  line-height:1.75!important;
+  margin:0 0 13px!important;
+}
+body.nx-document main .pr-person p.pr-person__links{
+  font-size:13px!important;
+  line-height:1.65!important;
+  margin:0!important;
+}
+body.nx-document main .pr-person .pr-person__links a{
+  color:#91e1f4!important;
+  text-decoration:underline!important;
+  text-decoration-color:rgba(145,225,244,.55)!important;
+}
+body.nx-document main .pr-person .pr-person__links a:hover{
+  color:#ffffff!important;
+}
+body.nx-document main .pr-person .pr-person__avatar{
+  border:1px solid rgba(143,224,219,.5)!important;
+  background:#0e2131!important;
+}
