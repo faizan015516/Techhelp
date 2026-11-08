@@ -122,7 +122,7 @@ test("Business AI controls have real targets and no live checkout", () => {
   const serviceLinks=[...page.matchAll(/class="feature-link"[^>]*data-service="([^"]+)"/g)].map(m=>m[1]);
   assert.equal(serviceLinks.length,6,"Every AI service card must have an actionable enquiry CTA");
   for(const name of new Set(serviceLinks))assert.ok(page.includes('<option value="'+name+'">'),"Missing matching service dropdown option: "+name);
-  for(const id of ["menu-toggle","nav-links","enquiry-form","enquiry-service","copy-enquiry","send-enquiry","enquiry-turnstile","enquiry-note","enquiry-status","razorpay-test-button","razorpay-test-status"])
+  for(const id of ["menu-toggle","nav-links","enquiry-form","enquiry-service","copy-enquiry","send-enquiry","enquiry-note","enquiry-status","razorpay-test-button","razorpay-test-status"])
     assert.ok(ids.has(id),"Missing interaction element: "+id);
   assert.match(page,/sample preview|prewritten example|illustrative example|interactive example/i);
   assert.match(page,/test checkout \(simulated payments only\)/i);
@@ -143,32 +143,25 @@ test("Payment API remains test-only and requires server-side verification", () =
   assert.match(front,/ondismiss/);
 });
 
-test("Business enquiry form uses backend delivery, security and honest fallback", () => {
+test("Business enquiries use existing Formspree-to-Zoho integration", () => {
   const page=read("ai-automation.html");
   const app=read("assets/enquiry-submit.js");
-  const api=read("functions/api/send-enquiry.js");
   const inter=read("assets/ai-automation-interactions.js");
   assert.match(page,/src="\/assets\/enquiry-submit\.js/);
-  assert.match(page,/action="mailto:support@printerresolve\.com"/);
-  assert.match(page,/name="company_website"/);
-  assert.match(app,/\/api\/send-enquiry/);
-  assert.match(app,/window\.turnstile\.render/);
-  assert.match(app,/window\.turnstile\.reset/);
-  assert.match(app,/mailDraft|emailDraft/);
-  assert.match(app,/result\.ok !== true/);
-  assert.doesNotMatch(inter,/form\.addEventListener\("submit"/,"Only the direct-submit client handles form submission");
-  assert.match(api,/TURNSTILE_SECRET_KEY/);
-  assert.match(api,/RESEND_API_KEY/);
-  assert.match(api,/turnstile\/v0\/siteverify/);
-  assert.match(api,/checked\.hostname/);
-  assert.match(api,/checked\.action !== "enquiry"/);
-  assert.match(api,/https:\/\/api\.resend\.com\/emails/);
-  assert.match(api,/reply_to: email/);
-  assert.match(api,/ENQUIRY_TO_EMAIL/);
-  assert.match(api,/Idempotency-Key/);
-  assert.ok(!page.includes("RESEND_API_KEY"),"Provider secret must never appear in HTML");
-  assert.ok(!page.includes("TURNSTILE_SECRET_KEY"),"Verification secret must never appear in HTML");
-  assert.doesNotThrow(()=>new vm.Script(app),"Contact form frontend syntax must be valid");
-  assert.match(read("privacy.html"),/Resend/);
+  assert.match(page,/action="https:\/\/formspree\.io\/f\/xwlvrqkl"/);
+  assert.match(page,/name="_gotcha"/);
+  assert.match(page,/id="send-enquiry"/);
+  for(const field of ["name","business","email","service","message"]){
+    assert.ok(page.includes('name="'+field+'"'),"Expected enquiry field: "+field);
+  }
+  assert.match(app,/fetch\(destination/);
+  assert.match(app,/headers:\s*\{\s*"Accept": "application\/json"/);
+  assert.match(app,/form\.reset\(\)/);
+  assert.match(app,/!response\.ok/);
+  assert.match(app,/formspree\.io\/f\/xwlvrqkl/);
+  assert.doesNotMatch(inter,/form\.addEventListener\("submit"/,"Only one script should handle form submit");
+  assert.ok(!known.has("functions/api/send-enquiry.js"),"Obsolete Resend backend must be removed");
+  assert.doesNotThrow(()=>new vm.Script(app),"Formspree frontend syntax");
+  assert.match(read("privacy.html"),/Formspree/);
   assert.ok(known.has("ENQUIRY-SETUP.md"));
 });
