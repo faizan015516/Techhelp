@@ -31,14 +31,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .nav-links .nav-contact{color:#082332;background:var(--ice);border:1px solid rgba(218,249,255,.7);border-radius:40px;padding:10px 19px;transition:transform .2s,background .2s}
 .nav-links .nav-contact:hover{color:#071b29;background:white;transform:translateY(-1px)}
 .menu-toggle{display:none;margin-left:auto;background:transparent;border:1px solid #4e7385;color:#d8eef8;border-radius:11px;padding:8px 13px;font-weight:700}
-.hero{padding:92px 0 72px;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);align-items:center;gap:55px}
+.hero{padding:74px 0 56px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);align-items:center;gap:50px}
 .eyebrow{display:flex;gap:10px;align-items:center;color:var(--mint);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;line-height:1.5}
 .eyebrow .spark{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 5px rgba(137,229,213,.1)}
-.hero-title{font-size:clamp(46px,5.25vw,76px);letter-spacing:-.074em;line-height:1.06;margin:21px 0 22px;font-weight:740;text-wrap:balance}
+.hero-title{font-size:clamp(44px,4.7vw,68px);letter-spacing:-.066em;line-height:1.09;margin:18px 0 20px;font-weight:740;text-wrap:balance}
 .gradient-text{color:var(--ice);background:linear-gradient(95deg,#89e5d5 4%,#98caff 68%,#b9baff);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.lead{max-width:580px;color:#b5c9d8;font-size:17px;line-height:1.85;margin:0}
-.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:31px 0 23px}
+.lead{max-width:580px;color:#b5c9d8;font-size:16px;line-height:1.78;margin:0}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:27px 0 21px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:50px;padding:12px 21px;font-size:13.5px;line-height:1.2;font-weight:770;border-radius:99px;border:1px solid transparent;text-decoration:none;transition:background .2s,transform .2s,border-color .2s,box-shadow .2s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.12)}
 .btn-primary{background:#d5f7f8;color:#072332}
@@ -63,7 +63,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .preview-title strong{display:block;font-size:14px;line-height:1.3;color:#eaf7ff}
 .preview-title span{display:block;font-size:11px;color:#9bb6c5;margin-top:4px}
 .agent-live{margin-left:auto;color:#91e4ce;font-size:10px;padding:3px 8px;border:1px solid rgba(133,219,187,.25);border-radius:30px}
-.chat-log{display:flex;flex-direction:column;gap:13px;min-height:195px;justify-content:center}
+.chat-log{display:flex;flex-direction:column;gap:13px;min-height:175px;justify-content:center}
 .message{padding:12px 15px;border-radius:16px;max-width:91%;line-height:1.5;font-size:13px;white-space:pre-line}
 .message.user{align-self:flex-end;color:#e6fbff;background:#17636c;border:1px solid rgba(130,225,217,.26);border-bottom-right-radius:4px}
 .message.assistant{align-self:flex-start;color:#d5e7f3;background:#1d374e;border:1px solid #35566b;border-bottom-left-radius:4px}
