@@ -67,7 +67,7 @@
       const requested = link.dataset.service;
       if ([...serviceField.options].some(option => option.value === requested)) {
         serviceField.value = requested;
-        if (status) status.textContent = "Selected: " + requested + ". Add your details below to compose an enquiry.";
+        if (status) status.textContent = "Selected: " + requested + ". Add your details below to send an enquiry.";
       }
     });
   });
@@ -102,17 +102,6 @@
       "Please reply with the next steps and proposal process."
     ].join("\n");
     return { subject, body };
-  }
-  if (form) {
-    form.addEventListener("submit", event => {
-      event.preventDefault();
-      const enquiry = getEnquiry();
-      if (!enquiry) { notice("Please complete the required details before composing the email."); return; }
-      const mailto = "mailto:support@printerresolve.com?subject=" +
-        encodeURIComponent(enquiry.subject) + "&body=" + encodeURIComponent(enquiry.body);
-      notice("Opening your email application. The enquiry is NOT sent until you review and send it there. If nothing opens, use Copy enquiry.");
-      window.location.href = mailto;
-    });
   }
   if (copyButton) {
     copyButton.addEventListener("click", async () => {
