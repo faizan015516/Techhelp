@@ -154,6 +154,8 @@ test("Business enquiries use existing Formspree-to-Zoho integration", () => {
   for(const field of ["name","business","email","service","message"]){
     assert.ok(page.includes('name="'+field+'"'),"Expected enquiry field: "+field);
   }
+  assert.match(app,/does not confirm delivery to our Zoho inbox/,"Formspree acceptance must not be misreported as email delivery");
+  assert.match(app,/The form did not send your enquiry/,"Honeypot must not show false success");
   assert.match(app,/fetch\(destination/);
   assert.match(app,/headers:\s*\{\s*"Accept": "application\/json"/);
   assert.match(app,/form\.reset\(\)/);
