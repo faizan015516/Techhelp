@@ -38,7 +38,7 @@
     const data = new FormData(form);
     if (String(data.get("_gotcha") || "").trim()) {
       // Formspree also processes this honeypot. Do not forward bot traffic.
-      message("Thank you for your enquiry.", "success");
+      message("The form did not send your enquiry. Please try again or email support@printerresolve.com directly.", "error");
       return;
     }
     setBusy(true);
@@ -61,7 +61,7 @@
         throw new Error(detail || "The enquiry was not accepted. Please try again or email support@printerresolve.com.");
       }
       form.reset();
-      message("Thank you! Your enquiry was submitted. We will reply to the email address you provided.", "success");
+      message("Your enquiry was accepted by our form service. This does not confirm delivery to our Zoho inbox. For urgent requests, email support@printerresolve.com directly.", "success");
     } catch (error) {
       message("We could not confirm your enquiry was sent. Your details are still here. " +
         (error && error.message ? error.message : "Please retry or use the email link."), "error");
