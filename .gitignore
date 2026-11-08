@@ -1,0 +1,9 @@
+# Never commit local credentials or payment tokens
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+node_modules/
+.wrangler/
+.DS_Store
