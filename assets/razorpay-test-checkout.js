@@ -44,12 +44,17 @@
     try {
       const config = await api("/api/create-order", { method: "GET" });
       if (!config.available || config.mode !== "test" || config.amount !== 10000 || config.currency !== "INR") {
-        message("Test checkout is not configured for this deployment. Please use the email enquiry option for project quotes.");
+        button.disabled = true;
+        button.textContent = "Test checkout unavailable";
+        message("Test checkout is not configured for this deployment. Check that both Razorpay test keys are set in Cloudflare's Production environment, then redeploy.");
         return;
       }
       button.disabled = false;
+      button.textContent = "Try Razorpay test checkout";
       message("Test mode is ready. This simulated ₹100 transaction cannot charge real funds.");
     } catch {
+      button.disabled = true;
+      button.textContent = "Test checkout unavailable";
       message("Checkout is not available here. Please contact us for a written quote.");
     }
   }
