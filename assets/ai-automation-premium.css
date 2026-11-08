@@ -92,6 +92,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .feature-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:linear-gradient(145deg,#1d5361,#173b58);border:1px solid #4e8291;color:#b4f5eb;font-size:20px}
 .feature h3{font-size:18px;letter-spacing:-.035em;line-height:1.3;margin:21px 0 9px}
 .feature p{font-size:13.5px;color:#a8bfd0;margin:0;line-height:1.8}
+.feature{display:flex;flex-direction:column}
+.feature-link{display:inline-flex;gap:8px;align-items:center;align-self:flex-start;margin-top:auto;padding-top:21px;color:#a1ebe0;font-size:12px;font-weight:750;text-decoration:none;line-height:1.4}
+.feature-link:hover{color:white;text-decoration:underline;text-underline-offset:4px}
+.feature-link:focus-visible{outline:3px solid #a0f0e8;outline-offset:4px;border-radius:3px}
 .feature .tag{position:absolute;top:33px;right:25px;color:#7c9dad;font-size:10px;letter-spacing:.1em}
 .workflow-grid{display:grid;grid-template-columns:.95fr 1.05fr;align-items:start;gap:70px}
 .flow-list{display:grid;gap:12px;margin-top:30px}
