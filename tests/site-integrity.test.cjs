@@ -115,7 +115,7 @@ test("Paper Fit rejects blank and impossible margins and clears the stale drawin
 
 test("Business AI controls have real targets and no live checkout", () => {
   const page=read("ai-automation.html");
-  const ids=new Set([...page.matchAll(/\\bid="([^"]+)"/g)].map(m=>m[1]));
+  const ids=new Set([...page.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
   const anchors=[...page.matchAll(/href="#([^"]+)"/g)].map(m=>m[1]);
   const broken=anchors.filter(x=>!ids.has(x));
   assert.deepEqual(broken,[],"All AI page anchor links should resolve");
