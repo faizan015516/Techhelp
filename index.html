@@ -13,6 +13,26 @@
   <meta property="og:description" content="Understand the problem, isolate the cause, and choose a safer next step. Independent printer troubleshooting guides and local-only diagnostic tools.">
   <meta property="og:url" content="https://printerresolve.com/">
   <link rel="stylesheet" href="/assets/printer-360.css?v=20261106-2"><link rel="stylesheet" href="/assets/experience.css"><link rel="stylesheet" href="/assets/future-2.css?v=20261106-contrast-4">
+  <link rel="stylesheet" href="/assets/publisher-profile.css?v=20261108-2">
+  <style>
+/* Accessible, mobile-friendly homepage publisher feature, matching the existing dark theme. */
+.publisher-section{background:radial-gradient(circle at 90% 10%,#183349 0,transparent 44%),#0c1623;border-top:1px solid rgba(160,205,237,.17);border-bottom:1px solid rgba(160,205,237,.17)}
+.publisher-section h2{font-size:clamp(38px,5vw,64px);letter-spacing:-.055em;line-height:1.12;margin:0}
+.publisher-section h2 span{color:#a4dff1}
+.publisher-section .pr-person{max-width:1100px;grid-template-columns:150px minmax(0,1fr);margin:38px 0 0;gap:36px;padding:40px 44px}
+.publisher-section .pr-person__avatar{width:150px;height:150px}
+.publisher-section .pr-person__name{font-size:clamp(28px,3vw,36px);margin-bottom:9px}
+.publisher-section .pr-person__eyebrow{font-size:12px;margin-bottom:9px}
+.publisher-section .pr-person__role{font-size:15px;margin-bottom:13px}
+.publisher-section .pr-person__bio{font-size:16px;line-height:1.75;margin-bottom:17px}
+.publisher-section .pr-person__links{display:flex;flex-wrap:wrap;column-gap:22px;row-gap:10px;font-size:14px}
+@media(max-width:620px){
+  .publisher-section .pr-person{grid-template-columns:1fr;padding:26px;gap:21px}
+  .publisher-section .pr-person__avatar{width:108px;height:108px}
+  .publisher-section .pr-person__name{font-size:29px}
+  .publisher-section .pr-person__bio{font-size:15px}
+}
+</style>
   <script defer src="/assets/experience.js"></script><script type="module" src="/assets/printer-360.mjs?v=20261106-autospin-3"></script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2393332073506347" crossorigin="anonymous"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Printer Resolve","url":"https://printerresolve.com/","description":"Free independent printer and Windows troubleshooting guidance","publisher":{"@type":"Organization","name":"Printer Resolve","url":"https://printerresolve.com/"}}</script>
@@ -24,7 +44,7 @@
     <a class="brand" href="/" aria-label="Printer Resolve home"><span class="brand-mark" aria-hidden="true">P<span>R</span></span><span>Printer<span class="brand-light">Resolve</span></span></a>
     <button class="menu-button" id="menu-button" type="button" aria-controls="nav-links" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button>
     <nav class="nav-links" id="nav-links" aria-label="Main navigation">
-      <a href="/guides">All guides</a><a href="#diagnose">Guided check</a><a href="/tools/connection-path">Connection lab</a><a href="/about">About</a>
+      <a href="/guides">All guides</a><a href="#diagnose">Guided check</a><a href="/tools/connection-path">Connection lab</a><a href="/ai-automation">Business AI</a><a href="/about">About</a>
       <a class="nav-cta" href="/printer-problem-checker">Problem checker <span aria-hidden="true">↗</span></a>
     </nav>
   </div>
@@ -127,7 +147,29 @@
   <div class="shell editorial-grid"><div><p class="section-kicker">Our editorial approach</p><h2 id="editorial-title">Useful instructions.<br>Clear limits.</h2><p>Printer Resolve is an independent educational site, not an official printer-brand support desk. We explain typical failure paths and link to original manufacturer guidance when needed.</p><a class="text-link" href="/editorial-policy">How our guides are prepared <span aria-hidden="true">↗</span></a></div>
   <div class="editorial-points"><div><h3>Safer steps first</h3><p>Check the symptom and device state before reinstalling drivers or resetting equipment.</p></div><div><h3>No invented tests</h3><p>Diagrams and examples are labeled as illustrations unless hands-on verification is documented.</p></div><div><h3>Your device stays yours</h3><p>We don't request passwords, payment or remote computer access to read these guides.</p></div></div></div>
 </section>
+<section class="publisher-section section-pad" id="publisher" aria-labelledby="home-publisher-title">
+  <div class="shell">
+    <p class="section-kicker">About the person behind this site</p>
+    <h2 id="home-publisher-title">Meet the publisher.<br><span>Independent guidance, accountable publishing.</span></h2>
+    <div class="pr-person pr-person--dark">
+      <div class="pr-person__avatar"><img src="/assets/sakib-manzoor-profile.webp?v=20261108-1" width="256" height="256" alt="Portrait of Sakib Manzoor" loading="lazy" decoding="async"></div>
+      <div>
+        <p class="pr-person__eyebrow">Publisher · Printer Resolve</p>
+        <h3 class="pr-person__name">Sakib Manzoor</h3>
+        <p class="pr-person__role">IT networking and infrastructure background · Kashmir, India</p>
+        <p class="pr-person__bio">Sakib publishes free, independent printer and Windows troubleshooting guides that help readers understand symptoms, try safer checks first and refer to official manufacturer documentation. Examples and illustrations are not presented as hands-on device tests unless explicitly verified.</p>
+        <p class="pr-person__links"><a href="/about">Read the full publisher profile ↗</a><a href="/editorial-policy#editorial-accountability">Editorial standards &amp; corrections ↗</a><a href="/contact">Contact the publisher ↗</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section-pad" aria-labelledby="business-ai-title" style="border-top:1px solid rgba(142,202,238,.16);background:#0b1828;padding:42px 0">
+  <div class="shell" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px">
+   <div style="max-width:700px"><p class="section-kicker" style="color:#98dfdf">Separate business technology services</p><h2 id="business-ai-title" style="color:#f0f7ff;font-size:clamp(25px,3vw,34px);letter-spacing:-.04em;margin:4px 0 10px">Exploring AI assistants for customer inquiries.</h2><p style="color:#b7cfe2;line-height:1.7;margin:0">Alongside our free guides, we also discuss custom website chatbots, multilingual customer inquiries and appointment-request workflows for businesses. Each project is scoped separately.</p></div>
+   <a class="button button-outline" href="/ai-automation">Explore business AI services <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
 <section class="bottom-cta section-pad" aria-labelledby="cta-title"><div class="shell bottom-cta-wrap"><p class="section-kicker">Ready to troubleshoot?</p><h2 id="cta-title">Start with the cause.<br><span>Not another guess.</span></h2><a class="button button-primary" href="/printer-problem-checker">Open the free problem checker <span aria-hidden="true">↗</span></a></div></section>
 </main>
-<footer class="site-footer"><div class="shell footer-main"><div><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">P<span>R</span></span><span>Printer<span class="brand-light">Resolve</span></span></a><p>Independent, free troubleshooting guides for printer and Windows problems.</p></div><nav aria-label="Footer navigation"><a href="/editorial-policy">Editorial standards</a><a href="/guides">All guides</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Disclaimer</a><a href="/remote-assistance-safety">Online safety</a></nav></div><div class="shell footer-bottom"><span>© 2026 Printer Resolve</span><span>Not affiliated with or endorsed by HP, Canon, Epson, Brother, Microsoft or other device makers.</span></div></footer>
+<footer class="site-footer"><div class="shell footer-main"><div><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">P<span>R</span></span><span>Printer<span class="brand-light">Resolve</span></span></a><p>Independent, free troubleshooting guides for printer and Windows problems.</p></div><nav aria-label="Footer navigation"><a href="/editorial-policy">Editorial standards</a><a href="/guides">All guides</a><a href="/ai-automation">Business AI</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Disclaimer</a><a href="/remote-assistance-safety">Online safety</a></nav></div><div class="shell footer-bottom"><span>© 2026 Printer Resolve</span><span>Not affiliated with or endorsed by HP, Canon, Epson, Brother, Microsoft or other device makers.</span></div></footer>
 </body></html>

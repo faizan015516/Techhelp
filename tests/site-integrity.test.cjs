@@ -19,9 +19,9 @@ function inlineLast(html){const tags=[...html.matchAll(/<script(?:\s[^>]*)?>([\s
 test("Site pages include titles, main content and viewport",()=>{for(const p of pages){const h=read(p);assert.match(h,/<!doctype html>/i,p+" doctype");assert.match(h,/<html\b[^>]*\blang=/i,p+" language");assert.match(h,/<title\b[^>]*>[\s\S]*?<\/title>/i,p+" title");assert.match(h,/<meta\b[^>]*name=["']viewport["']/i,p+" viewport");assert.match(h,/<main\b/i,p+" main");assert.match(h,/<\/main>/i,p+" closing main");assert.match(h,/<h1\b/i,p+" h1");}});
 test("All internal navigation and asset references resolve",()=>{const errors=[];for(const p of pages){const h=read(p),tags=[...h.matchAll(/<(?:a|link|script|img|source)\b[^>]*>/gi)];for(const tag of tags){const attrs=[...tag[0].matchAll(/\b(?:href|src)=["']([^"']+)["']/gi)];for(const match of attrs){const u=match[1],target=localTarget(u,p);if(target&&!known.has(target)){if(target==="refunds.html"&&known.has("_redirects"))continue;errors.push(p+" → "+u+" (expected "+target+")")}}}}assert.deepEqual(errors,[]);});
 test("Canonical urls and sitemap entries point to existing files",()=>{const sitemap=read("sitemap.xml");const errors=[];for(const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)){const target=localTarget(m[1],"sitemap.xml");if(!target||!known.has(target))errors.push(m[1]+" => "+target);}assert.deepEqual(errors,[]);for(const p of pages.filter(x=>!x.startsWith("tools/"))){if(p==="index.html"||p==="guides.html")continue;assert.match(read(p),/rel=["']canonical["']/i,p+" canonical")};});
-test("All educational articles include local-only note form and supporting script",()=>{const skip=new Set(["index.html","guides.html","about.html","editorial-policy.html","contact.html","privacy.html","terms.html","disclaimer.html","tools/connection-path.html","tools/page-fit.html","tools/print-path-lab.html"]);for(const p of pages){if(skip.has(p))continue;const h=read(p);assert.ok(h.includes('class="pr-notes"'),p+" note form");assert.ok(h.includes('/assets/guide-tools.js'),p+" script");}});
-test("Core JavaScript is syntactically valid",()=>{for(const p of ["assets/experience.js","assets/guide-tools.js"]){assert.doesNotThrow(()=>new vm.Script(read(p),{filename:p}))}for(const p of ["tools/page-fit.html","tools/connection-path.html"]){assert.doesNotThrow(()=>new vm.Script(inlineLast(read(p)),{filename:p}))}});
-test("Stylesheets have matched CSS blocks",()=>{for(const p of ["assets/experience.css","premium.css","trust.css"]){const s=read(p);assert.equal((s.match(/{/g)||[]).length,(s.match(/}/g)||[]).length,p)}});
+test("All educational articles include local-only note form and supporting script",()=>{const skip=new Set(["index.html","guides.html","ai-automation.html","about.html","editorial-policy.html","contact.html","privacy.html","terms.html","disclaimer.html","tools/connection-path.html","tools/page-fit.html","tools/print-path-lab.html"]);for(const p of pages){if(skip.has(p))continue;const h=read(p);assert.ok(h.includes('class="pr-notes"'),p+" note form");assert.ok(h.includes('/assets/guide-tools.js'),p+" script");}});
+test("Core JavaScript is syntactically valid",()=>{for(const p of ["assets/experience.js","assets/guide-tools.js","assets/ai-automation-interactions.js","assets/razorpay-test-checkout.js"]){assert.doesNotThrow(()=>new vm.Script(read(p),{filename:p}))}for(const p of ["tools/page-fit.html","tools/connection-path.html"]){assert.doesNotThrow(()=>new vm.Script(inlineLast(read(p)),{filename:p}))}});
+test("Stylesheets have matched CSS blocks",()=>{for(const p of ["assets/experience.css","assets/ai-automation-premium.css","premium.css","trust.css"]){const s=read(p);assert.equal((s.match(/{/g)||[]).length,(s.match(/}/g)||[]).length,p)}});
 function fakeEl(value=""){return {value,hidden:false,dataset:{},textContent:"",attrs:{},addEventListener(event,fn){this["on"+event]=fn},setAttribute(k,v){this.attrs[k]=v},requestSubmit(){this.onsubmit?.({preventDefault(){}})}}}
 test("IPv4 calculator distinguishes same and different /24 networks",()=>{const ids=["lab-form","lab-result","lab-title","lab-message","lab-networks","computer-ip","printer-ip","prefix","same-sample","different-sample"];const m=Object.fromEntries(ids.map(id=>[id,fakeEl()]));m["computer-ip"].value="192.168.1.24";m["printer-ip"].value="192.168.1.88";m.prefix.value="24";const d={getElementById:id=>m[id]};vm.runInNewContext(inlineLast(read("tools/connection-path.html")),{document:d,Number,Math,parseInt});m["lab-form"].onsubmit({preventDefault(){}});assert.match(m["lab-title"].textContent,/Same calculated/);assert.match(m["lab-networks"].textContent,/192\.168\.1\.0\/24/);m["printer-ip"].value="192.168.2.88";m["lab-form"].onsubmit({preventDefault(){}});assert.match(m["lab-title"].textContent,/Different calculated/);});
 test("Page fit tool compares A4 and Letter dimensions",()=>{const ids=["fit-form","fit-result","fit-title","fit-summary","fit-detail","paper","content-width","content-height","margin-left","margin-top","paper-rect","safe-rect","content-rect","page-label"];const m=Object.fromEntries(ids.map(id=>[id,fakeEl()]));Object.assign(m.paper,{value:"a4"});m["content-width"].value="190";m["content-height"].value="270";m["margin-left"].value="10";m["margin-top"].value="10";vm.runInNewContext(inlineLast(read("tools/page-fit.html")),{document:{getElementById:id=>m[id]},Number,Math});assert.equal(m["fit-result"].dataset.outcome,"fits");m.paper.value="letter";m["fit-form"].onsubmit({preventDefault(){}});assert.equal(m["fit-result"].dataset.outcome,"does-not-fit");assert.match(m["fit-detail"].textContent,/reduce the content/i);});
@@ -54,7 +54,7 @@ test("PrinterResolve has a consistent branded favicon on every page",()=>{
   assert.equal(icon.readUInt8(6),32,"ICO width");
   assert.equal(icon.readUInt8(7),32,"ICO height");
   assert.equal(icon.readUInt32LE(14),icon.length-22,"ICO embedded image length");
-  assert.equal(pages.length,39,"Expected all 39 published HTML pages");
+  assert.equal(pages.length,40,"Expected all 40 published HTML pages");
   for(const p of pages){
     const html=read(p);
     assert.ok(html.includes('href="/favicon.ico?v=20261107-1"'),p+" missing fallback favicon");
@@ -111,4 +111,59 @@ test("Paper Fit rejects blank and impossible margins and clears the stale drawin
     assert.equal(fields["content-rect"].attrs.visibility, outcome === "invalid" ? "hidden" : "visible");
     assert.doesNotMatch(fields["fit-detail"].textContent, /reduce the content to 0(?:\.0)?%/i);
   }
+});
+
+test("Business AI controls have real targets and no live checkout", () => {
+  const page=read("ai-automation.html");
+  const ids=new Set([...page.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
+  const anchors=[...page.matchAll(/href="#([^"]+)"/g)].map(m=>m[1]);
+  const broken=anchors.filter(x=>!ids.has(x));
+  assert.deepEqual(broken,[],"All AI page anchor links should resolve");
+  const serviceLinks=[...page.matchAll(/class="feature-link"[^>]*data-service="([^"]+)"/g)].map(m=>m[1]);
+  assert.equal(serviceLinks.length,6,"Every AI service card must have an actionable enquiry CTA");
+  for(const name of new Set(serviceLinks))assert.ok(page.includes('<option value="'+name+'">'),"Missing matching service dropdown option: "+name);
+  for(const id of ["menu-toggle","nav-links","enquiry-form","enquiry-service","copy-enquiry","send-enquiry","enquiry-note","enquiry-status","razorpay-test-button","razorpay-test-status"])
+    assert.ok(ids.has(id),"Missing interaction element: "+id);
+  assert.match(page,/sample preview|prewritten example|illustrative example|interactive example/i);
+  assert.match(page,/test checkout \(simulated payments only\)/i);
+  assert.ok(!page.includes("rzp_live_"),"Live key must never be published");
+  assert.ok(!page.includes("RAZORPAY_KEY_SECRET"),"Secret identifier not needed in frontend HTML");
+});
+test("Payment API remains test-only and requires server-side verification", () => {
+  const create=read("functions/api/create-order.js");
+  const verify=read("functions/api/verify-payment.js");
+  const front=read("assets/razorpay-test-checkout.js");
+  assert.match(create,/rzp_test_/,"Test-only API key required");
+  assert.match(create,/TEST_AMOUNT_PAISE\s*=\s*10000/);
+  assert.match(verify,/crypto\.subtle\.verify/,"HMAC signature must be checked on backend");
+  assert.match(verify,/payment\.status\s*!==\s*"captured"/);
+  assert.match(front,/\/api\/create-order/);
+  assert.match(front,/\/api\/verify-payment/);
+  assert.match(front,/payment\.failed/);
+  assert.match(front,/ondismiss/);
+});
+
+test("Business enquiries use existing Formspree-to-Zoho integration", () => {
+  const page=read("ai-automation.html");
+  const app=read("assets/enquiry-submit.js");
+  const inter=read("assets/ai-automation-interactions.js");
+  assert.match(page,/src="\/assets\/enquiry-submit\.js/);
+  assert.match(page,/action="https:\/\/formspree\.io\/f\/xwlvrqkl"/);
+  assert.match(page,/name="_gotcha"/);
+  assert.match(page,/id="send-enquiry"/);
+  for(const field of ["name","business","email","service","message"]){
+    assert.ok(page.includes('name="'+field+'"'),"Expected enquiry field: "+field);
+  }
+  assert.match(app,/does not confirm delivery to our Zoho inbox/,"Formspree acceptance must not be misreported as email delivery");
+  assert.match(app,/The form did not send your enquiry/,"Honeypot must not show false success");
+  assert.match(app,/fetch\(destination/);
+  assert.match(app,/headers:\s*\{\s*"Accept": "application\/json"/);
+  assert.match(app,/form\.reset\(\)/);
+  assert.match(app,/!response\.ok/);
+  assert.match(app,/formspree\.io\/f\/xwlvrqkl/);
+  assert.doesNotMatch(inter,/form\.addEventListener\("submit"/,"Only one script should handle form submit");
+  assert.ok(!known.has("functions/api/send-enquiry.js"),"Obsolete Resend backend must be removed");
+  assert.doesNotThrow(()=>new vm.Script(app),"Formspree frontend syntax");
+  assert.match(read("privacy.html"),/Formspree/);
+  assert.ok(known.has("ENQUIRY-SETUP.md"));
 });
