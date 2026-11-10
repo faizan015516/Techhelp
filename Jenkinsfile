@@ -95,6 +95,7 @@ stage('Trivy Image Scan') {
             echo "Scanning image: $FULL_IMAGE"
 
             trivy image \
+                 --scanners vuln,secret \
                 --severity HIGH,CRITICAL \
                 --exit-code 1 \
                 "$FULL_IMAGE"
